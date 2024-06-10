@@ -10,8 +10,11 @@ daggerHilt = "2.44"
 retrofit = "2.9.0"
 okhttp = "4.10.0"
 datastoreManager = "1.0.0"
+facebookStethoVersion = "1.6.0"
 activityCompose = "1.8.0"
 composeBom = "2023.08.00"
+appcompat = "1.7.0"
+material = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,10 +41,16 @@ retrofit-okHttp = {group = "com.squareup.okhttp3", name = "okhttp", version.ref 
 retrofit-okHttp-interceptor = {group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp"}
 
 datastore-manager = {group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastoreManager"}
+facebook-stetho = {group = "com.facebook.stetho", name = "stetho-okhttp3", version.ref = "facebookStethoVersion"}
+
+
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt"}
+android-library = { id = "com.android.library", version.ref = "agp" }
 
