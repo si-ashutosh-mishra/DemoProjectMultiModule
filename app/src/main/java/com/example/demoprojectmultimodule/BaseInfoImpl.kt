@@ -29,4 +29,9 @@ class BaseInfoImpl @Inject constructor(
         return true
     }
 
+    override fun getTeamLogo(clubId: String): String {
+        return getBaseUrl() + "static-assets/images/teams/{team_id}.png?v=1.12"
+            .replace("{team_id}", clubId)
+    }
+
 }

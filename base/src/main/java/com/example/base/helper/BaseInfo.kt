@@ -8,5 +8,8 @@ interface BaseInfo {
     fun getPreferenceDataStoreName(): String
     fun getCaptchaSiteKey(): String
     fun getIsDebugMode(): Boolean
+    fun getTeamLogo(
+        clubId: String
+    ): String
 
 }
