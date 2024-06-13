@@ -22,7 +22,7 @@ class ParticipantEntityMapper @Inject constructor(
             value = entity.value,
             now = entity.now,
             firstUp = entity.firstUp,
-            teamImageUrl = entity.id?.let { "" },
+            teamImageUrl = entity.id?.let { baseInfo.getTeamLogo(entity.id)  },
             highlight = entity.highlight,
             teamBackground = ""
         )
