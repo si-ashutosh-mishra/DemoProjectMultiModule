@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.retrofit.okHttp)
     implementation(libs.retrofit.okHttp.interceptor)
 
+    implementation(libs.coil.api)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

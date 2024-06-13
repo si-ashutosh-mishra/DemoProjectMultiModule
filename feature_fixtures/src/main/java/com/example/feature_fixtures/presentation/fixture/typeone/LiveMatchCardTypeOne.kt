@@ -32,11 +32,11 @@ import com.example.feature_fixtures.R
 import com.example.feature_fixtures.business.domain.model.masthead.IPLMatch
 
 @Composable
-fun RecentMatchCardTypeOne(
+fun LiveMatchCardTypeOne(
     data: IPLMatch?,
     isSponsorLogoRequired: Boolean = false,
     @DrawableRes sponsorLogo: Int,
-    @DrawableRes recentLogo: Int = R.drawable.ic_recent,
+    @DrawableRes recentLogo: Int = R.drawable.ic_live,
     matchNumberTextStyle: TextStyle = TextStyle(
         color = Color.Black,
         textAlign = TextAlign.Center

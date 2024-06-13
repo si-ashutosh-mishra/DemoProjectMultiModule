@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_fixtures.R
+import com.example.feature_fixtures.presentation.fixture.typeone.LiveMatchCardTypeOne
+import com.example.feature_fixtures.presentation.fixture.typeone.RecentMatchCardTypeOne
 import com.example.feature_fixtures.presentation.fixture.typeone.UpcomingMatchCardTypeOne
 import dagger.Lazy
 
@@ -67,7 +69,7 @@ fun Fixture() {
             items(20) { item ->
                 // on below line we are specifying ui for each item of list view.
                 // we are specifying a simple text for each item of our list view.
-                UpcomingMatchCardTypeOne(sponsorLogo = R.drawable.ic_menu_fixture, cardBackGroundColor = R.color.white, matchNumberTextStyle = TextStyle(fontSize = 20.sp, color = Color.Red))
+                //UpcomingMatchCardTypeOne(sponsorLogo = R.drawable.ic_menu_fixture)
                 // on below line we are specifying
                 // divider for each list item
                 Divider()

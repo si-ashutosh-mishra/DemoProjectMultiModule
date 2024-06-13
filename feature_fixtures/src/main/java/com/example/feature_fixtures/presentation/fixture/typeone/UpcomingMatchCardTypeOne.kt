@@ -31,9 +31,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.feature_fixtures.R
+import com.example.feature_fixtures.business.domain.model.masthead.IPLMatch
 
 @Composable
 fun UpcomingMatchCardTypeOne(
+    data: IPLMatch?,
     isSponsorLogoRequired: Boolean = false,
     @DrawableRes sponsorLogo: Int,
     @DrawableRes upcomingLogo: Int = R.drawable.ic_upcoming,
@@ -56,7 +58,7 @@ fun UpcomingMatchCardTypeOne(
     @DrawableRes matchCardBackGroundImage: Int? = null,
     @ColorRes cardBackGroundColor: Int? = null,
     @ColorRes cardBorderColor: Int = R.color.black,
-    ) {
+) {
     Column(
         modifier = Modifier
             .padding(8.dp)
@@ -75,7 +77,7 @@ fun UpcomingMatchCardTypeOne(
         ) {
             Box(
                 modifier = Modifier
-                    .background(if(cardBackGroundColor!=null)colorResource(id = cardBackGroundColor) else Color.Transparent)
+                    .background(if (cardBackGroundColor != null) colorResource(id = cardBackGroundColor) else Color.Transparent)
                     .fillMaxWidth()
             ) {
                 if (matchCardBackGroundImage != null) {
@@ -96,7 +98,7 @@ fun UpcomingMatchCardTypeOne(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Match 22",
+                            text = data?.eventName ?: "",
                             style = matchNumberTextStyle
                         )
 
@@ -125,11 +127,13 @@ fun UpcomingMatchCardTypeOne(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
+                        val teamA = data?.participants?.firstOrNull()
+                        val teamB = data?.participants?.lastOrNull()
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "TSK",
+                                text = teamA?.name.toString(),
                                 style = teamNameTextStyle
                             )
                             Spacer(modifier = Modifier.width(10.dp))
@@ -144,12 +148,12 @@ fun UpcomingMatchCardTypeOne(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = "06 july 2024",
+                                text = data?.startDate.toString(),
                                 style = timeStampTextStyle
                             )
                             Spacer(modifier = Modifier.height(5.dp))
                             Text(
-                                text = "06:00",
+                                text = data?.startDate.toString(),
                                 style = timeStampTextStyle
                             )
                         }
@@ -164,7 +168,7 @@ fun UpcomingMatchCardTypeOne(
                             )
                             Spacer(modifier = Modifier.width(10.dp))
                             Text(
-                                text = "LAKR",
+                                text = teamB?.name.toString(),
                                 style = teamNameTextStyle
                             )
                         }
@@ -175,7 +179,7 @@ fun UpcomingMatchCardTypeOne(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Grand Prairie Cricket Stadium,Dallas",
+                            text = data?.venueName.toString(),
                             style = matchStatusTextStyle
                         )
                     }
