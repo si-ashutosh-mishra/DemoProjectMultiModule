@@ -1,4 +1,4 @@
-package com.example.feature_fixtures.ui.fixture
+package com.example.feature_fixtures.presentation.fixture
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

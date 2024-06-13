@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.demoprojectmultimodule.ui.theme.DemoProjectMultiModuleTheme
-import com.example.feature_fixtures.ui.fixture.Fixture
+import com.example.feature_fixtures.presentation.fixture.Fixture
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

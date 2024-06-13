@@ -1,10 +1,14 @@
-package com.example.feature_fixtures.ui.fixture
+package com.example.feature_fixtures.presentation.fixture
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,9 +19,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_fixtures.R
+import com.example.feature_fixtures.presentation.fixture.typeone.UpcomingMatchCardTypeOne
+import dagger.Lazy
 
 
 @Composable
@@ -51,6 +59,21 @@ fun Fixture() {
                 )
             )
         }
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            // on below line we are populating
+            // items for listview.
+            items(20) { item ->
+                // on below line we are specifying ui for each item of list view.
+                // we are specifying a simple text for each item of our list view.
+                UpcomingMatchCardTypeOne(sponsorLogo = R.drawable.ic_menu_fixture, cardBackGroundColor = R.color.white, matchNumberTextStyle = TextStyle(fontSize = 20.sp, color = Color.Red))
+                // on below line we are specifying
+                // divider for each list item
+                Divider()
+            }
+        }
+
         // Text to Display the current Screen
     }
 }
