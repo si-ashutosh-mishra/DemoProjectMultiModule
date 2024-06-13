@@ -10,7 +10,7 @@ class BaseInfoImpl @Inject constructor(
 ) : BaseInfo {
 
     override fun getBaseUrl(): String {
-        return "https://www.punjabkingsipl.in/"
+        return "https://www.knightclub.in/"
     }
 
     override fun getApiAuthKey(): String {

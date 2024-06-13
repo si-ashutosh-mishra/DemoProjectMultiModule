@@ -96,7 +96,7 @@ class MasterHeadEntityMapper @Inject constructor(
     }
 
     private fun checkIfItIsPbks(participantEntities: List<ParticipantEntity>?):Boolean {
-        val pbksMatch = participantEntities?.firstOrNull { it.id == "1107" }
+        val pbksMatch = participantEntities?.firstOrNull { it.id != "1107" }
         return pbksMatch!=null
     }
 
