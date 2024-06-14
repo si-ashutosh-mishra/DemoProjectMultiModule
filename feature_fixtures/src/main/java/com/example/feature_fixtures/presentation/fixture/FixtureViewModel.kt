@@ -23,13 +23,14 @@ class FixtureViewModel @Inject constructor(
     val fixture: LiveData<List<IPLMatch?>>
         get() = _fixture
 
-    fun getFixtureList() {
+    fun getFixtureList(matchCount:Int) {
         viewModelScope.launch {
 
             val result = getListOfMatches(
                 1,
                 "default.aspx?methodtype=3&client=7756e60237&sport=1&league=0&timezone=0530&language=0&tournament=4848",
-                null
+                null,
+                itemCount = matchCount
             ).firstOrNull { it !is Resource.Loading }?.data
 
             _fixture.value = result?.allListOfMatches.orEmpty()

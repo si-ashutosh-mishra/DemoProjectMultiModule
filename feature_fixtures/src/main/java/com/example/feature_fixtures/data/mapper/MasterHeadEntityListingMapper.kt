@@ -13,9 +13,9 @@ class MasterHeadEntityListingMapper @Inject constructor(
 
     override fun toDomain(entity: MasterHeadResponse): FixtureItems {
 
-        val listOfAllMatches = entity.teamId?.let { clubId ->
+        val listOfAllMatches = entity.teamId?.let { teamId ->
             entity.matches?.filter { match ->
-                match?.participantEntities?.any { it?.id == clubId } == true
+                match?.participantEntities?.any { it?.id == teamId } == true
             }
         }?:run {
             entity.matches

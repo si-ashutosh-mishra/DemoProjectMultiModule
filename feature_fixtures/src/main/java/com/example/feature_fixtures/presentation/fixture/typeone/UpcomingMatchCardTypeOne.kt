@@ -38,7 +38,7 @@ import com.example.feature_fixtures.business.domain.model.masthead.IPLMatch
 fun UpcomingMatchCardTypeOne(
     data: IPLMatch?,
     isSponsorLogoRequired: Boolean = false,
-    @DrawableRes sponsorLogo: Int,
+    @DrawableRes sponsorLogo: Int? = null,
     @DrawableRes upcomingLogo: Int = R.drawable.ic_upcoming,
     matchNumberTextStyle: TextStyle = TextStyle(
         color = Color.Black, textAlign = TextAlign.Center
@@ -97,7 +97,7 @@ fun UpcomingMatchCardTypeOne(
                     )
 
                     Spacer(Modifier.weight(1f))
-                    if (isSponsorLogoRequired) {
+                    if (isSponsorLogoRequired && sponsorLogo!=null) {
                         Image(
                             painterResource(sponsorLogo),
                             contentDescription = "",
@@ -133,7 +133,7 @@ fun UpcomingMatchCardTypeOne(
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .height(24.dp)
+                                .height(50.dp)
                                 .aspectRatio(1f, matchHeightConstraintsFirst = true),
                             placeholder = painterResource(id = R.drawable.ic_menu_fixture)
                         )
@@ -161,7 +161,7 @@ fun UpcomingMatchCardTypeOne(
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .height(24.dp)
+                                .height(50.dp)
                                 .aspectRatio(1f, matchHeightConstraintsFirst = true),
                             placeholder = painterResource(id = R.drawable.ic_menu_fixture)
                         )
@@ -183,9 +183,4 @@ fun UpcomingMatchCardTypeOne(
             }
         }
     }
-}
-
-@Composable
-fun CommonView() {
-
 }

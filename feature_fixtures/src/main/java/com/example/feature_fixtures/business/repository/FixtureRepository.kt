@@ -9,7 +9,8 @@ interface FixtureRepository {
     fun getMatchMastHead(
         type: Int,
         url:String?,
-        teamId:String?
+        teamId:String?,
+        itemCount:Int
     ): Flow<Resource<FixtureItems?>>
 
 

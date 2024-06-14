@@ -12,7 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.demoprojectmultimodule.ui.theme.DemoProjectMultiModuleTheme
-import com.example.feature_fixtures.presentation.fixture.Fixture
+import com.example.feature_fixtures.presentation.fixture.FixtureTypeOne
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,7 +26,11 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "match_screen") {
                     composable(route = "match_screen") {
-                        Fixture()
+                        FixtureTypeOne(
+                            matchCount = 5,
+                            cardBackGroundColor = R.color.teal_200,
+                            cardBorderColor = R.color.purple_500
+                        )
                     }
                 }
             }

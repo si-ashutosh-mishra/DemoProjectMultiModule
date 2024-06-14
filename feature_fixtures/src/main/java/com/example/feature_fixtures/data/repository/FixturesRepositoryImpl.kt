@@ -25,7 +25,8 @@ class FixturesRepositoryImpl @Inject constructor(
     override fun getMatchMastHead(
         type: Int,
         url: String?,
-        teamId: String?
+        teamId: String?,
+        itemCount:Int
     ): Flow<Resource<FixtureItems?>> {
         return flow {
             emit(Resource.Loading())
@@ -37,7 +38,10 @@ class FixturesRepositoryImpl @Inject constructor(
                     override suspend fun handleSuccess(resultObj: MasterHeadResponse): Resource<FixtureItems?> {
                         val fixtureItems = when (type) {
                             1 -> {
-                                masterHeadEntityMapper.toDomain(resultObj)
+                                masterHeadEntityMapper.toDomain(resultObj.copy(
+                                    teamId = teamId,
+                                    itemCount = itemCount
+                                ))
                             }
                             else -> {
                                 masterHeadEntityListingMapper.toDomain(resultObj.copy(

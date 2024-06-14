@@ -17,9 +17,10 @@ class GetListOfMatches @Inject constructor(
 
     operator fun invoke(
         type: Int,
-        url:String?,
-        teamId:String?
+        url: String?,
+        teamId: String?,
+        itemCount: Int
     ): Flow<Resource<FixtureItems?>> {
-        return fixtureRepository.getMatchMastHead(type,url,teamId)
+        return fixtureRepository.getMatchMastHead(type, url, teamId, itemCount = itemCount)
     }
 }

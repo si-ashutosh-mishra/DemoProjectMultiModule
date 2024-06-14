@@ -37,8 +37,8 @@ import com.example.feature_fixtures.business.domain.model.masthead.IPLMatch
 fun LiveMatchCardTypeOne(
     data: IPLMatch?,
     isSponsorLogoRequired: Boolean = false,
-    @DrawableRes sponsorLogo: Int,
-    @DrawableRes recentLogo: Int = R.drawable.ic_live,
+    @DrawableRes sponsorLogo: Int? = null,
+    @DrawableRes liveLogo: Int = R.drawable.ic_live,
     matchNumberTextStyle: TextStyle = TextStyle(
         color = Color.Black,
         textAlign = TextAlign.Center
@@ -116,7 +116,7 @@ fun LiveMatchCardTypeOne(
                     )
 
                     Spacer(Modifier.weight(1f))
-                    if (isSponsorLogoRequired) {
+                    if (isSponsorLogoRequired && sponsorLogo!=null) {
                         Image(
                             painterResource(sponsorLogo),
                             contentDescription = "",
@@ -126,7 +126,7 @@ fun LiveMatchCardTypeOne(
                         Spacer(modifier = Modifier.width(10.dp))
                     }
                     Image(
-                        painterResource(recentLogo),
+                        painterResource(liveLogo),
                         contentDescription = "",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -152,7 +152,7 @@ fun LiveMatchCardTypeOne(
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
-                                    .height(24.dp)
+                                    .height(50.dp)
                                     .aspectRatio(1f, matchHeightConstraintsFirst = true),
                                 placeholder = painterResource(id = R.drawable.ic_menu_fixture)
                             )
@@ -369,7 +369,7 @@ fun LiveMatchCardTypeOne(
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier
-                                    .height(24.dp)
+                                    .height(50.dp)
                                     .aspectRatio(1f, matchHeightConstraintsFirst = true),
                                 placeholder = painterResource(id = R.drawable.ic_menu_fixture)
                             )
@@ -394,6 +394,4 @@ fun LiveMatchCardTypeOne(
             }
         }
     }
-
-
 }

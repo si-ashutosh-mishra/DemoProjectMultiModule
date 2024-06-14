@@ -6,4 +6,5 @@ data class MasterHeadResponse(
     @SerializedName("matches")
     val matches: List<MatchEntity>?,
     val teamId:String?,
+    val itemCount:Int
 )

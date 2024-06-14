@@ -21,18 +21,23 @@ class MasterHeadEntityMapper @Inject constructor(
         val filteredMatch = mutableListOf<IPLMatch>()
         val upcomingMatch = mutableListOf<IPLMatch>()
 
-//        entity?.matches?.get(0)?.eventState = "U"
-//        entity?.matches?.get(0)?.startDate = "2023-02-05T17:11+05:30"
-        val allPbksMatches = entity.matches?.filter { checkIfItIsPbks(it.participantEntities) }
-        val liveMatchList = allPbksMatches?.filter { it.eventState == "L" }?.sortedBy { it.startDate }
-        val upcomingMatchList = allPbksMatches?.filter { it.eventState == "U" }?.sortedBy { it.startDate }
-        val resultMatchList = allPbksMatches?.filter { it.eventState == "R" }?.sortedBy { it.startDate }?.reversed()
+        val listOfAllMatches = entity.teamId?.let { teamId ->
+            entity.matches?.filter { match ->
+                match?.participantEntities?.any { it?.id == teamId } == true
+            }
+        }?:run {
+            entity.matches
+        }
+
+        val liveMatchList = listOfAllMatches?.filter { it.eventState == "L" }?.sortedBy { it.startDate }
+        val upcomingMatchList = listOfAllMatches?.filter { it.eventState == "U" }?.sortedBy { it.startDate }
+        val resultMatchList = listOfAllMatches?.filter { it.eventState == "R" }?.sortedBy { it.startDate }?.reversed()
 
         if (liveMatchList?.size!! > 0){
             filteredList.addAll(liveMatchList)
             if (upcomingMatchList?.size!!>0 && resultMatchList?.size!! <=0){
                 upcomingMatchList.forEach {
-                    if (filteredList.size<3){
+                    if (filteredList.size<entity.itemCount){
                         filteredList.add(it)
                     }
                 }
@@ -41,7 +46,7 @@ class MasterHeadEntityMapper @Inject constructor(
             }
             if (resultMatchList?.size!!>0 && upcomingMatchList?.size!!<=0){
                 resultMatchList.forEach {
-                    if (filteredList.size<3){
+                    if (filteredList.size<entity.itemCount){
                         filteredList.add(it)
                     }
                 }
@@ -50,32 +55,32 @@ class MasterHeadEntityMapper @Inject constructor(
             }
         }else if (liveMatchList?.size==0 && resultMatchList?.size==0 && upcomingMatchList?.size!!>0){
             upcomingMatchList.forEach {
-                if (filteredList.size<=2){
+                if (filteredList.size<entity.itemCount){
                     filteredList.add(it)
                 }
             }
         }else if (liveMatchList?.size==0 && resultMatchList?.size!!>0 && upcomingMatchList?.size!!>0){
             if (upcomingMatchList.size>1){
             upcomingMatchList.forEach {
-                if (filteredList.size<2){
+                if (filteredList.size<(entity.itemCount-1)){
                     filteredList.add(it)
                 }
             }
             }else{
                 filteredList.add(upcomingMatchList[0])
             }
-            if (filteredList.size==2){
+            if (filteredList.size==(entity.itemCount-1)){
                 filteredList.add(resultMatchList[0])
             }else{
                 resultMatchList.forEach {
-                    if (filteredList.size<3){
+                    if (filteredList.size<entity.itemCount){
                         filteredList.add(it)
                     }
                 }
             }
         }else if (liveMatchList?.size==0 && upcomingMatchList?.size==0 && resultMatchList?.size!!>0){
             resultMatchList.forEach {
-                if (filteredList.size<3){
+                if (filteredList.size<entity.itemCount){
                     filteredList.add(it)
                 }
             }
@@ -94,11 +99,4 @@ class MasterHeadEntityMapper @Inject constructor(
             allRecentMatches = emptyList()
         )
     }
-
-    private fun checkIfItIsPbks(participantEntities: List<ParticipantEntity>?):Boolean {
-        val pbksMatch = participantEntities?.firstOrNull { it.id != "1107" }
-        return pbksMatch!=null
-    }
-
-
 }
