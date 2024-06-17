@@ -1,10 +1,9 @@
-package com.example.feature_fixtures.presentation.fixture
+package com.example.feature_fixtures.presentation.fixture.typeone
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,14 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_fixtures.R
 import com.example.feature_fixtures.business.domain.model.masthead.EventState
-import com.example.feature_fixtures.business.domain.model.masthead.IPLMatch
-import com.example.feature_fixtures.presentation.fixture.typeone.LiveMatchCardTypeOne
-import com.example.feature_fixtures.presentation.fixture.typeone.RecentMatchCardTypeOne
-import com.example.feature_fixtures.presentation.fixture.typeone.UpcomingMatchCardTypeOne
+import com.example.feature_fixtures.presentation.fixture.FixtureViewModel
 
 
 @Composable
@@ -66,7 +61,8 @@ fun FixtureTypeOne(
     @DrawableRes matchCardBackGroundImage: Int? = null,
     @ColorRes cardBackGroundColor: Int? = null,
     @ColorRes cardBorderColor: Int = R.color.black,
-    matchCount:Int = 3
+    matchCount:Int = 3,
+    onClickItem:(name:String?) ->Unit
 ) {
 
     val viewModel: FixtureViewModel = hiltViewModel()
@@ -135,13 +131,12 @@ fun FixtureTypeOne(
                         matchCardBackGroundImage = matchCardBackGroundImage,
                         cardBackGroundColor = cardBackGroundColor,
                         cardBorderColor = cardBorderColor
-                    )
+                    ){
+                        onClickItem(it)
+                    }
                 }
-                else ->{
-
-                }
+                else ->{}
             }
-
         }
     }
 
