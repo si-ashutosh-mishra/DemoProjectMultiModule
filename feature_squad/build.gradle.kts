@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.android.hilt)
+    id("kotlin-kapt")
+    id("kotlin-android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -37,10 +41,23 @@ android {
 
 dependencies {
 
+    implementation(project(":base"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
+    //hilt
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
+
+    //network
+    implementation(libs.retrofit.retrofit)
+    implementation(libs.retrofit.gsonconverter)
+
+    implementation(libs.retrofit.okHttp)
+    implementation(libs.retrofit.okHttp.interceptor)
 }
