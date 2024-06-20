@@ -1,4 +1,4 @@
-package com.example.feature_fixtures.presentation.fixture.typeone
+package com.example.feature_fixtures.presentation.fixture.typetwo
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -34,7 +34,7 @@ import com.example.feature_fixtures.presentation.fixture.PageIndicator
 
 @ExperimentalFoundationApi
 @Composable
-fun FixturesHorizontalScrollTypeOne(
+fun FixturesHorizontalScrollTypeTwo(
     list: List<IPLMatch?>, isSponsorLogoRequired: Boolean = false,
     @DrawableRes sponsorLogo: Int? = null,
     @DrawableRes liveLogo: Int = R.drawable.ic_live,
@@ -129,7 +129,7 @@ fun FixturesHorizontalScrollTypeOne(
                 val data = list[it]
                 when (data?.eventState) {
                     EventState.RESULT -> {
-                        RecentMatchCardTypeOne(
+                        RecentMatchCardTypeTwo(
                             data = data,
                             isSponsorLogoRequired = isSponsorLogoRequired,
                             recentLogo = recentLogo,
@@ -149,7 +149,7 @@ fun FixturesHorizontalScrollTypeOne(
                     }
 
                     EventState.LIVE -> {
-                        LiveMatchCardTypeOne(
+                        LiveMatchCardTypeTwo(
                             data = data,
                             isSponsorLogoRequired = isSponsorLogoRequired,
                             liveLogo = liveLogo,
@@ -169,13 +169,12 @@ fun FixturesHorizontalScrollTypeOne(
                     }
 
                     EventState.UPCOMING -> {
-                        UpcomingMatchCardTypeOne(
+                        UpcomingMatchCardTypeTwo(
                             data = data,
                             isSponsorLogoRequired = isSponsorLogoRequired,
                             upcomingLogo = upcomingLogo,
                             sponsorLogo = sponsorLogo,
                             matchNumberTextStyle = matchNumberTextStyle,
-                            teamNameTextStyle = teamNameTextStyle,
                             matchStatusTextStyle = matchStatusTextStyle,
                             timeStampTextStyle = timeStampTextStyle,
                             matchCardBackGroundImage = matchCardBackGroundImage,
@@ -195,6 +194,4 @@ fun FixturesHorizontalScrollTypeOne(
             PageIndicator(pagerState = pagerState, pageCount = list.size)
         }
     }
-
-
 }

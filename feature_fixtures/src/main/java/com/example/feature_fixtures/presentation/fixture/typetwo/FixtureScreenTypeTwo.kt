@@ -1,46 +1,43 @@
-package com.example.feature_fixtures.presentation.fixture.typeone
+package com.example.feature_fixtures.presentation.fixture.typetwo
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.example.feature_fixtures.R
 import com.example.feature_fixtures.business.domain.model.masthead.EventState
-import com.example.feature_fixtures.business.domain.model.masthead.IPLMatch
-import com.example.feature_fixtures.presentation.fixture.PageIndicator
+import com.example.feature_fixtures.presentation.fixture.FixtureViewModel
 
-@ExperimentalFoundationApi
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FixturesHorizontalScrollTypeOne(
-    list: List<IPLMatch?>, isSponsorLogoRequired: Boolean = false,
+fun FixtureScreenTypeTwo(
+    navController: NavController,
+    isSponsorLogoRequired: Boolean = false,
     @DrawableRes sponsorLogo: Int? = null,
     @DrawableRes liveLogo: Int = R.drawable.ic_live,
     @DrawableRes recentLogo: Int = R.drawable.ic_recent,
     @DrawableRes upcomingLogo: Int = R.drawable.ic_upcoming,
-    @DrawableRes viewMoreLogo: Int = R.drawable.ic_view_more,
     matchNumberTextStyle: TextStyle = TextStyle(
         color = Color.Black,
         textAlign = TextAlign.Center
@@ -73,64 +70,46 @@ fun FixturesHorizontalScrollTypeOne(
         color = Color.Black,
         textAlign = TextAlign.Center
     ),
-    fixtureHeadingStyle: TextStyle = TextStyle(
-        color = Color.Black,
-        textAlign = TextAlign.Center
-    ),
     @DrawableRes matchCardBackGroundImage: Int? = null,
     @ColorRes cardBackGroundColor: Int? = null,
     @ColorRes cardBorderColor: Int = R.color.black,
-    @ColorRes widgetBackGroundColor: Int? = null,
-    @DrawableRes widgetBackGroundImage: Int? = null,
-    onClickItem: (name: String?) -> Unit,
-    onViewMoreClick: () -> Unit
+    teamId: String? = null,
+    onClickItem: (name: String?) -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .background(if (widgetBackGroundColor != null) colorResource(id = widgetBackGroundColor) else Color.Transparent)
-            .fillMaxWidth()
+
+    val viewModel: FixtureViewModel = hiltViewModel()
+
+    val fixtureList by viewModel.fixture.observeAsState(initial = emptyList())
+
+    LaunchedEffect(
+        key1 = Unit
     ) {
-        val pagerState = rememberPagerState { list.size }
-        if (widgetBackGroundImage != null) {
-            Image(
-                painterResource(id = widgetBackGroundImage),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds, // or some other scale
-                modifier = Modifier.matchParentSize()
-            )
-        }
-        Column(
-            modifier = Modifier.padding(vertical = 10.dp)
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(15.dp)
-            ) {
-                Text(text = "Fixtures & Results", style = fixtureHeadingStyle)
-                Image(
-                    painterResource(viewMoreLogo),
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .height(15.dp)
-                        .background(Color.Transparent)
-                        .clickable {
-                            onViewMoreClick()
-                        }
-                )
+        viewModel.getFixtureList(teamId)
+    }
+    Column {
+        TopAppBar(title = {
+            Text(text = "Fixtures")
+        }, navigationIcon = {
+            IconButton(onClick = {
+                navController.navigateUp()
+            }) {
+                Icon(Icons.Filled.ArrowBack, "")
             }
-            HorizontalPager(
-                state = pagerState,
-                contentPadding = PaddingValues(horizontal = 15.dp),
-                pageSpacing = 0.dp
-            ) {
-                val data = list[it]
-                when (data?.eventState) {
+        }, colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = Color.Blue,
+            navigationIconContentColor = Color.White,
+            titleContentColor = Color.White,
+            actionIconContentColor = Color.White
+        )
+        )
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            items(fixtureList) {
+                when (it?.eventState) {
                     EventState.RESULT -> {
-                        RecentMatchCardTypeOne(
-                            data = data,
+                        RecentMatchCardTypeTwo(
+                            data = it,
                             isSponsorLogoRequired = isSponsorLogoRequired,
                             recentLogo = recentLogo,
                             sponsorLogo = sponsorLogo,
@@ -149,8 +128,8 @@ fun FixturesHorizontalScrollTypeOne(
                     }
 
                     EventState.LIVE -> {
-                        LiveMatchCardTypeOne(
-                            data = data,
+                        LiveMatchCardTypeTwo(
+                            data = it,
                             isSponsorLogoRequired = isSponsorLogoRequired,
                             liveLogo = liveLogo,
                             sponsorLogo = sponsorLogo,
@@ -169,13 +148,12 @@ fun FixturesHorizontalScrollTypeOne(
                     }
 
                     EventState.UPCOMING -> {
-                        UpcomingMatchCardTypeOne(
-                            data = data,
+                        UpcomingMatchCardTypeTwo(
+                            data = it,
                             isSponsorLogoRequired = isSponsorLogoRequired,
                             upcomingLogo = upcomingLogo,
                             sponsorLogo = sponsorLogo,
                             matchNumberTextStyle = matchNumberTextStyle,
-                            teamNameTextStyle = teamNameTextStyle,
                             matchStatusTextStyle = matchStatusTextStyle,
                             timeStampTextStyle = timeStampTextStyle,
                             matchCardBackGroundImage = matchCardBackGroundImage,
@@ -186,15 +164,9 @@ fun FixturesHorizontalScrollTypeOne(
                         }
                     }
 
-                    else -> {
-
-                    }
+                    else -> {}
                 }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            PageIndicator(pagerState = pagerState, pageCount = list.size)
         }
     }
-
-
 }
