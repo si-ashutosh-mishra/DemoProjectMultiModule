@@ -5,4 +5,6 @@ interface FixtureConfigContract {
     fun getTeamLogo(
         clubId: String
     ): String
+
+    fun getTimeInterval():Long
 }
