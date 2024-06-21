@@ -34,7 +34,7 @@ fun LeftDataSection(
     selectedTeamBGColor: Int,
     circularTeamBGColor: Int,
     qualifiedBGColor: Int,
-    currentTeamID: Int,
+    currentTeamID: Int?,
 
     ) {
     Column(modifier = modifier) {

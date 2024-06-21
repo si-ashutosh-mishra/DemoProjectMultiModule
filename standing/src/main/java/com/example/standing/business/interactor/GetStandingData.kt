@@ -13,11 +13,11 @@ class GetStandingData @Inject constructor(
 ) {
     operator fun invoke(
         url: String,
-        isShowForm: Boolean,
-        isSwapRequired: Boolean,
-        teamCount: Int?,
-        swapPosition: Int?,
-        currentTeamId: Int?
+        isShowForm: Boolean = false,
+        isSwapRequired: Boolean = false,
+        teamCount: Int? = null,
+        swapPosition: Int? = null,
+        currentTeamId: Int? = null
     ): Flow<Resource<List<IPLStandings?>?>> {
         return standingRepository.getStandingData(
             url = url,

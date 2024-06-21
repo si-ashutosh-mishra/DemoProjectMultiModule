@@ -24,18 +24,18 @@ class StandingViewModel @Inject constructor(
 
 
     fun loadStanding(
-        isShowForm: Boolean,
-        isSwapRequired: Boolean,
-        teamCount: Int? = null,
+        isShowForm: Boolean = false,
+        isSwapRequired: Boolean = false,
+        requiredTeamCount: Int? = null,
         swapPosition: Int? = null,
-        currentTeamId: Int?
+        currentTeamId: Int? = null,
     ) {
         viewModelScope.launch {
             getStandingsData(
                 url = standingConfigContract.getStandingUrl(),
                 isShowForm = isShowForm,
                 isSwapRequired = isSwapRequired,
-                teamCount = teamCount,
+                teamCount = requiredTeamCount,
                 swapPosition = swapPosition,
                 currentTeamId = currentTeamId
             ).collectLatest {

@@ -65,7 +65,7 @@ class StandingEntityMapper @Inject constructor(
             updateList.add(
                 IPLStandings(
                     isShowForm = standingEntity.isShowForm,
-                    teamID = entity.id?.toInt() ?: 0,
+                    teamID = entity.id?.toInt(),
                     teamIsQualified = entity.isQualified?.lowercase()?.toBoolean() ?: false,
                     teamPosition = title,
                     title = entity.shortName,

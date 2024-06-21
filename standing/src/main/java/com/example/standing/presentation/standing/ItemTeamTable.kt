@@ -33,7 +33,7 @@ fun ItemTeamTable(
     selectedTeamBGColor: Int,
     qualifiedBGColor: Int,
     circularTeamBGColor: Int,
-    currentTeamID: Int,
+    currentTeamID: Int?,
     teamPosStyle: TextStyle,
     teamNameStyle: TextStyle
 ) {

@@ -21,6 +21,7 @@ import com.example.standing.R
 @Composable
 fun StandingToolbar(
     onBackClick: () -> Unit,
+    onFilterClick: () -> Unit,
     titleBarIconTintColor: Int,
     toolBarColor: Int,
     toolBarTitle: String,
@@ -62,7 +63,7 @@ fun StandingToolbar(
             horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxWidth()
         ) {
             if (showFilter) {
-                IconButton(onClick = { onBackClick.invoke() }) {
+                IconButton(onClick = { onFilterClick.invoke() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_standings_filter),
                         contentDescription = null,

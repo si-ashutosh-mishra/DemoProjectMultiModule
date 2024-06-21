@@ -16,7 +16,7 @@ import com.example.standing.business.domain.model.standing.IPLStandings
 @Composable
 fun RightDataSection(
     modifier: Modifier,
-    currentTeamID: Int,
+    currentTeamID: Int?,
     list: List<IPLStandings?>,
     topRadius: Dp,
     bottomRadius: Dp,

@@ -2,7 +2,7 @@ package com.example.standing.business.domain.model.standing
 
 data class IPLStandings(
     val isShowForm: Boolean = false,
-    val teamID: Int,
+    val teamID: Int?,
     val teamIsQualified: Boolean,
     val teamPosition: String?,
     val title: String?,

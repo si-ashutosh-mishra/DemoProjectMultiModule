@@ -22,7 +22,7 @@ fun ItemTeamValueTable(
     iplStanding: IPLStandings,
     titleTextStyle: TextStyle,
     valueTextStyle: TextStyle,
-    currentTeamID: Int,
+    currentTeamID: Int?,
     selectedTeamBGColor: Int
 ) {
     Row(
