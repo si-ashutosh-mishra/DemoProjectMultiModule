@@ -13,10 +13,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -27,7 +25,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.feature_fixtures.R
 import com.example.feature_fixtures.business.domain.model.masthead.EventState
-import com.example.feature_fixtures.presentation.fixture.FixtureViewModel
+import com.example.feature_fixtures.presentation.fixture.viewmodel.FixtureViewModel
+import com.example.feature_fixtures.presentation.fixture.LifeCycleObserver
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,11 +80,13 @@ fun FixtureScreenTypeTwo(
 
     val fixtureList by viewModel.fixture.observeAsState(initial = emptyList())
 
-    LaunchedEffect(
-        key1 = Unit
-    ) {
+    LifeCycleObserver(fetchData = {
+        viewModel.cancelApiCoroutine()
         viewModel.getFixtureList(teamId)
+    }) {
+        viewModel.cancelApiCoroutine()
     }
+
     Column {
         TopAppBar(title = {
             Text(text = "Fixtures")

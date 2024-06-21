@@ -10,7 +10,7 @@ import com.example.feature_fixtures.data.mapper.MasterHeadEntityListingMapper
 import com.example.feature_fixtures.data.mapper.MasterHeadEntityMapper
 import com.example.feature_fixtures.data.model.mastheadscore.MasterHeadResponse
 import com.example.feature_fixtures.data.service.FixturesService
-import com.example.feature_fixtures.presentation.fixture.FixturesType
+import com.example.feature_fixtures.presentation.fixture.utils.FixturesType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
