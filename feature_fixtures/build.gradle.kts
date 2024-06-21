@@ -74,9 +74,16 @@ dependencies {
     implementation(libs.retrofit.okHttp)
     implementation(libs.retrofit.okHttp.interceptor)
 
+    //pageindicator
+    implementation(libs.page.indicator)
+
 
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }

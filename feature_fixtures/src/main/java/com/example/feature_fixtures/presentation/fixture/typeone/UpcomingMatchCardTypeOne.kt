@@ -5,6 +5,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.base.utils.CalendarUtils
@@ -55,6 +57,7 @@ fun UpcomingMatchCardTypeOne(
     @DrawableRes matchCardBackGroundImage: Int? = null,
     @ColorRes cardBackGroundColor: Int? = null,
     @ColorRes cardBorderColor: Int = R.color.black,
+    onItemClick: (name:String?) -> Unit
 ) {
     val teamA = data?.participants?.firstOrNull()
     val teamB = data?.participants?.lastOrNull()
@@ -63,7 +66,8 @@ fun UpcomingMatchCardTypeOne(
         modifier = Modifier
             .background(Color.Transparent)
             .fillMaxWidth()
-            .padding(all = 8.dp),
+            .padding(all = 8.dp)
+            .clickable { onItemClick(data?.eventName) },
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
         ),
@@ -182,5 +186,18 @@ fun UpcomingMatchCardTypeOne(
                 }
             }
         }
+    }
+}
+
+@Composable
+@Preview(showBackground = true, showSystemUi = true)
+fun UpcomingMatchCardTypeOnePreview(modifier: Modifier = Modifier) {
+    UpcomingMatchCardTypeOne(
+        data = null,
+        isSponsorLogoRequired=true,
+        sponsorLogo = R.drawable.ic_upcoming,
+        cardBackGroundColor = R.color.blue
+    ){
+
     }
 }
