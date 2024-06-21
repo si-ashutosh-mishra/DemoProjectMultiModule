@@ -14,7 +14,7 @@ class BaseInfoImpl @Inject constructor(
     }
 
     override fun getApiAuthKey(): String {
-        return ""
+        return "eGxzdRsmKP"
     }
 
     override fun getPreferenceDataStoreName(): String {
