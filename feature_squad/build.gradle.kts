@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     debugImplementation(libs.ui.tooling)
 
+    implementation(libs.androidx.constraintlayout.compose)
+
 
     implementation(libs.hilt.navigation.compose)
     //implementation(libs.lifecycle.viewmodel.compose)

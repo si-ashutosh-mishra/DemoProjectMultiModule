@@ -1,4 +1,4 @@
-package com.example.feature_squad.presentation.fixture.typeone
+package com.example.feature_squad.presentation.squad.typeone
 
 import androidx.compose.runtime.Composable
 
