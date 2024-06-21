@@ -2,14 +2,12 @@ package com.example.base.helper
 
 
 
-interface BaseInfo {
+interface BaseConfigContract {
     fun getBaseUrl(): String
     fun getApiAuthKey(): String
     fun getPreferenceDataStoreName(): String
     fun getCaptchaSiteKey(): String
     fun getIsDebugMode(): Boolean
-    fun getTeamLogo(
-        clubId: String
-    ): String
+
 
 }

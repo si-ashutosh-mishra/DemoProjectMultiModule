@@ -5,7 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.example.base.helper.BaseInfo
+import com.example.base.helper.BaseConfigContract
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,10 +19,10 @@ object PreferenceModule {
 
     @Provides
     @Singleton
-    fun providePreferencesFantasyDataStore(@ApplicationContext appContext: Context,baseInfo: BaseInfo): DataStore<Preferences> =
+    fun providePreferencesFantasyDataStore(@ApplicationContext appContext: Context,baseConfigContract: BaseConfigContract): DataStore<Preferences> =
         PreferenceDataStoreFactory.create(
             produceFile = {
-                appContext.preferencesDataStoreFile(baseInfo.getPreferenceDataStoreName())
+                appContext.preferencesDataStoreFile(baseConfigContract.getPreferenceDataStoreName())
             }
         )
 
