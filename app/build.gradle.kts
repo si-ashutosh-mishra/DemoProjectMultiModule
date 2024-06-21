@@ -71,6 +71,7 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(project(":feature_fixtures"))
+    implementation(project(":standing"))
     implementation(project(":base"))
 
 
