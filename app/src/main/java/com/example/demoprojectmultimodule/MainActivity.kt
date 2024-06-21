@@ -11,7 +11,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.demoprojectmultimodule.ui.theme.DemoProjectMultiModuleTheme
-import com.example.feature_fixtures.presentation.fixture.typeone.FixtureTypeOne
+import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
+import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,18 +23,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DemoProjectMultiModuleTheme {
-                val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "match_screen") {
-                    composable(route = "match_screen") {
-                        FixtureTypeOne(
-                            matchCount = 5,
-                            cardBackGroundColor = R.color.teal_200,
-                            cardBorderColor = R.color.purple_500
-                        ){
-                            println("name:::->"+it)
-                        }
-                    }
-                }
+                Navigation()
             }
         }
     }
@@ -46,7 +36,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun GreetingPreview() {
     DemoProjectMultiModuleTheme {
