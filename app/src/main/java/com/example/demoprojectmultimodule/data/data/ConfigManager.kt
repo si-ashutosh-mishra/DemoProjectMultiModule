@@ -37,6 +37,10 @@ class ConfigManager @Inject constructor(
             )
     }
 
+    override fun getTimeInterval(): Long {
+        return 10000
+    }
+
     override fun getFixturesUrl(): String {
         return "default.aspx?methodtype=3&client=7756e60237&sport=1&league=0&timezone=0530&language=0&tournament=4848"
     }
