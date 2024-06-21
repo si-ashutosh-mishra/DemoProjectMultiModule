@@ -10,6 +10,7 @@ import com.example.feature_fixtures.data.mapper.MasterHeadEntityListingMapper
 import com.example.feature_fixtures.data.mapper.MasterHeadEntityMapper
 import com.example.feature_fixtures.data.model.mastheadscore.MasterHeadResponse
 import com.example.feature_fixtures.data.service.FixturesService
+import com.example.feature_fixtures.presentation.fixture.FixturesType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -37,7 +38,7 @@ class FixturesRepositoryImpl @Inject constructor(
                 object : ApiResultHandler<MasterHeadResponse, FixtureItems>(result) {
                     override suspend fun handleSuccess(resultObj: MasterHeadResponse): Resource<FixtureItems?> {
                         val fixtureItems = when (type) {
-                            1 -> {
+                            FixturesType.HOME.id -> {
                                 masterHeadEntityMapper.toDomain(resultObj.copy(
                                     teamId = teamId,
                                     itemCount = itemCount
