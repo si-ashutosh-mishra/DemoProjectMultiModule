@@ -51,10 +51,12 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.lifecycle.viewmodel.compose)
 
     //hilt
     implementation(libs.dagger.hilt)
@@ -67,4 +69,7 @@ dependencies {
 
     implementation(libs.retrofit.okHttp)
     implementation(libs.retrofit.okHttp.interceptor)
+
+    //paging
+    implementation(libs.androidx.paging.common.android)
 }
