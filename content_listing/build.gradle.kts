@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+import org.jetbrains.kotlin.kapt3.base.Kapt
 
 plugins {
     alias(libs.plugins.android.library)
@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.standing"
+    namespace = "com.example.content_listing"
     compileSdk = 34
 
     defaultConfig {
@@ -41,33 +41,23 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.2"
     }
+
 }
 
 dependencies {
 
     implementation(project(":base"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.coil)
     implementation(libs.androidx.runtime.livedata)
 
     //hilt
     implementation(libs.dagger.hilt)
-    //implementation(libs.hilt.view.model)
-    implementation(libs.hilt.navigation.compose)
-    //implementation(libs.lifecycle.viewmodel.compose)
     kapt(libs.dagger.hilt.compiler)
     kapt(libs.hilt.compiler)
 
