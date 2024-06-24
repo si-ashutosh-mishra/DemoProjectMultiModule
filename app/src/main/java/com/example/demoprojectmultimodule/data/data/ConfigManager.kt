@@ -1,6 +1,7 @@
 package com.example.demoprojectmultimodule.data.data
 
 import com.example.base.helper.BaseConfigContract
+import com.example.content_listing.data.remote.ContentListingConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.standing.data.remote.StandingConfigContract
 import javax.inject.Inject
@@ -8,7 +9,8 @@ import javax.inject.Singleton
 
 @Singleton
 class ConfigManager @Inject constructor(
-) : BaseConfigContract, FixtureConfigContract, StandingConfigContract {
+) : BaseConfigContract, FixtureConfigContract, StandingConfigContract,
+    ContentListingConfigContract {
 
     override fun getBaseUrl(): String {
         return "https://www.knightclub.in/"
@@ -32,9 +34,8 @@ class ConfigManager @Inject constructor(
 
     override fun getTeamLogo(clubId: String): String {
         return getBaseUrl() + "static-assets/images/teams/{team_id}.png?v=1.12".replace(
-                "{team_id}",
-                clubId
-            )
+            "{team_id}", clubId
+        )
     }
 
     override fun getTimeInterval(): Long {
@@ -47,6 +48,22 @@ class ConfigManager @Inject constructor(
 
     override fun getStandingUrl(): String {
         return getBaseUrl() + "cricket/live/json/standing_5157.json"
+    }
+
+    override fun getContentImageUrl(
+        imagePath: String?, imageName: String?, imageRatio: String?
+    ): String {
+        return ""
+    }
+
+    override fun getContentSharingUrl(entityCategory: String?, titleAlias: String?): String {
+        return ""
+    }
+
+    override fun getReelsSharingUrl(
+        entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?
+    ): String {
+        return ""
     }
 
 }
