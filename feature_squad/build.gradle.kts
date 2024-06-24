@@ -58,6 +58,10 @@ dependencies {
 
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.runtime.android)
     implementation(libs.androidx.activity.compose)
@@ -68,6 +72,9 @@ dependencies {
 
     implementation(libs.hilt.navigation.compose)
     //implementation(libs.lifecycle.viewmodel.compose)
+
+    implementation(libs.coil)
+    implementation(libs.androidx.runtime.livedata)
 
 
     //hilt

@@ -8,11 +8,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
 import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
+import com.example.feature_squad.presentation.squad.typetwo.SquadHorizontalScroll
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.MainScreen.route){
+    NavHost(navController = navController, startDestination = Screen.SquadScreen.route){
         composable(route = Screen.MainScreen.route){
             FixtureScreenTypeOne() {
                 navController.navigate(Screen.DetailScreen.withArgs("3841"))
@@ -31,6 +32,9 @@ fun Navigation() {
             ) {
 
             }
+        }
+        composable(route = Screen.SquadScreen.route){
+            SquadHorizontalScroll()
         }
     }
 }

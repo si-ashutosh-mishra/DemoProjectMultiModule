@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.feature_squad.R
+import com.example.feature_squad.business.domain.model.squad.PlayerItem
 
 @Preview(showBackground = true)
 @Composable
@@ -62,7 +63,7 @@ fun SquadTypeTwo(
         textAlign = TextAlign.Center
     ),
     playerImageModifier: Modifier = Modifier.height(150.dp),
-
+    data: PlayerItem? = null
 ) {
     Box(
         modifier = Modifier

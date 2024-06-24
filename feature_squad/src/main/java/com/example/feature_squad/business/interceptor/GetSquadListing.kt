@@ -12,9 +12,10 @@ import com.example.feature_squad.data.remote.SquadConfigContract
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 @ViewModelScoped
-class GetSquadListing (
+class GetSquadListing @Inject constructor(
     private val squadRepository: SquadRepository,
     private val configManager: SquadConfigContract,
 ) {
@@ -24,7 +25,6 @@ class GetSquadListing (
         currentTeam: Int = 99,
         seriesId: String? = null,
         teamId: String? = null,
-        url: String
     ): Flow<Resource<SquadStaff>> {
 
         return squadRepository.getSquadsListing(
