@@ -16,7 +16,7 @@ class SquadRepositoryImpl(
     private val squadService: SquadService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ): SquadRepository {
-    override fun getSquadsListing(url: String?/*seriesId: String?, teamId: String?*/): Flow<Resource<SquadList>> {
+    override fun getSquadsListing(url: String?): Flow<Resource<SquadList>> {
         return flow {
             emit(Resource.Loading())
             val response = safeApiCall(ioDispatcher) {

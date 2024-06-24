@@ -1,34 +1,39 @@
 package com.example.feature_squad.business.interceptor
 
 import com.example.base.helper.Resource
+import com.example.feature_squad.business.domain.model.squad.PlayerComparator
+import com.example.feature_squad.business.domain.model.squad.PlayerItem
 import com.example.feature_squad.business.domain.model.squad.SquadStaff
+import com.example.feature_squad.business.domain.model.squad.StaffItem
 import com.example.feature_squad.business.repository.SquadRepository
+import com.example.feature_squad.data.model.SquadList
+import com.example.feature_squad.data.model.Staff
+import com.example.feature_squad.data.remote.SquadConfigContract
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 @ViewModelScoped
 class GetSquadListing (
-    private val squadRepository: SquadRepository
+    private val squadRepository: SquadRepository,
+    private val configManager: SquadConfigContract,
 ) {
     operator fun invoke(
         isPlayerNameUpperCase: Boolean = true,
         isSupportStaffRequired: Boolean = false,
-//        configManager: ConfigManager,
         currentTeam: Int = 99,
-//        seriesId: String? = null,
-//        teamId: String? = null,
+        seriesId: String? = null,
+        teamId: String? = null,
         url: String
     ): Flow<Resource<SquadStaff>> {
 
-        return squadRepository.getSquadsListing(url = url/*seriesId = seriesId, teamId = teamId*/).map {
+        return squadRepository.getSquadsListing(
+            url = configManager.getSquadListingUrl(seriesId, teamId)
+        ).map {
             when (it) {
                 is Resource.Error -> Resource.Error(throwable = it.throwable)
                 is Resource.Loading -> Resource.Loading()
                 else -> {
-                    Resource.Success(null)
-                }
-                /*else -> {
 
                     Resource.Success(
                         data = SquadStaff(
@@ -43,12 +48,12 @@ class GetSquadListing (
                             ) else emptyList()
                         )
                     )
-                }*/
+                }
             }
 
         }
     }
-/*
+
     private fun getPlayerItems(
         isPlayerNameUpperCase: Boolean,
         squadList: SquadList?,
@@ -69,9 +74,9 @@ class GetSquadListing (
                 playerImageUrl = configManager.getPlayerImageUrl(it.playerDetails?.id),
                 country = it.playerDetails?.nationality,
                 countryImageUrl = configManager.getCountryNationalityIdImageUrl(it.playerDetails?.nationalityId),
-                overseasPlayer = *//*it.playerDetails?.nationalityId != configManager.getTeamNationalityId(
+                overseasPlayer = it.playerDetails?.nationalityId != configManager.getTeamNationalityId(
                     currentTeam = currentTeam
-                )*//*false,
+                ),
                 bio = null,
                 isCaptain = it.playerDetails?.isCaptain ?: false,
                 isViceCaptain = it.playerDetails?.isViceCaptain ?: false,
@@ -105,5 +110,54 @@ class GetSquadListing (
         } else {
             players.sortedWith(PlayerComparator())
         }
-    }*/
+    }
+
+    private fun getStaffItem(
+        supportStaff: List<Staff>,
+        currentTeam: Int
+    ): List<StaffItem> {
+        val staffs = supportStaff.map {
+            val firstName = it.name?.substringBefore(" ")
+            val lastName = it.name?.substringAfter(" ")
+
+            StaffItem(
+                staffId = it.id,
+                firstName = firstName,
+                lastName = lastName,
+                roleId = it.roleId,
+                roleName = it.roleName,
+                staffImageUrl = configManager.getStaffImageUrl(it.id),
+                countryId = it.nationalityId,
+                countryName = it.nationalityName,
+                countryImageUrl = configManager.getCountryNationalityIdImageUrl(it.nationalityId),
+                overseasPlayer = it.nationalityId != configManager.getTeamNationalityId(currentTeam = currentTeam)
+            )
+        }.toMutableList()
+
+        val staffOrder = configManager.getSquadStaffOrder()
+
+        if (staffOrder.isNotEmpty()) {
+            val staffMap: HashMap<String, StaffItem> = hashMapOf()
+            staffs.forEach {
+                it.staffId ?: return@forEach
+                staffMap[it.staffId] = it
+            }
+
+            val selectedStaffList = mutableListOf<StaffItem>()
+            staffOrder.forEach {
+                staffMap[it]?.let { staff ->
+                    selectedStaffList.add(staff)
+                    staffs.remove(staff)
+                }
+            }
+
+            staffs.forEach {
+                selectedStaffList.add(it)
+            }
+
+            return selectedStaffList
+        } else {
+            return staffs
+        }
+    }
 }
