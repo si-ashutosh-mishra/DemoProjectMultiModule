@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.base.helper.NetworkThrowable
 import com.example.base.helper.Resource
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
@@ -28,11 +29,9 @@ class SquadViewModel @Inject constructor(
     private val squadConfigContract: SquadConfigContract
 ) : ViewModel() {
 
-    private val jobs = HashMap<String, Job>()
-    private var apiCoroutineScope: CoroutineScope? = null
     private var teamId: String? = null
 
-    private val _playerList = MutableLiveData< List<PlayerItem>>()
+    private val _playerList = MutableLiveData<List<PlayerItem>>()
     val player: LiveData<List<PlayerItem>>
         get() = _playerList
 
@@ -42,8 +41,7 @@ class SquadViewModel @Inject constructor(
 
     fun getFixtureList(teamId: String? = null) {
         this.teamId = teamId
-        apiCoroutineScope = createApiCoroutineScope()
-        apiCoroutineScope?.launch {
+        viewModelScope.launch {
             val result = getSquadListing().map {
                 when (it) {
                     is Resource.Loading -> Resource.Loading()
@@ -64,37 +62,8 @@ class SquadViewModel @Inject constructor(
                         }
                 }
             }
-            _playerList.postValue(result.firstOrNull()?.data?: emptyList())
+            _playerList.postValue(result.firstOrNull()?.data ?: emptyList())
         }
-    }
-
-    private fun createApiCoroutineScope() =
-        CoroutineScope(SupervisorJob() + coroutineExceptionHandler)
-
-    private val coroutineExceptionHandler: CoroutineExceptionHandler by lazy {
-        CoroutineExceptionHandler { context, throwable ->
-            handleException(context, throwable)
-        }
-    }
-
-    private fun handleException(context: CoroutineContext, exception: Throwable) {
-        Log.e(this.javaClass.simpleName, exception.message, exception)
-    }
-
-    fun cancelApiCoroutine() {
-        clearJobs()
-        apiCoroutineScope?.cancel()
-        apiCoroutineScope = null
-    }
-
-    override fun onCleared() {
-        cancelApiCoroutine()
-        super.onCleared()
-        println("viewModel cleared:::->")
-    }
-
-    private fun clearJobs() {
-        jobs.clear()
     }
 
 }

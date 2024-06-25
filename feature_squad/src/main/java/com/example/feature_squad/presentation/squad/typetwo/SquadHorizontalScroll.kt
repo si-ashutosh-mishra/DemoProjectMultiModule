@@ -46,6 +46,7 @@ fun SquadHorizontalScroll (
 //    list: List<PlayerItem> = listOf(),
 ) {
     val viewModel: SquadViewModel = hiltViewModel()
+    viewModel.getFixtureList()
     val squadList by viewModel.player.observeAsState(initial = emptyList())
 
     Column  {
