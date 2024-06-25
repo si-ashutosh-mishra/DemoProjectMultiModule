@@ -22,8 +22,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,6 +40,7 @@ import coil.compose.AsyncImage
 import com.example.base.utils.CalendarUtils
 import com.example.feature_fixtures.R
 import com.example.feature_fixtures.business.domain.model.masthead.IPLMatch
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.concurrent.TimeUnit
@@ -86,65 +89,71 @@ fun UpcomingMatchCardTypeTwo(
     val secondsState = remember {
         mutableStateOf("00")
     }
-    try {
-        val sdf = SimpleDateFormat(CalendarUtils.SCORE_CARD_MATCH_DATE_FORMAT)
-        val date: Date = sdf.parse(data?.startDate)
 
-        val timeRemaining = (date.time - System.currentTimeMillis()).toLong()
-        countDownTimer1?.cancel()
-        countDownTimer1 = object : CountDownTimer(
-            timeRemaining,
-            1000
-        ) {
-            override fun onTick(millis: Long) {
-                var millisUntilFinished = millis
+    LaunchedEffect(key1 = Unit) {
+        try {
+            val sdf = SimpleDateFormat(CalendarUtils.SCORE_CARD_MATCH_DATE_FORMAT)
+            val date: Date = sdf.parse(data?.startDate)
+            val timeRemaining = (date.time - System.currentTimeMillis()).toLong()
+            countDownTimer1?.cancel()
+            countDownTimer1 = object : CountDownTimer(
+                timeRemaining,
+                1000
+            ) {
+                override fun onTick(millis: Long) {
+                    var millisUntilFinished = millis
 
-                /*val diffSeconds = millisUntilFinished / 1000 % 60
-                val diffMinutes = millisUntilFinished / (60 * 1000) % 60
-                val diffHours = millisUntilFinished / (60 * 60 * 1000) % 24
-                val days = millisUntilFinished / (1000 * 60 * 60 * 24) % 7*/
-
-
-                /*val diffSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
-                val diffMinutes = TimeUnit.SECONDS.toMinutes(diffSeconds)
-                val diffHours = TimeUnit.MINUTES.toHours(diffMinutes)
-                val days =TimeUnit.HOURS.toDays(diffHours)*/
+                    /*val diffSeconds = millisUntilFinished / 1000 % 60
+                    val diffMinutes = millisUntilFinished / (60 * 1000) % 60
+                    val diffHours = millisUntilFinished / (60 * 60 * 1000) % 24
+                    val days = millisUntilFinished / (1000 * 60 * 60 * 24) % 7*/
 
 
-                val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
-                millisUntilFinished -= TimeUnit.DAYS.toMillis(days)
+                    /*val diffSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
+                    val diffMinutes = TimeUnit.SECONDS.toMinutes(diffSeconds)
+                    val diffHours = TimeUnit.MINUTES.toHours(diffMinutes)
+                    val days =TimeUnit.HOURS.toDays(diffHours)*/
 
-                val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished)
-                millisUntilFinished -= TimeUnit.HOURS.toMillis(hours)
 
-                val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
-                millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes)
+                    val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
+                    millisUntilFinished -= TimeUnit.DAYS.toMillis(days)
 
-                val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
+                    val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished)
+                    millisUntilFinished -= TimeUnit.HOURS.toMillis(hours)
 
-                if (hours > 0 || minutes > 0 || seconds > 0) {
-                    daysState.value = String.format("%02d", days)
-                    hoursState.value = String.format("%02d", hours)
-                    minutesState.value = String.format("%02d", minutes)
-                    secondsState.value = String.format("%02d", seconds)
+                    val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+                    millisUntilFinished -= TimeUnit.MINUTES.toMillis(minutes)
 
-                } else {
+                    val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished)
 
+                    if (hours > 0 || minutes > 0 || seconds > 0) {
+                        daysState.value = String.format("%02d", days)
+                        hoursState.value = String.format("%02d", hours)
+                        minutesState.value = String.format("%02d", minutes)
+                        secondsState.value = String.format("%02d", seconds)
+
+                    } else {
+                        daysState.value = "00"
+                        hoursState.value = "00"
+                        minutesState.value = "00"
+                        secondsState.value = "00"
+                    }
+                }
+
+                override fun onFinish() {
+                    //binding?.txtTimmer?.text = context.getString(R.string.finished)
+                    countDownTimer1?.cancel()
                 }
             }
-
-            override fun onFinish() {
-                //binding?.txtTimmer?.text = context.getString(R.string.finished)
-                countDownTimer1?.cancel()
-            }
+            countDownTimer1?.start()
+        } catch (e: Exception) {
+            daysState.value = "00"
+            hoursState.value = "00"
+            minutesState.value = "00"
+            secondsState.value = "00"
         }
-        countDownTimer1?.start()
-    } catch (e: Exception) {
-        daysState.value = "00"
-        hoursState.value = "00"
-        minutesState.value = "00"
-        secondsState.value = "00"
     }
+
     Card(
         modifier = Modifier
             .background(Color.Transparent)

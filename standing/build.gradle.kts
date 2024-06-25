@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.satndings"
+    namespace = "com.example.standing"
     compileSdk = 34
 
     defaultConfig {

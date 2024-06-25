@@ -1,6 +1,6 @@
 package com.example.base.di
 
-import com.example.base.helper.BaseInfo
+import com.example.base.helper.BaseConfigContract
 import com.example.base.utils.CurlLoggingInterceptor
 import com.example.base.utils.CustomRequestInterceptor
 import com.facebook.stetho.okhttp3.StethoInterceptor
@@ -36,7 +36,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun providesCurlInterceptor(baseInfo: BaseInfo): CurlLoggingInterceptor {
+    fun providesCurlInterceptor(baseInfo: BaseConfigContract): CurlLoggingInterceptor {
         return CurlLoggingInterceptor("cURL",baseInfo)
     }
 
@@ -46,7 +46,7 @@ object NetworkModule {
         httpLoggingInterceptor: HttpLoggingInterceptor,
         curlLoggingInterceptor: CurlLoggingInterceptor,
         customRequestInterceptor: CustomRequestInterceptor,
-        baseInfo: BaseInfo
+        baseInfo: BaseConfigContract
     ): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(30, TimeUnit.SECONDS)
@@ -77,7 +77,7 @@ object NetworkModule {
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory,
-        baseInfo: BaseInfo
+        baseInfo: BaseConfigContract
     ): Retrofit =
         Retrofit.Builder()
             .baseUrl(baseInfo.getBaseUrl())

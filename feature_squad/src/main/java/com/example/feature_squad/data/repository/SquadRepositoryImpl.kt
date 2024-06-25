@@ -11,12 +11,13 @@ import com.example.feature_squad.data.service.SquadService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class SquadRepositoryImpl(
+class SquadRepositoryImpl @Inject constructor(
     private val squadService: SquadService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ): SquadRepository {
-    override fun getSquadsListing(url: String?/*seriesId: String?, teamId: String?*/): Flow<Resource<SquadList>> {
+    override fun getSquadsListing(url: String?): Flow<Resource<SquadList>> {
         return flow {
             emit(Resource.Loading())
             val response = safeApiCall(ioDispatcher) {

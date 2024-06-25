@@ -1,4 +1,4 @@
-package com.example.feature_fixtures.di
+package com.example.feature_squad.di
 
 import com.example.feature_squad.business.repository.SquadRepository
 import com.example.feature_squad.data.repository.SquadRepositoryImpl
@@ -14,6 +14,6 @@ interface RepositoryModule {
 
     @Binds
     @ViewModelScoped
-    fun provideListingRepository(fixturesRepositoryImpl: SquadRepositoryImpl): SquadRepository
+    fun provideListingRepository(squadRepositoryImpl: SquadRepositoryImpl): SquadRepository
 
 }

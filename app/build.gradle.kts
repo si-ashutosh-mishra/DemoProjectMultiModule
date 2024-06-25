@@ -71,6 +71,9 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(project(":feature_fixtures"))
+    implementation(project(":feature_squad"))
+    implementation(project(":standing"))
+    implementation(project(":content_listing"))
     implementation(project(":base"))
 
 
@@ -81,4 +84,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
+    implementation(libs.retrofit.gsonconverter)
 }
