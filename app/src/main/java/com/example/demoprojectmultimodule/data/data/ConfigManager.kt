@@ -82,10 +82,10 @@ class ConfigManager @Inject constructor(
                 ReplaceKeys.DEFAULT_TEAM_ID, teamId ?: getDefaultTeamId()
             )*/
         return "https://stg-kc.sportz.io/cricket/static/json/iplfeeds/{team_id}_all_players_{series_id}.json".replace(
-            ReplaceKeys.DEFAULT_SERIES_ID, seriesId ?: "3840"
+            ReplaceKeys.DEFAULT_SERIES_ID, seriesId ?: "5553"
         )
             .replace(
-                ReplaceKeys.DEFAULT_TEAM_ID, teamId ?: "5553"
+                ReplaceKeys.DEFAULT_TEAM_ID, teamId ?: "3840"
             )
     }
 

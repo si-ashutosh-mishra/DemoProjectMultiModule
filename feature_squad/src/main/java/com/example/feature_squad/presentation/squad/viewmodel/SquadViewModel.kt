@@ -11,16 +11,9 @@ import com.example.feature_squad.business.domain.model.squad.PlayerItem
 import com.example.feature_squad.business.interceptor.GetSquadListing
 import com.example.feature_squad.data.remote.SquadConfigContract
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 
 @HiltViewModel
@@ -42,7 +35,7 @@ class SquadViewModel @Inject constructor(
     fun getFixtureList(teamId: String? = null) {
         this.teamId = teamId
         viewModelScope.launch {
-            val result = getSquadListing().map {
+            val result = getSquadListing().collectLatest {
                 when (it) {
                     is Resource.Loading -> Resource.Loading()
                     is Resource.Error -> Resource.Error(throwable = it.throwable)
@@ -56,13 +49,13 @@ class SquadViewModel @Inject constructor(
                             )
                         } else {
                             Log.d("Squad List", it.data?.squadList.orEmpty().toString())
+                            _playerList.postValue(it.data?.squadList.orEmpty())
                             Resource.Success(
                                 data = it.data?.squadList.orEmpty(),
                             )
                         }
                 }
             }
-            _playerList.postValue(result.firstOrNull()?.data ?: emptyList())
         }
     }
 
