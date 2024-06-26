@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFFFF</color>
+    <color name="blue">#73C5EA</color>
+
+    <color name="black">#000000</color>
+    <color name="black_center">#CC000000</color>
+
+    <color name="kkr_yellow">#F2C029</color>
+    <color name="kkr_purple_dark">#340D53</color>
+    <color name="light_gray">#D3D3D3</color>
+    <color name="textcolor_gray">#252525</color>
+    <color name="purple">#3A225D</color>
+    <color name="share_gray">#2A2A2A</color>
+
+
+</resources>

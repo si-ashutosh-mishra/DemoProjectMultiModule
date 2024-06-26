@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item>
+        <shape
+            android:shape="rectangle"
+            android:tint="@color/kkr_yellow">
+            <size
+                android:width="@dimen/dimen_65dp"
+                android:height="@dimen/dimen_24dp" />
+            <corners android:radius="@dimen/dimen_24dp" />
+        </shape>
+
+    </item>
+    <item
+        android:end="8dp"
+        android:gravity="center_vertical|end">
+        <vector
+            android:width="5dp"
+            android:height="9dp"
+            android:viewportWidth="5"
+            android:viewportHeight="9">
+            <path
+                android:fillColor="@color/kkr_purple_dark"
+                android:pathData="M0.7095,8.9988C0.544,8.9991 0.3837,8.9469 0.2562,8.8513C0.1845,8.7975 0.1252,8.7313 0.0818,8.6567C0.0383,8.5821 0.0115,8.5004 0.003,8.4164C-0.0056,8.3324 0.0043,8.2477 0.0319,8.1671C0.0596,8.0865 0.1045,8.0117 0.1642,7.9469L3.3373,4.5088L0.2775,1.0643C0.2186,0.9987 0.1747,0.9232 0.1482,0.8421C0.1217,0.7611 0.1131,0.6761 0.123,0.5921C0.1329,0.508 0.161,0.4266 0.2057,0.3524C0.2505,0.2782 0.311,0.2128 0.3837,0.1599C0.457,0.1015 0.5428,0.0574 0.6358,0.0305C0.7288,0.0036 0.8269,-0.0057 0.924,0.0034C1.0211,0.0124 1.1151,0.0395 1.2001,0.083C1.2851,0.1265 1.3592,0.1854 1.4178,0.2561L4.8389,4.1047C4.943,4.2195 5,4.3634 5,4.512C5,4.6606 4.943,4.8045 4.8389,4.9193L1.2974,8.7679C1.2264,8.8455 1.1361,8.9069 1.034,8.947C0.9318,8.9872 0.8207,9.0049 0.7095,8.9988Z" />
+        </vector>
+
+    </item>
+
+    <item android:end="@dimen/dimen_19dp">
+        <shape
+            android:shape="rectangle"
+            android:tint="@color/kkr_purple_dark">
+            <size
+                android:width="@dimen/dimen_65dp"
+                android:height="@dimen/dimen_24dp" />
+            <corners android:radius="@dimen/dimen_24dp" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,5 +1,5 @@
 [versions]
-agp = "8.4.1"
+agp = "8.1.2"
 kotlin = "1.8.10"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -22,6 +22,7 @@ lifecycleViewmodelCompose="2.6.2"
 runtimeLivedata = "1.6.7"
 coilVersion="2.4.0"
 pageIndicatorVersion = "0.30.1"
+kotlinPlugin = "1.8.10"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -69,4 +70,5 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt"}
 android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlinPlugin"  }
 
