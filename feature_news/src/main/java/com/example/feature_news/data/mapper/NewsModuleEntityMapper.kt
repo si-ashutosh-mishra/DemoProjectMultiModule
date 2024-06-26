@@ -5,21 +5,19 @@ import com.example.base.helper.EntityMapper
 import com.example.base.utils.CalendarUtils
 import com.example.content_listing.business.domain.model.AssetUtils
 import com.example.content_listing.data.mapper.AssetItemEntityMapper
+import com.example.content_listing.data.model.layoutbuilder.Module
+import com.example.feature_news.business.domain.model.news.NewsListingItem
 import com.example.feature_news.presentation.news.typeone.NewsItemViewType
 import com.knightclub.app.business.domain.model.Component
 import com.knightclub.app.business.domain.model.WidgetView
 import com.knightclub.app.business.domain.model.listing.BannerItem
-import com.knightclub.app.business.domain.model.news.NewsListingItem
-import com.knightclub.app.business.mapper.ListingEntityDataMapper
-import com.knightclub.app.data.model.layoutbuilder.Module
 import javax.inject.Inject
 
 class NewsModuleEntityMapper @Inject constructor(
     private val assetItemEntityMapper: AssetItemEntityMapper,
     private val listingEntityDataMapper: ListingEntityDataMapper,
     //private val configManager: ConfigManager
-) :
-    EntityMapper<List<Module>?, List<NewsListingItem>?> {
+) :EntityMapper<List<Module>?, List<NewsListingItem>?> {
 
     override fun toDomain(entity: List<Module>?): List<NewsListingItem>? {
 
@@ -84,7 +82,7 @@ class NewsModuleEntityMapper @Inject constructor(
                         NewsListingItem.Banner(
                             title = module.displayTitle.orEmpty(),
                             bannerImage = "",//configManager.getBaseUrl() + module.metaInfo.bannerImage,
-                            bannerLink = module.metaInfo.bannerLink ?: "",
+                            bannerLink = module.metaInfo?.bannerLink ?: "",
                         )
                 }
 
@@ -96,7 +94,7 @@ class NewsModuleEntityMapper @Inject constructor(
                             title = module.displayTitle.orEmpty(),
                             items = module.widgetData?.items?.map { 
                                 assetItemEntityMapper.toDomain(
-                                    entity = it//ImageRatioMapper._6_4.value
+                                    entity = it
                                 )
                             }.orEmpty(),
                             entityData = listingEntityDataMapper.toDomain(module)

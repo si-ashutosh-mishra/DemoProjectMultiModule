@@ -53,6 +53,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.runtime.livedata)
 
     //hilt
     implementation(libs.dagger.hilt)

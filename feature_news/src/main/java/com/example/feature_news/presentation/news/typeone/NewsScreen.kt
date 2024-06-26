@@ -1,8 +1,5 @@
 package com.example.feature_news.presentation.news.typeone
 
-import android.util.Log
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +20,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,18 +28,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_news.R
 import com.example.feature_news.presentation.news.NewsViewModel
-import com.knightclub.app.business.domain.model.news.NewsListingItem
+import com.example.feature_news.business.domain.model.news.NewsListingItem
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -61,7 +54,7 @@ fun NewsTypeOne(
     LaunchedEffect(
         key1 = Unit
     ) {
-        viewModel.fetchData()
+        viewModel.fetchData("https://www.knightclub.in/apiv4/gettemplatedata?url=kkr-app-home/app-news&is_app=1")
     }
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {

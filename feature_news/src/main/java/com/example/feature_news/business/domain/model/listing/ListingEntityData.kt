@@ -1,7 +1,7 @@
 package com.example.feature_news.business.domain.model.listing
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ListingEntityData(

@@ -4,7 +4,7 @@ package com.example.content_listing.data.mapper
 import com.example.base.helper.EntityMapper
 import com.example.base.utils.CalendarUtils
 import com.example.content_listing.business.domain.model.AssetItem
-import com.example.content_listing.data.model.AssetItemEntity
+import com.example.content_listing.data.model.layoutbuilder.AssetItemEntity
 import com.example.content_listing.data.remote.ContentListingConfigContract
 import javax.inject.Inject
 import javax.inject.Singleton
