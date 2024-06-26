@@ -29,10 +29,10 @@ class SquadViewModel @Inject constructor(
         get() = _playerList
 
     init {
-        getFixtureList()
+        getSquadList()
     }
 
-    fun getFixtureList(teamId: String? = null) {
+    fun getSquadList(teamId: String? = null) {
         this.teamId = teamId
         viewModelScope.launch {
             val result = getSquadListing().collectLatest {
