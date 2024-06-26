@@ -5,5 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class WidgetData(
     @SerializedName("items")
-    val items: List<AssetItemEntity>?
+    val items: List<AssetItemEntity>?,
+    @SerializedName("data")
+    val data: Data?
 )
