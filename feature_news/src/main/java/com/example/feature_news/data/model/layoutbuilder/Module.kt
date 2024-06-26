@@ -1,5 +1,6 @@
 package com.knightclub.app.data.model.layoutbuilder
 
+import com.example.feature_news.data.model.layoutbuilder.WidgetData
 import com.google.gson.annotations.SerializedName
 
 data class Module(

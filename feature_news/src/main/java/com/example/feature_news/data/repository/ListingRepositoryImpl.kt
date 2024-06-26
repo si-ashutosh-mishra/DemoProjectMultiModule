@@ -9,7 +9,7 @@ import com.example.feature_news.data.model.BaseResponse
 import com.example.feature_news.data.model.layoutbuilder.Content
 import com.example.feature_news.data.service.NewsService
 import com.knightclub.app.business.domain.model.news.NewsListingItem
-import com.knightclub.app.business.mapper.NewsModuleEntityMapper
+import com.example.feature_news.data.mapper.NewsModuleEntityMapper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

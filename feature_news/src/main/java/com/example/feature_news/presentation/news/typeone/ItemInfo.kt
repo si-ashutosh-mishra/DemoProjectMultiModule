@@ -19,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -28,6 +29,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.feature_news.R
+import com.example.feature_news.presentation.theme.share_gray
+import com.example.feature_news.presentation.theme.textcolor_gray
 import com.knightclub.app.business.domain.model.listing.BannerItem
 
 @Composable
@@ -36,12 +39,12 @@ fun ItemDateTimeLikeShare(
     likes: String,
     likesFontSize: TextUnit = 10.sp,
     publishedDateFontSize: TextUnit = 10.sp,
-    @ColorRes publishedDateColor : Int = R.color.textcolor_gray,
+    @ColorRes publishedDateColor : Color = textcolor_gray,
     publishedDateFontFamily: FontFamily = FontFamily(Font(R.font.rubik_regular)),
     likesFontFamily: FontFamily = FontFamily(Font(R.font.rubik_regular)),
-    @ColorRes likesTextColor : Int = R.color.textcolor_gray,
-    @ColorRes pipeColor : Int = R.color.textcolor_gray,
-    @ColorRes shareIcon : Int = R.color.share_gray,
+    @ColorRes likesTextColor : Color = textcolor_gray,
+    @ColorRes pipeColor : Color = textcolor_gray,
+    @ColorRes shareIcon : Color = share_gray,
     @DrawableRes unselectedLike: Int = R.drawable.ic_like_type1_gray,
     ){
 
@@ -53,7 +56,7 @@ fun ItemDateTimeLikeShare(
             text = publishedDate,
             overflow = TextOverflow.Ellipsis,
             fontSize = publishedDateFontSize,
-            color = colorResource(id = publishedDateColor),
+            color = publishedDateColor,
             fontFamily = publishedDateFontFamily,
         )
 
@@ -75,7 +78,7 @@ fun ItemDateTimeLikeShare(
                 text = likes,
                 overflow = TextOverflow.Ellipsis,
                 fontSize = likesFontSize,
-                color = colorResource(id = likesTextColor),
+                color = likesTextColor,
                 fontFamily = likesFontFamily,
             )
             Spacer(modifier = Modifier.width(4.dp))
@@ -83,14 +86,14 @@ fun ItemDateTimeLikeShare(
                 text = "|",
                 overflow = TextOverflow.Ellipsis,
                 fontSize = 10.sp,
-                color = colorResource(id = pipeColor),
+                color = pipeColor,
                 fontFamily = likesFontFamily,
             )
             Spacer(modifier = Modifier.width(4.dp))
             Icon(
                 imageVector = Icons.Outlined.Share,
                 contentDescription = null,
-                tint = colorResource(id = shareIcon),
+                tint = shareIcon,
                 modifier = Modifier
                     .size(15.dp)
                     .clickable {

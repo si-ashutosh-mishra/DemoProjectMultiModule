@@ -49,10 +49,7 @@ import com.knightclub.app.business.domain.model.news.NewsListingItem
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NewsTypeOne(
-    generalScoreStyle: TextStyle = TextStyle(
-        color = Color.Black,
-        textAlign = TextAlign.Center
-    )
+    onViewMoreClick: () -> Unit,
 ) {
 
     val mContext = LocalContext.current
@@ -60,35 +57,12 @@ fun NewsTypeOne(
     val viewModel: NewsViewModel = hiltViewModel()
 
     val list by viewModel.items.observeAsState(initial = emptyList())
-    val fm = FontFamily(Font(R.font.rubik_medium))
-    val items = listOf("Item 1", "Item 2", "Item 3", "Item 4", "Last Item")
 
     LaunchedEffect(
         key1 = Unit
     ) {
         viewModel.fetchData()
     }
-
-    /*Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp)
-    ) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(text = "Latest Articles & Press".uppercase(), fontSize = 18.sp, fontFamily = fm )//rubik font
-            Text(text = "View All".uppercase(), fontSize = 18.sp, )//rubik font
-        }
-
-        LazyRow(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            itemsIndexed(list){item, index ->
-
-                ItemCategoryArticle()
-                Spacer(modifier = Modifier.size(10.dp))
-            }
-        }
-    }*/
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         itemsIndexed(
@@ -119,9 +93,7 @@ fun NewsTypeOne(
                                 key = null,
                                 pageContent = {
                                     CarouselTypeOneScreen(
-                                        item = items.items[it],
-                                        pageCount = count,
-                                        pagerState = pagerState
+                                        item = items.items[it]
                                         )
                                 })
                             Row(
@@ -141,7 +113,6 @@ fun NewsTypeOne(
                                                 .clip(shape = RoundedCornerShape(10.dp))
                                                 .background(color)
                                                 .width(22.dp).height(8.dp)
-                                                //.size(10.dp)//.width(20.dp)
                                         )
                                     } else {
                                         Box(
@@ -152,7 +123,6 @@ fun NewsTypeOne(
                                                 .size(8.dp)
                                         )
                                     }
-
                                 }
                             }
                         }
@@ -170,7 +140,8 @@ fun NewsTypeOne(
                             title = item.title,
                             titleFontSize = 18.sp,
                             titleFontStyle = FontFamily(Font(R.font.rubik_medium)),
-                            assetList = item.items
+                            assetList = item.items,
+                            clickViewAll = onViewMoreClick
                         )
                         Spacer(
                             modifier = Modifier
@@ -186,7 +157,8 @@ fun NewsTypeOne(
                             title = item.title,
                             titleFontSize = 18.sp,
                             titleFontStyle = FontFamily(Font(R.font.rubik_medium)),
-                            assetList = item.items
+                            assetList = item.items,
+                            clickViewAll = onViewMoreClick
                         )
                         Spacer(
                             modifier = Modifier
@@ -198,72 +170,4 @@ fun NewsTypeOne(
             }
         }
     }
-
-
-    /*LazyColumn(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        items(fixtureList) {
-            when(it?.eventState){
-                EventState.RESULT ->{
-                    RecentMatchCardTypeOne(
-                        data = it,
-                        isSponsorLogoRequired = isSponsorLogoRequired,
-                        recentLogo = recentLogo,
-                        sponsorLogo = sponsorLogo,
-                        matchNumberTextStyle = matchNumberTextStyle,
-                        teamNameTextStyle = teamNameTextStyle,
-                        matchStatusTextStyle = matchStatusTextStyle,
-                        timeStampTextStyle = timeStampTextStyle,
-                        highLightedScoreStyle = highLightedScoreStyle,
-                        highLightedOverStyle = highLightedOverStyle,
-                        generalScoreStyle = generalScoreStyle,
-                        generalOverStyle = generalOverStyle,
-                        matchCardBackGroundImage = matchCardBackGroundImage,
-                        cardBackGroundColor = cardBackGroundColor,
-                        cardBorderColor = cardBorderColor
-                    )
-                }
-                EventState.LIVE ->{
-                    LiveMatchCardTypeOne(
-                        data = it,
-                        isSponsorLogoRequired=isSponsorLogoRequired,
-                        liveLogo = liveLogo,
-                        sponsorLogo = sponsorLogo,
-                        matchNumberTextStyle = matchNumberTextStyle,
-                        teamNameTextStyle = teamNameTextStyle,
-                        matchStatusTextStyle = matchStatusTextStyle,
-                        timeStampTextStyle = timeStampTextStyle,
-                        highLightedScoreStyle = highLightedScoreStyle,
-                        highLightedOverStyle = highLightedOverStyle,
-                        generalScoreStyle = generalScoreStyle,
-                        generalOverStyle = generalOverStyle,
-                        matchCardBackGroundImage = matchCardBackGroundImage,
-                        cardBackGroundColor = cardBackGroundColor,
-                        cardBorderColor = cardBorderColor
-                    )
-                }
-                EventState.UPCOMING ->{
-                    UpcomingMatchCardTypeOne(
-                        data = it,
-                        isSponsorLogoRequired=isSponsorLogoRequired,
-                        upcomingLogo = upcomingLogo,
-                        sponsorLogo = sponsorLogo,
-                        matchNumberTextStyle = matchNumberTextStyle,
-                        teamNameTextStyle = teamNameTextStyle,
-                        matchStatusTextStyle = matchStatusTextStyle,
-                        timeStampTextStyle = timeStampTextStyle,
-                        matchCardBackGroundImage = matchCardBackGroundImage,
-                        cardBackGroundColor = cardBackGroundColor,
-                        cardBorderColor = cardBorderColor
-                    ){
-                        onClickItem(it)
-                    }
-                }
-                else ->{}
-            }
-        }
-    }*/
-
-
 }

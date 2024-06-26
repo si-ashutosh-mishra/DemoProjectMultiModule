@@ -1,14 +1,16 @@
-package com.knightclub.app.business.mapper
+package com.example.feature_news.data.mapper
 
 
 import com.example.base.helper.EntityMapper
 import com.example.base.utils.CalendarUtils
+import com.example.content_listing.business.domain.model.AssetUtils
+import com.example.content_listing.data.mapper.AssetItemEntityMapper
 import com.example.feature_news.presentation.news.typeone.NewsItemViewType
 import com.knightclub.app.business.domain.model.Component
 import com.knightclub.app.business.domain.model.WidgetView
-import com.knightclub.app.business.domain.model.listing.AssetUtils
 import com.knightclub.app.business.domain.model.listing.BannerItem
 import com.knightclub.app.business.domain.model.news.NewsListingItem
+import com.knightclub.app.business.mapper.ListingEntityDataMapper
 import com.knightclub.app.data.model.layoutbuilder.Module
 import javax.inject.Inject
 
@@ -66,7 +68,7 @@ class NewsModuleEntityMapper @Inject constructor(
                                     reactCount = null,
                                     assetType = AssetUtils.getAssetType(
                                         assetTypeId = assetMap.assetType,
-                                        secondaryEntityRoleMapId = assetMap.entitydata?.find { entity -> entity.priority == 2 }?.entityRoleMapId
+                                        //secondaryEntityRoleMapId = assetMap.entitydata?.find { entity -> entity.priority == 2 }?.entityRoleMapId
                                     ),
                                     sharingUrl = sharingUrl,
                                     tag = categoryTag
@@ -92,10 +94,9 @@ class NewsModuleEntityMapper @Inject constructor(
                     else
                         NewsListingItem.Latest(
                             title = module.displayTitle.orEmpty(),
-                            items = module.widgetData?.items?.map {
+                            items = module.widgetData?.items?.map { 
                                 assetItemEntityMapper.toDomain(
-                                    entity = it,
-                                    imageRatio = ""//ImageRatioMapper._6_4.value
+                                    entity = it//ImageRatioMapper._6_4.value
                                 )
                             }.orEmpty(),
                             entityData = listingEntityDataMapper.toDomain(module)

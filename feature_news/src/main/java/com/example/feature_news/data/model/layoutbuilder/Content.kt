@@ -1,7 +1,6 @@
 package com.example.feature_news.data.model.layoutbuilder
 
 import com.google.gson.annotations.SerializedName
-import com.knightclub.app.data.model.layoutbuilder.AssetItemEntity
 import com.knightclub.app.data.model.layoutbuilder.Module
 
 data class Content(
