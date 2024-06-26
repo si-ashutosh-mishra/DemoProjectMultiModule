@@ -34,7 +34,7 @@ import com.example.feature_fixtures.presentation.fixture.PageIndicator
 
 @ExperimentalFoundationApi
 @Composable
-fun FixturesHorizontalScroll(
+fun FixturesHorizontalScrollTypeOne(
     list: List<IPLMatch?>, isSponsorLogoRequired: Boolean = false,
     @DrawableRes sponsorLogo: Int? = null,
     @DrawableRes liveLogo: Int = R.drawable.ic_live,
