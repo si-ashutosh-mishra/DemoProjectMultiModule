@@ -54,7 +54,7 @@ fun PhotoListing(
 
             LazyRow (modifier = Modifier.fillMaxSize()){
                 items(data.items){
-                    ListingOfPhotos(it)
+                    ListingOfPhotos(it,data.items.size)
                 }
             }
         }

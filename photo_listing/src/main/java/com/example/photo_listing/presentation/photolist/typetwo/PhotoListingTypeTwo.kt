@@ -75,7 +75,9 @@ fun PhotoListingTypeTwo(
                             }
                         }
                         PhotoItemViewType.BEHINDSCENES->{
-
+                            (it as? PhotoListingItem.PhotosArticle)?.let {
+                                PhotoListing(it)
+                            }
                         }
                         PhotoItemViewType.BANNER->{
 
