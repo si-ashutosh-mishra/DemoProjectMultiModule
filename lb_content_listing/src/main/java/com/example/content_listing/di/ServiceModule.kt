@@ -2,6 +2,7 @@ package com.example.content_listing.di
 
 
 import com.example.content_listing.data.service.ContentListingService
+import com.example.content_listing.data.service.LBService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,5 +18,12 @@ object ServiceModule {
     @ViewModelScoped
     fun provideContentListingServiceApi(retrofit: Retrofit): ContentListingService {
         return retrofit.create(ContentListingService::class.java)
+    }
+
+
+    @Provides
+    @ViewModelScoped
+    fun provideLBServiceApi(retrofit: Retrofit): LBService {
+        return retrofit.create(LBService::class.java)
     }
 }
