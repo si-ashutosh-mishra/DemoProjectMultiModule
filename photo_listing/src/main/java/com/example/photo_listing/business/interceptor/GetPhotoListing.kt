@@ -24,7 +24,7 @@ class GetPhotoListing @Inject constructor(
 
     operator fun invoke(
         url: String
-    ): Flow<Resource<List<PhotoListingItem>>> {
+    ): Flow<Resource<List<PhotoListingItem>?>> {
         return photosRepository.getPhotosListing(url)
     }
 }

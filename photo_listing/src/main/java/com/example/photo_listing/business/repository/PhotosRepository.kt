@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface PhotosRepository {
 
-    fun getPhotosListing(url : String):Flow<Resource<List<PhotoListingItem>>>
+    fun getPhotosListing(url : String):Flow<Resource<List<PhotoListingItem>?>>
 
 }

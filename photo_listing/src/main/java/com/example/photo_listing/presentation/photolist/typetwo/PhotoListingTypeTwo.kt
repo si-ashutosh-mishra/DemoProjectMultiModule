@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.photo_listing.business.model.PhotoListingItem
 import com.example.photo_listing.presentation.LifeCycleObserver
 import com.example.photo_listing.presentation.PhotoItemViewType
 import com.example.photo_listing.presentation.viewmodel.PhotoListingViewModel
@@ -40,7 +41,7 @@ fun PhotoListingTypeTwo(
         viewModel.cancelApiCoroutine()
     }
     Log.d("Photo_Listing", "PhotoListingTypeTwo: "+photoListing)
-    Column {
+    Column (modifier = Modifier.fillMaxSize()){
         TopAppBar(title = {
             Text(text = "Photos")
         }, navigationIcon = {
@@ -63,10 +64,15 @@ fun PhotoListingTypeTwo(
 
                         }
                         PhotoItemViewType.TRAINING->{
-                            PhotoListing()
+                            (it as? PhotoListingItem.PhotosArticle)?.let {
+                                PhotoListing(it)
+                            }
+
                         }
                         PhotoItemViewType.MATCHPHOTOS->{
-                            PhotoListing()
+                            (it as? PhotoListingItem.PhotosArticle)?.let {
+                                PhotoListing(it)
+                            }
                         }
                         PhotoItemViewType.BEHINDSCENES->{
 

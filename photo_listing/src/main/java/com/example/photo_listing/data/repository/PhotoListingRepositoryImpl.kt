@@ -20,17 +20,13 @@ class PhotoListingRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val photoModuleEntityMapper: PhotoModuleEntityMapper
 ) : PhotosRepository{
-    override fun getPhotosListing(url: String): Flow<Resource<List<PhotoListingItem>>> {
+    override fun getPhotosListing(url: String): Flow<Resource<List<PhotoListingItem>?>> {
         return flow {
             emit(Resource.Loading())
             val response = safeApiCall(ioDispatcher){
                 listingService.getPhotosPageListing(url)
             }
-           /* val module = resultObj.content?.module?.filter { it.showInApp == 1 }?.sortedBy { it.metaInfo?.widgetOrder ?: 0 }
-            return Resource.Success(data = photoModuleEntityMapper.toDomain(module)
-                ?.filter { it !is PhotoListingItem.Unknown })*/
-
-            object : ApiResultHandler<BaseResponse<Content>,List<PhotoListingItem>>(
+            val resource = object : ApiResultHandler<BaseResponse<Content>,List<PhotoListingItem>?>(
                 response = response
             ) {
                 override suspend fun handleSuccess(resultObj: BaseResponse<Content>): Resource<List<PhotoListingItem>?> {
@@ -39,6 +35,7 @@ class PhotoListingRepositoryImpl @Inject constructor(
                         ?.filter { it !is PhotoListingItem.Unknown })
                 }
             }.getResult()
+            emit(resource)
         }
     }
 }
