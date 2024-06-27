@@ -1,7 +1,7 @@
 package com.example.demoprojectmultimodule.data.data
 
 import com.example.base.helper.BaseConfigContract
-import com.example.content_listing.data.remote.ContentListingConfigContract
+import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.standing.data.remote.StandingConfigContract
 import javax.inject.Inject
