@@ -1,5 +1,6 @@
 package com.example.feature_news.presentation.news.typeone
 
+import android.util.Log
 import androidx.annotation.ColorRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -53,6 +54,7 @@ fun ItemCategoryArticle(
     @ColorRes newsTitleColor : Color = textcolor_gray,
     clickViewAll: () -> Unit
 ) {
+    Log.d("MTIMAGEURL", "${assetList.get(0).imageUrl}")
     val mContext = LocalContext.current
 
     Row(
@@ -99,7 +101,7 @@ fun ItemCategoryArticle(
                     Text(
                         color = tagTextColor,
                         fontSize = tagFontSize,
-                        text = item.assetTitle ?: "tag",
+                        text = item.primaryEntityDisplayName ?: "",
                         fontFamily = tagFontStyle,
                         modifier = Modifier
                             .background(

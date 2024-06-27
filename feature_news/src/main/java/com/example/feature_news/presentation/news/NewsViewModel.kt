@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsViewModel @Inject constructor(
-    //private val listingRepository: ListingRepository,
     private val getNewsLB: GetNewsLB,
 ): ViewModel(){
 

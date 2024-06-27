@@ -53,7 +53,17 @@ class ConfigManager @Inject constructor(
     override fun getContentImageUrl(
         imagePath: String?, imageName: String?, imageRatio: String?
     ): String {
-        return ""
+        return getBaseUrl() + getBaseContentImageUrl()
+            .replace(
+                /*ReplaceKeys.IMAGE_PATH*/"{image_path}",
+                imageRatio?.let { imagePath?.replace("/0/", "/$imageRatio/") }
+                    ?: imagePath.orEmpty())
+            .replace(/*ReplaceKeys.IMAGE_NAME*/"{image_name}", imageName.orEmpty())
+            .replace(
+                /*ReplaceKeys.CONTENT_IMAGE_VERSION*/"{content_image_version}", /*firebaseRemoteConfig.getString(
+                    KEY_CONTENT_IMAGE_VERSION
+                )*/"1.30"
+            )
     }
 
     override fun getContentSharingUrl(entityCategory: String?, titleAlias: String?): String {
@@ -64,6 +74,11 @@ class ConfigManager @Inject constructor(
         entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?
     ): String {
         return ""
+    }
+
+    private fun getBaseContentImageUrl(): String {
+        return "static-assets/waf-images/{image_path}{image_name}?v={content_image_version}"
+        //return firebaseRemoteConfig.getString(KEY_BASE_CONTENT_IMAGE_PATH)
     }
 
 }

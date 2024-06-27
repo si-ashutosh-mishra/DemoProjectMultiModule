@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.feature_news.R
+import com.example.feature_news.presentation.theme.black
 import com.example.feature_news.presentation.theme.light_gray
 import com.example.feature_news.presentation.theme.purple
 import com.example.feature_news.presentation.theme.white
@@ -38,7 +39,7 @@ fun CarouselTypeOneScreen(
     item: BannerItem,
     tagFontStyle: FontFamily = FontFamily(Font(R.font.rubik_medium)),
     tagFontSize: TextUnit = 10.sp,
-    @ColorRes tagColor: Color =  light_gray,
+    @ColorRes tagColor: Color =  black,
     @ColorRes tagTextColor: Color =  yellow,
     carouselFontFamily: FontFamily = FontFamily(Font(R.font.urbanist_bold)),
     carouselFontSize: TextUnit = 20.sp

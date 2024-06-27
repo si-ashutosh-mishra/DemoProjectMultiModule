@@ -6,8 +6,10 @@ import com.example.base.utils.CalendarUtils
 import com.example.content_listing.business.domain.model.AssetUtils
 import com.example.content_listing.data.mapper.AssetItemEntityMapper
 import com.example.content_listing.data.model.layoutbuilder.Module
+import com.example.content_listing.data.remote.ContentListingConfigContract
 import com.example.feature_news.business.domain.model.news.NewsListingItem
 import com.example.feature_news.presentation.news.typeone.NewsItemViewType
+import com.example.feature_news.utils.ImageRatioMapper
 import com.knightclub.app.business.domain.model.Component
 import com.knightclub.app.business.domain.model.WidgetView
 import com.knightclub.app.business.domain.model.listing.BannerItem
@@ -16,7 +18,7 @@ import javax.inject.Inject
 class NewsModuleEntityMapper @Inject constructor(
     private val assetItemEntityMapper: AssetItemEntityMapper,
     private val listingEntityDataMapper: ListingEntityDataMapper,
-    //private val configManager: ConfigManager
+    private val contentListingConfigContract: ContentListingConfigContract
 ) :EntityMapper<List<Module>?, List<NewsListingItem>?> {
 
     override fun toDomain(entity: List<Module>?): List<NewsListingItem>? {
@@ -46,13 +48,13 @@ class NewsModuleEntityMapper @Inject constructor(
                                 BannerItem(
                                     assetId = assetMap.assetId,
                                     title = assetMap.assetMeta?.title,
-                                    bannerImageUrl = "https://www.knightclub.in/static-assets/waf-images/"
-                                            +"${assetMap.assetMeta?.imagePath}"+"${assetMap.assetMeta?.imageName}"+"?v=1.30"
-                                    /*configManager.getContentImageUrl(
+                                    bannerImageUrl = /*"https://www.knightclub.in/static-assets/waf-images/"
+                                            +"${assetMap.assetMeta?.imagePath}"+"${assetMap.assetMeta?.imageName}"+"?v=1.30"*/
+                                    contentListingConfigContract.getContentImageUrl(
                                         imagePath = assetMap.assetMeta?.imagePath ?: "",
                                         imageName = assetMap.assetMeta?.imageName ?: "",
                                         imageRatio = module.metaInfo?.layoutData?.firstOrNull()?.imgRatio
-                                    )*/,
+                                    ),
                                     titleAlias = assetMap.assetMeta?.titleAlias,
                                     beautifiedDuration = CalendarUtils.getPublishedDuration(
                                         dateString = assetMap.publishDate,
@@ -94,7 +96,8 @@ class NewsModuleEntityMapper @Inject constructor(
                             title = module.displayTitle.orEmpty(),
                             items = module.widgetData?.items?.map { 
                                 assetItemEntityMapper.toDomain(
-                                    entity = it
+                                    entity = it,
+                                    imageRatio = ImageRatioMapper._6_4.value
                                 )
                             }.orEmpty(),
                             entityData = listingEntityDataMapper.toDomain(module)
@@ -110,7 +113,7 @@ class NewsModuleEntityMapper @Inject constructor(
                             items = module.widgetData?.items?.map {
                                 assetItemEntityMapper.toDomain(
                                     entity = it,
-                                    imageRatio = ""//ImageRatioMapper._6_4.value
+                                    imageRatio = ImageRatioMapper._6_4.value
                                 )
                             }.orEmpty(),
                             entityData = listingEntityDataMapper.toDomain(module)
