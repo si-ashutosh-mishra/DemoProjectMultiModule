@@ -3,14 +3,16 @@ package com.example.demoprojectmultimodule.data.data
 import com.example.base.helper.BaseConfigContract
 import com.example.content_listing.data.remote.ContentListingConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
+import com.example.feature_fixtures.data.remote.PhotoListingConfig
 import com.example.standing.data.remote.StandingConfigContract
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ConfigManager @Inject constructor(
 ) : BaseConfigContract, FixtureConfigContract, StandingConfigContract,
-    ContentListingConfigContract {
+    ContentListingConfigContract,PhotoListingConfig {
 
     override fun getBaseUrl(): String {
         return "https://www.knightclub.in/"
@@ -64,6 +66,36 @@ class ConfigManager @Inject constructor(
         entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?
     ): String {
         return ""
+    }
+
+    override fun getPhotosPageListingUrl(): String {
+       /* val appTypePath = ""//getAppTypePath()
+        val photosListingFinder = when (getAppType()) {
+            AppType.LAKR.id -> appTypePath?.lAKR?.photosPageListingFinder
+            AppType.TKR.id -> appTypePath?.tKR?.photosPageListingFinder
+            AppType.ADKR.id -> appTypePath?.aDKR?.photosPageListingFinder
+            else -> "app-photos"
+        }
+        return getBaseApiUrl() + firebaseRemoteConfig.getString(KEY_PHOTOS_BUILDER_URL)
+            .replace(ReplaceKeys.PHOTOS_PAGE_LISTING_FINDER, photosListingFinder ?: "")*/
+        return ""
+    }
+
+    override fun getReactionCountUrl(): String {
+        return getBaseUrl() + ""
+    }
+
+    override fun getAppType(): Int {
+       /* var result: Int
+        runBlocking {
+            result = sessionStoreManager.getTypeOfApp().firstOrNull() ?: AppType.getDefaultAppType()
+        }
+        return result*/
+        return 0
+    }
+
+    override fun getUserReactionUrl(): String {
+        return getBaseUrl() + ""//firebaseRemoteConfig.getString(KEY_FLRP_GET_USER_REACTION)
     }
 
 }

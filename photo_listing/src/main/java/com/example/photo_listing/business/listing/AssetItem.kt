@@ -1,6 +1,6 @@
 package com.example.photo_listing.business.listing
 
-import com.example.photo_listing.business.domain.model.BannerRedirectionModel
+import com.example.photo_listing.business.domain.model.photolisting.BannerRedirectionModel
 import java.io.Serializable
 
 data class AssetItem(
@@ -38,7 +38,7 @@ data class AssetItem(
     val contentSourceId: String? = null,
     val likeReacts:String? = null,
     val tag:String? = "",
-    val redirectionPayload:BannerRedirectionModel? = null,
+    val redirectionPayload: BannerRedirectionModel? = null,
 ) : Serializable {
     val assetType: AssetUtils.AssetType =
         AssetUtils.getAssetType(assetTypeId, secondaryEntityRoleMapId)

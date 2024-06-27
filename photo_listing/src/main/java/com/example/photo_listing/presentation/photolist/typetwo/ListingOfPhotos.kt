@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
@@ -38,35 +39,34 @@ import com.example.photo_listing.business.listing.AssetItem
 fun ListingOfPhotos(assetItem: AssetItem,itemCounts : Int) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-    val itemWidth = (screenWidth / itemCounts) + 50.dp
+    val itemWidth = (screenWidth / itemCounts) + 70.dp
 
-    Card (elevation = 5.dp,
-        modifier = Modifier
-            .width(itemWidth)
-            .aspectRatio(0.9f)
-            .padding(0.dp, 10.dp, 10.dp, 0.dp)){
+    Card (modifier = Modifier
+        .width(itemWidth)
+        .aspectRatio(0.8f)
+        .padding(0.dp, 10.dp, 10.dp, 0.dp)){
+
         Column(verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier.fillMaxSize()) {
+            modifier = Modifier.fillMaxSize().wrapContentHeight()) {
 
             Box(modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(1.5f),
+                .aspectRatio(1.2f),
                 contentAlignment = Alignment.BottomStart){
                 Image(
                     painter = rememberAsyncImagePainter(model = assetItem.imageUrl),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .aspectRatio(1.5f)
-                        .padding(all = 5.dp)
+                        .aspectRatio(1.2f)
                     )
 
-                Text(text = "16 Photos",
+                Text(text = "${assetItem.totalAssets} Photos",
                     color = Color.White,
                     modifier = Modifier
                         .wrapContentWidth()
                         .padding(5.dp)
-                        .background(Color.Black)
+                        .background(Color(0x80000000))
                 , textAlign = TextAlign.Left)
             }
 
@@ -77,27 +77,31 @@ fun ListingOfPhotos(assetItem: AssetItem,itemCounts : Int) {
                 textAlign = TextAlign.Left,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(5.dp)
+                modifier = Modifier.padding(5.dp,0.dp,1.dp,5.dp)
             )
 
             Row(verticalAlignment = Alignment.Bottom,
                 modifier = Modifier.fillMaxHeight()) {
+
                 Icon(painter = painterResource(id = R.drawable.ic_clock), contentDescription = null,
-                    modifier = Modifier.padding(5.dp,0.dp,1.dp,5.dp))
+                    modifier = Modifier.padding(5.dp,0.dp,1.dp,7.dp))
 
-                Text(text = "12 Min")
+                Text(text = assetItem.beautifiedDuration?: "",modifier = Modifier.padding(0.dp,0.dp,1.dp,5.dp) )
 
-                Text(text = "|")
+                Text(text = "|",modifier = Modifier.padding(2.dp,0.dp,2.dp,5.dp) )
 
-                Icon(painter = painterResource(id = R.drawable.ic_like), contentDescription =null )
+                Icon(painter = painterResource(id = R.drawable.ic_like),
+                    contentDescription =null, modifier = Modifier.padding(0.dp,0.dp,1.dp,7.dp) )
 
-                Text(text = "236")
+                Text(text = assetItem.totalReacts ?:"",modifier = Modifier.padding(0.dp,0.dp,1.dp,5.dp) )
 
                 Icon(painter = painterResource(id = R.drawable.ic_share),
                     contentDescription = null,
-                    modifier = Modifier.padding(2.dp,0.dp,5.dp,5.dp)
-                        .fillMaxWidth())
+                    modifier = Modifier
+                        .padding(5.dp, 0.dp, 1.dp, 7.dp)
+                        .fillMaxWidth(1f))
             }
         }
     }
 }
+

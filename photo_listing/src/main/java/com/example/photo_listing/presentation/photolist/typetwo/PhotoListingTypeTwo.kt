@@ -61,7 +61,9 @@ fun PhotoListingTypeTwo(
                 items(photoListing){
                     when(it.type){
                         PhotoItemViewType.CAROUSEL->{
-
+                            (it as? PhotoListingItem.Carousel)?.let { 
+                                PhotosCorousal(data = it)
+                            }
                         }
                         PhotoItemViewType.TRAINING->{
                             (it as? PhotoListingItem.PhotosArticle)?.let {

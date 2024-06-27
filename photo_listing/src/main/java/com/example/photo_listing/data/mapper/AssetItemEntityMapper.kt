@@ -2,10 +2,8 @@ package com.example.photo_listing.data.mapper
 
 import com.example.base.helper.EntityMapper
 import com.example.base.utils.CalendarUtils
-import com.example.photo_listing.business.domain.model.AssetItemEntity
+import com.example.photo_listing.business.domain.model.photolisting.AssetItemEntity
 import com.example.photo_listing.business.listing.AssetItem
-import com.example.photo_listing.business.listing.AssetUtils
-import com.google.gson.Gson
 import javax.inject.Inject
 import javax.inject.Singleton
 
