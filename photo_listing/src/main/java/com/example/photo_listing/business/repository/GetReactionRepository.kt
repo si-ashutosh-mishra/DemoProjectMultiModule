@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface GetReactionRepository {
 
-    fun getReactionCount(assetList: List<String>): Flow<Resource<ReactionCount>>
+   /* fun getReactionCount(assetList: List<String>): Flow<Resource<ReactionCount>>
 
-    fun getUserReactionCount(assetList: List<String>): Flow<Resource<UserReaction>>
+    fun getUserReactionCount(assetList: List<String>): Flow<Resource<UserReaction>>*/
 
 }

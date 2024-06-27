@@ -23,7 +23,6 @@ class PhotoListingRepositoryImpl @Inject constructor(
     private val listingService: ListingService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val photoModuleEntityMapper: PhotoModuleEntityMapper,
-    private val getReactionRepositoryImpl: GetReactionRepositoryImpl,
     private val photoListingConfig: PhotoListingConfig
 ) : PhotosRepository{
     override fun getPhotosListing(url: String): Flow<Resource<List<PhotoListingItem>?>> {
@@ -78,7 +77,7 @@ class PhotoListingRepositoryImpl @Inject constructor(
                 }
             }
 
-            getReactionRepositoryImpl.getReactionCount(listOfIds)
+          /*  getReactionRepositoryImpl.getReactionCount(listOfIds)
                 .collectLatest { reactionCount ->
 
                     when (reactionCount) {
@@ -124,9 +123,9 @@ class PhotoListingRepositoryImpl @Inject constructor(
 
                         else -> Unit
                     }
-                }
+                }*/
 
-            getReactionRepositoryImpl.getUserReactionCount(listOfIds)
+           /* getReactionRepositoryImpl.getUserReactionCount(listOfIds)
                 .collectLatest { reactionCount ->
 
                     when (reactionCount) {
@@ -173,7 +172,7 @@ class PhotoListingRepositoryImpl @Inject constructor(
 
                         else -> Unit
                     }
-                }
+                }*/
 
             emit(Resource.Success(assetList))
         }

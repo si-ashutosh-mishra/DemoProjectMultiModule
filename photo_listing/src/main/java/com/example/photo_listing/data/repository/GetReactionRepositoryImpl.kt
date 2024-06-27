@@ -21,16 +21,16 @@ class GetReactionRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : GetReactionRepository {
 
-    override fun getReactionCount(assetList: List<String>): Flow<Resource<ReactionCount>> {
+   /* override fun getReactionCount(assetList: List<String>): Flow<Resource<ReactionCount>> {
         return flow {
             val url = "https://stg-kkr.sportz.io/flrp/services/content/get-reaction-count-v1?buster=1719154591291"//configManager.getReactionCountUrl() + getQueryBuster().firstOrNull()
            // val teamName = configManager.getAppType()
             val result = safeApiCall(ioDispatcher) {
                 listingService.getReactionCount(
                     gameName = "kkrappportal",
-                    userGuid = ""/*sessionStoreManager.getUserToken().firstOrNull().toString()*/,
+                    userGuid = ""*//*sessionStoreManager.getUserToken().firstOrNull().toString()*//*,
                     url =url,
-                    reactionCountRequest = ReactionCountRequest(assetList, "2"/*getAppSubType(teamName)*/)
+                    reactionCountRequest = ReactionCountRequest(assetList, "2"*//*getAppSubType(teamName)*//*)
                 )
             }
             when (result) {
@@ -57,14 +57,14 @@ class GetReactionRepositoryImpl @Inject constructor(
 
     override fun getUserReactionCount(assetList: List<String>): Flow<Resource<UserReaction>> {
         return flow {
-            val url = "https://stg-kkr.sportz.io/flrp/services/content/get-user-reaction-v1?buster=1719154591291"/*configManager.getUserReactionUrl() + getQueryBuster().firstOrNull()*/
-            val teamName = "" /*configManager.getAppType()*/
+            val url = "https://stg-kkr.sportz.io/flrp/services/content/get-user-reaction-v1?buster=1719154591291"*//*configManager.getUserReactionUrl() + getQueryBuster().firstOrNull()*//*
+            val teamName = "" *//*configManager.getAppType()*//*
             val result = safeApiCall(ioDispatcher) {
                 listingService.getUserReactionCount(
                     gameName = "kkrappportal",
-                    userGuid = ""/*sessionStoreManager.getUserToken().firstOrNull().toString()*/,
+                    userGuid = ""*//*sessionStoreManager.getUserToken().firstOrNull().toString()*//*,
                     url = url,
-                    reactionCountRequest = ReactionCountRequest(assetList, "2"/*getAppSubType(teamName)*/)
+                    reactionCountRequest = ReactionCountRequest(assetList, "2"*//*getAppSubType(teamName)*//*)
                 )
             }
             when (result) {
@@ -87,7 +87,7 @@ class GetReactionRepositoryImpl @Inject constructor(
                 )
             }
         }
-    }
+    }*/
 
     /*private fun getQueryBuster(): Flow<String> {
         *//*return flow {

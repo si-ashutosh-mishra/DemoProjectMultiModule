@@ -16,7 +16,7 @@ interface ListingService {
     @GET
     suspend fun getPhotosPageListing(@Url url: String): BaseResponse<Content>
 
-    @POST
+  /*  @POST
     suspend fun getReactionCount(
         @Header("x-game-name") gameName: String,
         @Header("user-guid") userGuid: String,
@@ -30,5 +30,5 @@ interface ListingService {
         @Header("user-guid") userGuid: String,
         @Url url: String,
         @Body reactionCountRequest: ReactionCountRequest
-    ): UserReaction
+    ): UserReaction*/
 }
