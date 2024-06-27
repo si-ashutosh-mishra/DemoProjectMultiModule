@@ -23,6 +23,6 @@ rootProject.name = "DemoProjectMultiModule"
 include(":app")
 include(":feature_fixtures")
 include(":base")
-include(":standing")
+include(":feature_standing")
+include(":lb_content_listing")
 include(":photo_listing")
-include(":content_listing")

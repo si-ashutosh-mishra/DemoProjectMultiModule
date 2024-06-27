@@ -71,8 +71,8 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(project(":feature_fixtures"))
-    implementation(project(":standing"))
-    implementation(project(":content_listing"))
+    implementation(project(":feature_standing"))
+    implementation(project(":lb_content_listing"))
     implementation(project(":base"))
     implementation(project(":photo_listing"))
 
