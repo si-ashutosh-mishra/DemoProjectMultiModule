@@ -5,4 +5,5 @@ interface StandingConfigContract {
     fun getTeamLogo(
         clubId: String
     ): String
+    fun getStandingTitleList():List<String>
 }

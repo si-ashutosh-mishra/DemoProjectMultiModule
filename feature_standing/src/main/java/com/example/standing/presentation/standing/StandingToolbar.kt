@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -22,8 +23,8 @@ import com.example.standing.R
 fun StandingToolbar(
     onBackClick: () -> Unit,
     onFilterClick: () -> Unit,
-    titleBarIconTintColor: Int,
-    toolBarColor: Int,
+    titleBarIconTintColor: Color,
+    toolBarColor: Color,
     toolBarTitle: String,
     toolBarTitleTextStyle: TextStyle,
     showBack: Boolean = true,
@@ -31,7 +32,7 @@ fun StandingToolbar(
 ) {
     Box(
         modifier = Modifier
-            .background(color = colorResource(id = toolBarColor))
+            .background(color = toolBarColor)
             .height(56.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -43,7 +44,7 @@ fun StandingToolbar(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_back),
                         contentDescription = null,
-                        tint = colorResource(id = titleBarIconTintColor)
+                        tint = titleBarIconTintColor
                     )
                 }
             }
@@ -67,7 +68,7 @@ fun StandingToolbar(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_standings_filter),
                         contentDescription = null,
-                        tint = colorResource(id = titleBarIconTintColor)
+                        tint = titleBarIconTintColor
                     )
                 }
             }

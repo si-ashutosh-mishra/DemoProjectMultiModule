@@ -1,7 +1,6 @@
 package com.example.base.utils
 
 import com.example.base.helper.BaseConfigContract
-import com.rajasthanroyals.app.utils.CurlPrinter
 import okhttp3.Interceptor
 import okhttp3.Response
 import okio.Buffer
@@ -13,8 +12,8 @@ import javax.inject.Singleton
 
 @Singleton
 class CurlLoggingInterceptor @Inject constructor(
-    var tag: String,
-    val baseConfigContract: BaseConfigContract
+    private var tag: String,
+    private val baseConfigContract: BaseConfigContract
     ) : Interceptor {
     private val UTF8 = Charset.forName("UTF-8")
     private var stringBuffer: StringBuffer? = null
