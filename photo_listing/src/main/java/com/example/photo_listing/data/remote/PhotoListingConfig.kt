@@ -1,13 +1,7 @@
-package com.example.feature_fixtures.data.remote
+package com.example.photo_listing.data.remote
 
 interface PhotoListingConfig {
 
     fun getPhotosPageListingUrl(): String
-
-    fun getReactionCountUrl(): String
-
-    fun getAppType(): Int
-
-    fun getUserReactionUrl(): String
 
 }

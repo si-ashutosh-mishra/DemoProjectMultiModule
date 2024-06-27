@@ -1,6 +1,5 @@
 package com.example.photo_listing.business.model
 
-import com.example.photo_listing.business.listing.AssetItem
 import com.example.photo_listing.business.listing.BannerItem
 import com.example.photo_listing.business.listing.ListingEntityData
 import com.example.photo_listing.presentation.PhotoItemViewType

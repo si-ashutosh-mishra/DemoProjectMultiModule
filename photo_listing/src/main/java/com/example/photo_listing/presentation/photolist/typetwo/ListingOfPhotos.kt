@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.example.photo_listing.R
-import com.example.photo_listing.business.listing.AssetItem
 
 
 @Composable

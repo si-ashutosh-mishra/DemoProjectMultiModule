@@ -5,7 +5,7 @@ import com.example.base.helper.BaseConfigContract
 import com.example.content_listing.data.remote.ContentListingConfigContract
 import com.example.demoprojectmultimodule.data.data.ConfigManager
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
-import com.example.feature_fixtures.data.remote.PhotoListingConfig
+import com.example.photo_listing.data.remote.PhotoListingConfig
 import com.example.standing.data.remote.StandingConfigContract
 import dagger.Binds
 import dagger.Module

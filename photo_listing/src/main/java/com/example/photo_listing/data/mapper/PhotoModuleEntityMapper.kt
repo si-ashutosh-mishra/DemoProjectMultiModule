@@ -2,8 +2,6 @@ package com.example.photo_listing.data.mapper
 
 import com.example.base.helper.EntityMapper
 import com.example.base.utils.CalendarUtils
-import com.example.photo_listing.business.domain.model.photolisting.Module
-import com.example.photo_listing.business.listing.AssetUtils
 import com.example.photo_listing.business.listing.BannerItem
 import com.example.photo_listing.business.model.Component
 import com.example.photo_listing.business.model.PhotoListingItem
