@@ -1,5 +1,7 @@
 package com.example.photo_listing.business.listing
 
+import com.example.lb_content_listing.business.domain.model.AssetUtils
+
 data class BannerItem(
     val assetId: Int?,
     val bannerLink: String? = "",
@@ -15,8 +17,7 @@ data class BannerItem(
     var isLiked: Boolean? = false,
     val sharingUrl: String? = null,
     val assetType: AssetUtils.AssetType = AssetUtils.getAssetType(
-        assetTypeId = -1,
-        secondaryEntityRoleMapId = -1
+        assetTypeId = -1
     ),
     val albumCount: Int? = 0,
     val tag:String?="",

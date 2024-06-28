@@ -24,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -48,80 +49,78 @@ fun PhotosCorousal(data : PhotoListingItem.Carousel){
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
-        Box (modifier = Modifier.wrapContentSize()){
+        Box (modifier = Modifier.fillMaxWidth()){
             HorizontalPager(state = pagerState
             , modifier = Modifier
-                    .wrapContentSize()
-                    .padding(10.dp)) {currentPage->
+                    .fillMaxWidth()) {currentPage->
 
                 Column (modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .padding(10.dp,10.dp,10.dp,10.dp)){
+                    .padding(5.dp,5.dp,5.dp,5.dp)){
                     Box (contentAlignment = Alignment.BottomStart){
+
                         AsyncImage(model = data.items.get(currentPage).bannerImageUrl
-                            , contentDescription = null)
+                            , contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxWidth().fillMaxHeight())
 
                         HorizontalPagerIndicator(pagerState = pagerState,
                             pageCount = data.items.size,
                             activeColor = Color.Yellow,
                             inactiveColor = Color.Gray,
+                            modifier = Modifier.padding(5.dp,0.dp,0.dp,5.dp)
                         )
                     }
 
                     Text(text = data.items.get(currentPage).title?: ""
                     , modifier = Modifier.padding(0.dp,10.dp,0.dp,10.dp))
 
-                    Row(verticalAlignment = Alignment.Bottom,
+                    Row(verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
                         modifier = Modifier.fillMaxHeight()
                             .padding(0.dp,0.dp,0.dp,10.dp)) {
+
 
                         Text(
                             text = "16 Photos",
                             color = Color.White,
                             modifier = Modifier
                                 .wrapContentWidth()
-                                .padding(5.dp)
                                 .background(Color.Blue), textAlign = TextAlign.Left
                         )
 
                         Icon(
                             painter = painterResource(id = R.drawable.ic_clock),
                             contentDescription = null,
-                            modifier = Modifier.padding(5.dp, 0.dp, 1.dp, 7.dp)
+                            modifier = Modifier.padding(5.dp, 0.dp, 1.dp, 0.dp)
                         )
 
                         Text(
-                            text = "12 Min",
-                            modifier = Modifier.padding(0.dp, 0.dp, 1.dp, 5.dp)
+                            text = "12 Min"
                         )
 
                         Text(
-                            text = "|",
-                            modifier = Modifier.padding(0.dp, 0.dp, 1.dp, 5.dp)
+                            text = "|"
                         )
 
                         Icon(
                             painter = painterResource(id = R.drawable.ic_like),
-                            contentDescription = null,
-                            modifier = Modifier.padding(0.dp, 0.dp, 1.dp, 7.dp)
+                            contentDescription = null
                         )
 
                         Text(
-                            text = "236",
-                            modifier = Modifier.padding(0.dp, 0.dp, 1.dp, 5.dp)
+                            text = "236"
                         )
 
 
                         Row (modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.Bottom){
+                            horizontalArrangement = Arrangement.End){
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_share),
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .padding(5.dp, 0.dp, 1.dp, 7.dp)
-                                    .fillMaxWidth(1f)
+                                    .padding(0.dp, 0.dp, 5.dp, 0.dp)
                             )
                         }
                     }

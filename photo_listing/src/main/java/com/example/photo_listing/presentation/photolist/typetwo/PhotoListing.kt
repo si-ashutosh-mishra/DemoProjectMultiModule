@@ -33,7 +33,7 @@ fun PhotoListing(
         Column(modifier = Modifier
             .background(Color.Blue)
             .fillMaxSize()
-            .padding(0.dp, 5.dp, 5.dp, 5.dp)) {
+            .padding(0.dp, 5.dp, 0.dp, 5.dp)) {
 
             Row (horizontalArrangement = Arrangement.Absolute.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
@@ -57,7 +57,7 @@ fun PhotoListing(
                 }
             }
 
-            LazyRow (modifier = Modifier.fillMaxSize()){
+            LazyRow{
                 items(data.items){
                     ListingOfPhotos(it,data.items.size)
                 }

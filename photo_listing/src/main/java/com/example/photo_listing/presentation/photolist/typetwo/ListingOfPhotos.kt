@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,42 +32,44 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import com.example.lb_content_listing.business.domain.model.AssetItem
 import com.example.photo_listing.R
 
 
 @Composable
-fun ListingOfPhotos(assetItem: AssetItem,itemCounts : Int) {
+fun ListingOfPhotos(assetItem: AssetItem,
+                    itemCounts : Int) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-    val itemWidth = (screenWidth / itemCounts) + 70.dp
+    val itemWidth = (screenWidth / itemCounts) + 80.dp
 
     Card (modifier = Modifier
         .width(itemWidth)
         .aspectRatio(0.8f)
-        .padding(0.dp, 10.dp, 10.dp, 0.dp)){
+        .padding(5.dp, 10.dp, 10.dp, 0.dp)){
 
         Column(verticalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier.fillMaxSize().wrapContentHeight()) {
+            modifier = Modifier
+                .fillMaxSize()
+                .wrapContentHeight()) {
 
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1.2f),
-                contentAlignment = Alignment.BottomStart){
+            Box(contentAlignment = Alignment.BottomStart){
+
                 Image(
                     painter = rememberAsyncImagePainter(model = assetItem.imageUrl),
                     contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1.2f)
+                        .aspectRatio(1.2f),
+                    contentScale = ContentScale.Crop
                     )
 
                 Text(text = "${assetItem.totalAssets} Photos",
                     color = Color.White,
                     modifier = Modifier
                         .wrapContentWidth()
-                        .padding(5.dp)
+                        .padding(5.dp,0.dp,5.dp,0.dp)
                         .background(Color(0x80000000))
-                , textAlign = TextAlign.Left)
+                    ,textAlign = TextAlign.Left)
             }
 
             Text(
@@ -80,25 +83,49 @@ fun ListingOfPhotos(assetItem: AssetItem,itemCounts : Int) {
             )
 
             Row(verticalAlignment = Alignment.Bottom,
-                modifier = Modifier.fillMaxHeight()) {
+                modifier = Modifier.fillMaxHeight(),
+                horizontalArrangement = Arrangement.SpaceBetween) {
 
-                Icon(painter = painterResource(id = R.drawable.ic_clock), contentDescription = null,
-                    modifier = Modifier.padding(5.dp,0.dp,1.dp,7.dp))
+                Row (verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ,modifier = Modifier.padding(0.dp,0.dp,0.dp,10.dp)
+                        .fillMaxHeight()){
 
-                Text(text = assetItem.beautifiedDuration?: "",modifier = Modifier.padding(0.dp,0.dp,1.dp,5.dp) )
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_clock),
+                        contentDescription = null,
+                        modifier = Modifier.padding(5.dp, 0.dp, 1.dp, 0.dp)
+                    )
 
-                Text(text = "|",modifier = Modifier.padding(2.dp,0.dp,2.dp,5.dp) )
+                    Text(
+                        text = assetItem.beautifiedDuration ?: "",
+                        modifier = Modifier.padding(0.dp, 0.dp, 1.dp, 0.dp)
+                    )
 
-                Icon(painter = painterResource(id = R.drawable.ic_like),
-                    contentDescription =null, modifier = Modifier.padding(0.dp,0.dp,1.dp,7.dp) )
+                    Text(text = "|", modifier = Modifier.padding(2.dp, 0.dp, 2.dp, 0.dp))
 
-                Text(text = assetItem.totalReacts ?:"",modifier = Modifier.padding(0.dp,0.dp,1.dp,5.dp) )
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_like),
+                        contentDescription = null,
+                        modifier = Modifier.padding(0.dp, 0.dp, 1.dp, 0.dp)
+                    )
 
-                Icon(painter = painterResource(id = R.drawable.ic_share),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .padding(5.dp, 0.dp, 1.dp, 7.dp)
-                        .fillMaxWidth(1f))
+                    Text(
+                        text = assetItem.totalReacts ?: "",
+                        modifier = Modifier.padding(0.dp, 0.dp, 1.dp, 0.dp)
+                    )
+
+
+                Row (modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                    ){
+
+                    Icon(painter = painterResource(id = R.drawable.ic_share),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(0.dp, 0.dp, 5.dp, 0.dp))
+                    }
+                }
             }
         }
     }

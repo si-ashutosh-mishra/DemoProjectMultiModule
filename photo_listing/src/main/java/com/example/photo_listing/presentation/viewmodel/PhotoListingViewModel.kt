@@ -29,9 +29,9 @@ class PhotoListingViewModel @Inject constructor(
 
     fun fetchPhotoListing(){
         viewModelScope.launch {
-           /* getPhotoListing("https://stg-kc.sportz.io/apiv3/gettemplatedata?url=tkr-app-photos&is_app=1").collectLatest {
+            getPhotoListing("https://stg-kc.sportz.io/apiv3/gettemplatedata?url=tkr-app-photos&is_app=1").collectLatest {
                 _photoListing.value = it.data ?: _photoListing.value.orEmpty()
-            }*/
+            }
         }
     }
 

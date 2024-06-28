@@ -1,6 +1,7 @@
 package com.example.photo_listing.presentation.photolist.typetwo
 
 import android.util.Log
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,7 +33,20 @@ import com.example.photo_listing.presentation.viewmodel.PhotoListingViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PhotoListingTypeTwo(
-    navController: NavController
+    navController: NavController,
+    isLikeLogoRequired : Boolean = false,
+    @DrawableRes likeLogo : Int? =null,
+    @DrawableRes clockLogo : Int?=null,
+    @DrawableRes shareLogo : Int?=null,
+    corousalTitle : TextStyle = TextStyle(
+        color = Color.White,
+        textAlign = TextAlign.Left
+    ),
+    corousalPhotosNumber : TextStyle = TextStyle(
+        color = Color.White,
+        textAlign = TextAlign.Center/*,
+        background = Color()*/
+    )
 ){
     val viewModel : PhotoListingViewModel = hiltViewModel()
     val photoListing by viewModel.photoListing.observeAsState(initial = emptyList())
@@ -40,7 +56,7 @@ fun PhotoListingTypeTwo(
     }) {
         viewModel.cancelApiCoroutine()
     }
-    Log.d("Photo_Listing", "PhotoListingTypeTwo: "+photoListing)
+
     Column (modifier = Modifier.fillMaxSize()){
         TopAppBar(title = {
             Text(text = "Photos")

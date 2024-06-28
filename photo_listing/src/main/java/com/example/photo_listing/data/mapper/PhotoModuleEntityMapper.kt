@@ -2,17 +2,21 @@ package com.example.photo_listing.data.mapper
 
 import com.example.base.helper.EntityMapper
 import com.example.base.utils.CalendarUtils
+import com.example.lb_content_listing.business.domain.model.AssetUtils
+import com.example.lb_content_listing.data.mapper.AssetItemEntityMapper
+import com.example.lb_content_listing.data.model.layoutbuilder.Module
 import com.example.photo_listing.business.listing.BannerItem
 import com.example.photo_listing.business.model.Component
 import com.example.photo_listing.business.model.PhotoListingItem
 import com.example.photo_listing.business.model.WidgetView
+import com.example.photo_listing.data.remote.PhotoListingConfig
 import com.example.photo_listing.presentation.PhotoItemViewType
 import javax.inject.Inject
 
 class PhotoModuleEntityMapper @Inject constructor(
     private val assetItemEntityMapper: AssetItemEntityMapper,
     private val listingEntityDataMapper: ListingEntityDataMapper,
-    //private val configManager: ConfigManager
+    private val photoListingConfig: PhotoListingConfig
 ) :
     EntityMapper<List<Module>?, List<PhotoListingItem>?> {
 
@@ -47,11 +51,11 @@ class PhotoModuleEntityMapper @Inject constructor(
                                 BannerItem(
                                     assetId = assetMap.assetId,
                                     title = assetMap.assetMeta?.title,
-                                    bannerImageUrl =""/* configManager.getContentImageUrl(
+                                    bannerImageUrl = photoListingConfig.getCorousalImageUrl(
                                         imagePath = assetMap.assetMeta?.imagePath ?: "",
                                         imageName = assetMap.assetMeta?.imageName ?: "",
                                         imageRatio = module.metaInfo?.layoutData?.firstOrNull()?.imgRatio
-                                    )*/,
+                                    ),
                                     titleAlias = assetMap.assetMeta?.titleAlias,
                                     beautifiedDuration = CalendarUtils.getPublishedDuration(
                                         dateString = assetMap.publishDate,
@@ -59,8 +63,7 @@ class PhotoModuleEntityMapper @Inject constructor(
                                     ),
                                     reactCount = null,
                                     assetType = AssetUtils.getAssetType(
-                                        assetTypeId = assetMap.assetType,
-                                        secondaryEntityRoleMapId = assetMap.entitydata?.find { entity -> entity.priority == 2 }?.entityRoleMapId
+                                        assetTypeId = assetMap.assetType
                                     ),
                                     sharingUrl = sharingUrl,
                                     albumCount = assetMap.album_count
@@ -76,7 +79,7 @@ class PhotoModuleEntityMapper @Inject constructor(
                         PhotoListingItem.Banner(
                             title = module.displayTitle.orEmpty(),
                             bannerImage = "",/*configManager.getBaseUrl() + module.metaInfo.bannerImage*/
-                            bannerLink = module.metaInfo.bannerLink ?: "",
+                            bannerLink = module.metaInfo?.bannerLink ?: "",
                         )
                 }
 
