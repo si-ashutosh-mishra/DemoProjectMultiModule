@@ -28,11 +28,11 @@ fun ItemTeamTable(
     iplStandings: IPLStandings,
     index: Int,
     listSize: Int,
-    leftViewBgColor: Int,
+    leftViewBgColor: Color,
     bottomRadius: Dp,
-    selectedTeamBGColor: Int,
-    qualifiedBGColor: Int,
-    circularTeamBGColor: Int,
+    selectedTeamBGColor: Color,
+    qualifiedBGColor: Color,
+    circularTeamBGColor: Color,
     currentTeamID: Int?,
     teamPosStyle: TextStyle,
     teamNameStyle: TextStyle
@@ -51,7 +51,7 @@ fun ItemTeamTable(
             .fillMaxWidth()
             .height(50.dp)
             .background(
-                colorResource(id = if (currentTeamID == iplStandings.teamID) selectedTeamBGColor else leftViewBgColor)
+                if (currentTeamID == iplStandings.teamID) selectedTeamBGColor else leftViewBgColor
             ),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -63,7 +63,7 @@ fun ItemTeamTable(
                     .clip(shape = CircleShape)
                     .size(20.dp)
                     .background(
-                        color = if (iplStandings.teamIsQualified) colorResource(id = qualifiedBGColor) else Color.Transparent
+                        color = if (iplStandings.teamIsQualified) qualifiedBGColor else Color.Transparent
                     )
                     .padding(top = 2.dp),
                 text = if (iplStandings.teamIsQualified) "Q" else iplStandings.teamPosition ?: "",
@@ -80,7 +80,7 @@ fun ItemTeamTable(
                     .size(36.dp)
                     .clip(shape = CircleShape)
                     .background(
-                        color = colorResource(id = circularTeamBGColor)
+                        color = circularTeamBGColor
                     )
                     .padding(all = 5.dp),
 

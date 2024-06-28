@@ -1,4 +1,4 @@
-package com.rajasthanroyals.app.utils
+package com.example.base.utils
 
 import android.util.Log
 
@@ -6,7 +6,7 @@ object CurlPrinter  {
     /**
      * Drawing toolbox
      */
-    private val SINGLE_DIVIDER = "────────────────────────────────────────────"
+    private const val SINGLE_DIVIDER = "────────────────────────────────────────────"
 
     private var sTag = "CURL"
 

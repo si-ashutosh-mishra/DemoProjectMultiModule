@@ -23,7 +23,7 @@ class StandingEntityMapper @Inject constructor(
                 standingEntity.teamList?.indexOfFirst { it.id?.toInt() == standingEntity.currentTeamId }
                     ?: 0
             if (swapTeamIndex != -1) {
-                if (swapTeamIndex > standingEntity.requiredTeamCount ?: 0) {
+                if (swapTeamIndex > (standingEntity.requiredTeamCount ?: 0)) {
                     val item =
                         standingEntity.teamList?.getOrNull(swapTeamIndex) ?: return emptyList()
 
@@ -43,7 +43,7 @@ class StandingEntityMapper @Inject constructor(
                 teamPosition = "Pos",
                 title = "Team",
                 teamLogoUrl = null,
-                scoreList = listOf("MP", "W", "L", "NRR", "PTS"),
+                scoreList = standingConfigContract.getStandingTitleList(),
                 lastMatchesResult = listOf("FORM")
             )
         )

@@ -16,14 +16,14 @@ val BlueBg = Color(0xFF253B89)
 val MidBlue10 = Color(0x1A253B89)
 val TextColorGolden = Color(0xFFE2BE5F)
 val GoldenDark = Color(0xFFE2BE5F)
-val White70 = Color(0xB3FFFFFF)
+
 val Red = Color(0xFFED3123)
 
 // New Colors
 val DarkBlue = Color(0xFF071544)
 val DarkBlue70 = Color(0xB3071544)
-val Orange=  Color(0xFFED3123)
-val Yellow=  Color(0xFFEBD191)
+val Orange = Color(0xFFED3123)
+val Yellow = Color(0xFFEBD191)
 
 val GoldenLight = Color(0xFFEBD191)
 val Golden10 = Color(0xFFE2BE5F)
@@ -31,3 +31,10 @@ val Golden10 = Color(0xFFE2BE5F)
 val ColorPrimary = Color(0xFF13296F)
 val ColorAccent = Color(0xFF13296F)
 val ColorPrimaryDark = Color(0xFF1e3279)
+
+val White = Color(0xFFFFFFFF)
+val White20 = Color(0x33FFFFFF)
+val White50 = Color(0x80FFFFFF)
+val White70 = Color(0xB3FFFFFF)
+val Blue = Color(0x73C5EA)
+val Black = Color(0x000000)

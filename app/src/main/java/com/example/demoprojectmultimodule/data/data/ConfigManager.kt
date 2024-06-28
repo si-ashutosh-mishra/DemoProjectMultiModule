@@ -1,9 +1,9 @@
 package com.example.demoprojectmultimodule.data.data
 
 import com.example.base.helper.BaseConfigContract
-import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.photo_listing.data.remote.PhotoListingConfig
+import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.example.standing.data.remote.StandingConfigContract
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -52,18 +52,12 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getContentImageUrl(
-        imagePath: String?, imageName: String?, imageRatio: String?
+        imagePath: String?, imageName: String?, imageRatio: String?,
     ): String {
-        return getBaseUrl() + getBaseContentImageUrl()
+        return getBaseUrl() + getBaseContentImageUrl().replace("{image_path}",
+            imageRatio?.let { imagePath?.replace("/0/", "/$imageRatio/") } ?: imagePath.orEmpty())
             .replace(
-                /*ReplaceKeys.IMAGE_PATH*/"{image_path}",
-                imageRatio?.let { imagePath?.replace("/0/", "/$imageRatio/") }
-                    ?: imagePath.orEmpty())
-            .replace(/*ReplaceKeys.IMAGE_NAME*/"{image_name}", imageName.orEmpty())
-            .replace(
-                /*ReplaceKeys.CONTENT_IMAGE_VERSION*/"{content_image_version}", /*firebaseRemoteConfig.getString(
-            KEY_CONTENT_IMAGE_VERSION
-        )*/"1.30"
+                "{image_name}", imageName.orEmpty()
             )
     }
 
@@ -72,10 +66,17 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getReelsSharingUrl(
-        entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?
+        entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?,
     ): String {
         return ""
     }
+
+    override fun getStandingTitleList(): List<String> {
+        return listOf("MP", "W", "L", "NRR", "PTS")
+    }
+
+    private fun getBaseContentImageUrl() =
+        "static-assets/waf-images/{image_path}{image_name}?v=1.30"
 
     override fun getPhotosPageListingUrl(): String {
        /* val appTypePath = ""//getAppTypePath()
@@ -105,8 +106,4 @@ class ConfigManager @Inject constructor(
             )
     }
 
-    private fun getBaseContentImageUrl(): String {
-        return "static-assets/waf-images/{image_path}{image_name}?v={content_image_version}"
-        //return firebaseRemoteConfig.getString(KEY_BASE_CONTENT_IMAGE_PATH)
-    }
 }
