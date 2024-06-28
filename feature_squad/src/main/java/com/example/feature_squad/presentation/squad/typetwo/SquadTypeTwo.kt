@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
@@ -28,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import coil.compose.AsyncImage
 import com.example.feature_squad.R
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
 
@@ -62,55 +62,49 @@ fun SquadTypeTwo(
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center
     ),
-    playerImageModifier: Modifier = Modifier.height(150.dp),
-    data: PlayerItem? = null
+    playerImageModifier: Modifier = Modifier.height(200.dp),
+    playerDetail: PlayerItem? = null
 ) {
-    Box(
-        modifier = Modifier
-            .width(200.dp)
-            .background(Color.Transparent)
-            .fillMaxWidth()
-            .padding(all = 8.dp),
-    ) {
-        ConstraintLayout() {
-            val (playerImageId, playerDetailCard, divider) = createRefs()
+    ConstraintLayout() {
+        val (playerImageId, playerDetailCard, divider) = createRefs()
 
-            Image(
-                painter = painterResource(playerImage),
-                modifier = playerImageModifier
-                    .constrainAs(playerImageId) {}
-                    .fillMaxWidth(),
-                contentScale = ContentScale.Fit,
-                contentDescription = "",
-            )
+        AsyncImage(
+//                painter = rememberAsyncImagePainter(model = playerDetail?.playerImageUrl),
+            model = playerDetail?.playerImageUrl,
+            modifier = playerImageModifier
+                .constrainAs(playerImageId) {}
+                .fillMaxWidth(),
+            contentScale = ContentScale.Fit,
+            contentDescription = "",
+        )
 
-
-            Card(
+        Card(
+            modifier = Modifier
+                .constrainAs(playerDetailCard) {
+                    top.linkTo(playerImageId.bottom)
+                }
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(0.dp)
+        ) {
+            Column(
                 modifier = Modifier
-                    .constrainAs(playerDetailCard) {
-                        top.linkTo(playerImageId.bottom)
-                    }
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(0.dp)
+                    .fillMaxWidth()
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = playerDetailDrawable
+                        )
+                    )
+                    .padding(8.dp)
+                    .align(Alignment.CenterHorizontally),
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = playerDetailDrawable
-                            )
-                        )
-                        .padding(8.dp)
-                        .align(Alignment.CenterHorizontally),
-                ) {
-                    Box {
-                        Text(
-                            text = "Hello", modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.Center),
-                            style = firstNameTextStyle
-                        )
+                Box {
+                    Text(
+                        text = playerDetail?.firstName?: "Ankush", modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.Center),
+                        style = firstNameTextStyle
+                    )
+                    if (playerDetail?.overseasPlayer == true)
                         Image(
                             modifier = Modifier
                                 .size(10.dp)
@@ -118,31 +112,32 @@ fun SquadTypeTwo(
                             painter = painterResource(R.drawable.ic_overseas),
                             contentDescription = ""
                         )
-                    }
-                    Text(
-                        text = "Hello", modifier = Modifier.fillMaxWidth(),
-                        style = lastNameTextStyle
-                    )
-                    Text(
-                        text = "Hello", modifier = Modifier.fillMaxWidth(),
-                        style = playerRoleTextStyle
-                    )
                 }
-            }
-            Box(
-                modifier = Modifier
-                    .constrainAs(divider) {
-                        top.linkTo(playerImageId.bottom)
-                        bottom.linkTo(playerDetailCard.top)
-                    },
-            ) {
-                Divider(
-                    modifier = Modifier
-                        .padding(horizontal = 30.dp)
-                        .align(Alignment.Center),
-                    thickness = 4.dp,
-                    color = Color(0xFFF2C029)
+                Text(
+                    text = playerDetail?.lastName ?: "Yadav", modifier = Modifier.fillMaxWidth(),
+                    style = lastNameTextStyle
                 )
+                Text(
+                    text = playerDetail?.skill ?: "All Rounder", modifier = Modifier.fillMaxWidth(),
+                    style = playerRoleTextStyle
+                )
+            }
+        }
+        Box(
+            modifier = Modifier
+                .constrainAs(divider) {
+                    top.linkTo(playerImageId.bottom)
+                    bottom.linkTo(playerDetailCard.top)
+                },
+        ) {
+            Divider(
+                modifier = Modifier
+                    .padding(horizontal = 30.dp)
+                    .align(Alignment.Center),
+                thickness = 4.dp,
+                color = Color(0xFFF2C029)
+            )
+            if (playerDetail?.isCaptain == true)
                 Image(
                     modifier = Modifier
                         .size(15.dp)
@@ -150,7 +145,6 @@ fun SquadTypeTwo(
                     painter = painterResource(R.drawable.ic_captain),
                     contentDescription = ""
                 )
-            }
         }
     }
 

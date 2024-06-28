@@ -105,11 +105,11 @@ class ConfigManager @Inject constructor(
                     KEY_DATA_IMAGE_VERSION
                 )
             ).replace(ReplaceKeys.PLAYER_IMAGE_PATH_FINDER, playerImagePathFinder ?: "")*/
-        return "https://stg-kc.sportz.io/static-assets/images/players/{player_image_path_finder}/" +
-                "{player_id}.png?v={data_image_version}".replace(ReplaceKeys.PLAYER_ID, playerId.orEmpty())
-                    .replace(
-                        ReplaceKeys.DATA_IMAGE_VERSION,""
-                    ).replace(ReplaceKeys.PLAYER_IMAGE_PATH_FINDER, "")
+        return "https://stg-kc.sportz.io/static-assets/images/players/lakr/" +
+                "{player_id}.png?v={data_image_version}"
+                    .replace(ReplaceKeys.PLAYER_IMAGE_PATH_FINDER,"kkr")
+                    .replace(ReplaceKeys.PLAYER_ID, playerId.orEmpty())
+                    .replace(ReplaceKeys.DATA_IMAGE_VERSION,"2.23")
     }
 
     override fun getCountryNationalityIdImageUrl(nationalityId: String?): String {
