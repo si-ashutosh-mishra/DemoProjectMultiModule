@@ -6,4 +6,5 @@ interface StandingConfigContract {
         clubId: String
     ): String
     fun getStandingTitleList():List<String>
+    fun getCurrentTeamID():Int
 }

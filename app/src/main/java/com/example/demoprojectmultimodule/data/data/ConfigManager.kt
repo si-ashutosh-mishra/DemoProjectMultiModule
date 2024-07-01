@@ -1,6 +1,7 @@
 package com.example.demoprojectmultimodule.data.data
 
 import com.example.base.helper.BaseConfigContract
+import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.example.standing.data.remote.StandingConfigContract
@@ -9,8 +10,8 @@ import javax.inject.Singleton
 
 @Singleton
 class ConfigManager @Inject constructor(
-) : BaseConfigContract, FixtureConfigContract, StandingConfigContract,
-    ContentListingConfigContract {
+) : BaseConfigContract, FixtureConfigContract, StandingConfigContract, ContentListingConfigContract,
+    AppHomeConfigContract {
 
     override fun getBaseUrl(): String {
         return "https://www.knightclub.in/"
@@ -76,5 +77,14 @@ class ConfigManager @Inject constructor(
 
     private fun getBaseContentImageUrl() =
         "static-assets/waf-images/{image_path}{image_name}?v=1.30"
+
+    override fun getAppHomeUrl(): String {
+        return "https://www.knightclub.in/apiv3/gettemplatedata?url=kkr-app-home&is_app=1"
+    }
+    override fun getCurrentTeamID() = 1106
+    override fun getHomeTeamCount() = 5
+    override fun swapPos() = 4
+    override fun isSwap() = true
+
 
 }
