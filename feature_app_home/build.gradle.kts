@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":base"))
     implementation(project(":feature_standing"))
     implementation(project(":lb_content_listing"))
+    implementation(project(":feature_fixtures"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

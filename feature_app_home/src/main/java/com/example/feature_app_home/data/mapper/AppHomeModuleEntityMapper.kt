@@ -29,6 +29,10 @@ class AppHomeModuleEntityMapper @Inject constructor(
                     )
                 }
 
+                HomeItemViewType.HOME_FIXTURES -> HomeListingItem.HomeFixtures(
+                    matches = emptyList()
+                )
+
                 else -> HomeListingItem.Unknown
             }
 
@@ -39,6 +43,7 @@ class AppHomeModuleEntityMapper @Inject constructor(
     private fun getWidgetType(componentName: String?, layoutType: String?): HomeItemViewType {
         return when {
             componentName == Component.SI_STANDINGS.componentName && layoutType == WidgetView.LAYOUT_01 -> HomeItemViewType.HOME_STANDING
+            componentName == Component.SI_SCORESTRIP.componentName && layoutType == WidgetView.LAYOUT_01 -> HomeItemViewType.HOME_FIXTURES
             else -> HomeItemViewType.UNKNOWN
         }
     }

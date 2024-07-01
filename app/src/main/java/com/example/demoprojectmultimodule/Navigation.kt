@@ -40,14 +40,20 @@ fun Navigation() {
         }
 
         composable(route = Screen.AppHomeScreen.route) {
-            AppHome {
+            AppHome(onFixtureViewMoreClick = {
+                navController.navigate(Screen.MainScreen.route)
+            }, onFixtureItemClick = {
+                //
+            }, onStandingViewMoreClick = {
                 navController.navigate(Screen.StandingDetailsScreen.route)
-            }
+            })
         }
-        composable(route = Screen.WebViewScreen.route){
-            WebViewScreen("WebView",
+        composable(route = Screen.WebViewScreen.route) {
+            WebViewScreen(
+                "WebView",
                 "https://www.punjabkingsipl.in/news/icc-t20-world-cup-2024-arshdeep-rabada-and-bairstow-dazzle-in-the-super-eights",
-                false){
+                false
+            ) {
 
             }
         }

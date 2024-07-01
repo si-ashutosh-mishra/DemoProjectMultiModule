@@ -5,6 +5,7 @@ import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.example.standing.data.remote.StandingConfigContract
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -44,7 +45,7 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getFixturesUrl(): String {
-        return "default.aspx?methodtype=3&client=7756e60237&sport=1&league=0&timezone=0530&language=0&tournament=4848"
+        return "default.aspx?methodtype=3&client=4737564702&sport=1&league=0&timezone=0530&language=&tournament=4723"
     }
 
     override fun getStandingUrl(): String {
@@ -79,12 +80,19 @@ class ConfigManager @Inject constructor(
         "static-assets/waf-images/{image_path}{image_name}?v=1.30"
 
     override fun getAppHomeUrl(): String {
-        return "https://www.knightclub.in/apiv3/gettemplatedata?url=kkr-app-home&is_app=1"
+        return getBaseUrl() + "apiv3/gettemplatedata?url=kkr-app-home&is_app=1"
     }
+
     override fun getCurrentTeamID() = 1106
     override fun getHomeTeamCount() = 5
     override fun swapPos() = 4
     override fun isSwap() = true
+
+    override fun getFixturesPollingInterval(): Long {
+        return TimeUnit.SECONDS.toMillis(
+            15
+        )
+    }
 
 
 }
