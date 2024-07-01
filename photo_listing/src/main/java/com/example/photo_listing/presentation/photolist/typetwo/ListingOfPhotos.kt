@@ -67,7 +67,7 @@ fun ListingOfPhotos(assetItem: AssetItem,
                     contentScale = ContentScale.Crop
                     )
 
-                Text(text = "${assetItem.totalAssets} Photos",
+                Text(text = " ${assetItem.totalAssets} Photos ",
                     style = matchPhotosNumberStyle)
             }
 
