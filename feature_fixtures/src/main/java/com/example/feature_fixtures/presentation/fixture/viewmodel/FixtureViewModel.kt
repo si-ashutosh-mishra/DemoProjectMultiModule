@@ -43,6 +43,7 @@ class FixtureViewModel @Inject constructor(
 
     //default.aspx?methodtype=3&client=3727564696&sport=1&league=0&timezone=0530&language=en&tournament=4554
     //default.aspx?methodtype=3&client=7756e60237&sport=1&league=0&timezone=0530&language=0&tournament=4848
+    //default.aspx?methodtype=3&client=4737564702&sport=1&league=0&timezone=0530&language=&tournament=4723
     fun getFixtureList(teamId: String? = null, isLoadingRequired: Boolean = false) {
         this.teamId = teamId
         apiCoroutineScope = createApiCoroutineScope()
