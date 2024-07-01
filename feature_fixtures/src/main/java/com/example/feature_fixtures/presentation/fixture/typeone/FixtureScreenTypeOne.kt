@@ -70,7 +70,7 @@ fun FixtureScreenTypeOne(
 
     LifeCycleObserver(fetchData = {
         viewModel.cancelApiCoroutine()
-        viewModel.getFixtureList(teamId)
+        viewModel.getFixtureList(teamId,true)
     }) {
         viewModel.cancelApiCoroutine()
     }

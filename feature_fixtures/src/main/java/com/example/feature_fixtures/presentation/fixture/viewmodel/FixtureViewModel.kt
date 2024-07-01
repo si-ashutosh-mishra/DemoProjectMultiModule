@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import java.util.HashMap
@@ -42,18 +43,34 @@ class FixtureViewModel @Inject constructor(
 
     //default.aspx?methodtype=3&client=3727564696&sport=1&league=0&timezone=0530&language=en&tournament=4554
     //default.aspx?methodtype=3&client=7756e60237&sport=1&league=0&timezone=0530&language=0&tournament=4848
-    fun getFixtureList(teamId: String? = null) {
+    fun getFixtureList(teamId: String? = null, isLoadingRequired: Boolean = false) {
         this.teamId = teamId
         apiCoroutineScope = createApiCoroutineScope()
         apiCoroutineScope?.launch {
-            val result = getListOfMatches(
+            getListOfMatches(
                 FixturesType.LISTING.id,
                 fixtureConfigContract.getFixturesUrl(),
                 teamId,
                 itemCount = 0
-            ).firstOrNull { it !is Resource.Loading }?.data
-            scheduleRefreshEventUntilMatchGoLive(result?.allListOfMatches.orEmpty())
-            _fixture.postValue(result?.allListOfMatches.orEmpty())
+            ).collectLatest {
+                when (it) {
+                    is Resource.Loading -> {
+                        if (isLoadingRequired) {
+                            //loading true
+                        }
+                    }
+
+                    is Resource.Success -> {
+                        //loading false
+                        scheduleRefreshEventUntilMatchGoLive(it.data?.allListOfMatches.orEmpty())
+                        _fixture.postValue(it.data?.allListOfMatches.orEmpty())
+                    }
+
+                    is Resource.Error -> {
+                        //loading false
+                    }
+                }
+            }
         }
     }
 
@@ -90,12 +107,23 @@ class FixtureViewModel @Inject constructor(
         apiCoroutineScope?.launch {
             matches.let { matches ->
 
-                if (jobs.isEmpty()) {
-                    matches.forEach { match ->
-                        val timeInFuture = CalendarUtils.convertDateStringToMillis(
-                            dateString = match?.startDate, dateFormat = "yyyy-MM-dd'T'HH:mmZZZZZ"
-                        )
-                        if (match?.eventState == EventState.UPCOMING) {
+                matches.forEach { match ->
+                    val timeInFuture = CalendarUtils.convertDateStringToMillis(
+                        dateString = match?.startDate, dateFormat = "yyyy-MM-dd'T'HH:mmZZZZZ"
+                    )
+
+                    when (match?.eventState) {
+                        EventState.LIVE -> {
+                            jobs[match.gameId.toString()] =
+                                startCoroutineTimer(coroutineScope = this,
+                                    delayMillis = fixtureConfigContract.getTimeInterval(),
+                                    repeatMillis = fixtureConfigContract.getTimeInterval(),
+                                    action = {
+                                        cancelApiCoroutine()
+                                        getFixtureList(teamId)
+                                    })
+                        }
+                        EventState.UPCOMING -> {
                             val delayMillis = if (DateUtils.isToday(timeInFuture)) {
                                 fixtureConfigContract.getTimeInterval()
                             } else {
@@ -116,11 +144,10 @@ class FixtureViewModel @Inject constructor(
                                     })
 
                         }
-                    }
-                } else {
-                    matches.filter { it?.eventState == EventState.LIVE }.forEach {
-                        jobs[it?.gameId]?.cancel()
-                        jobs.remove(it?.gameId)
+                        else -> {
+                            jobs[match?.gameId]?.cancel()
+                            jobs.remove(match?.gameId)
+                        }
                     }
                 }
             }
