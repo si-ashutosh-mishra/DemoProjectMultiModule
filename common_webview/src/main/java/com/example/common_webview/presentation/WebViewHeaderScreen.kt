@@ -20,13 +20,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.example.common_webview.data.model.JavaScriptData
 import com.example.common_webview.utils.Utils
-import org.json.JSONObject
 
 @Composable
 @SuppressLint("SetJavaScriptEnabled")
-fun WebViewScreen(
+fun WebViewHeaderScreen(
     title:String? = null,
     webUrl:String,
     timeStamp:Boolean = false,
@@ -39,17 +37,31 @@ fun WebViewScreen(
         fontSize = 14.sp,
         fontWeight = FontWeight.Bold,
     ),
-    openNewPage:(data:JavaScriptData)->Unit,
+    onNativeLogin:()->Unit,
+    uscWebview:String?="",
+    auth:String?="",
+    isLoggedIn:Boolean = false,
+    urcWebview:String? = ""
 ) {
     val url = remember {
         mutableStateOf<String?>("")
     }
+    val headers= remember {
+        mutableStateOf<HashMap<String, String?>>(HashMap())
+    }
+
     LaunchedEffect(key1 = Unit) {
         url.value = Utils.addQueryParameter(
             webViewUrl = webUrl,
             timeStamp = timeStamp,
             timeStampQuery = timeStampQuery
         )
+        if (isLoggedIn){
+            headers.value["uscwebview"] = uscWebview
+            headers.value["auth"] = auth
+            headers.value["setlogincookie"] = if (isLoggedIn) "1" else "0"
+            headers.value["urcwebview"] = urcWebview
+        }
     }
 
     Column {
@@ -71,12 +83,12 @@ fun WebViewScreen(
                     settings.userAgentString = System.getProperty("http.agent")
                     isClickable = true
                     settings.cacheMode = WebSettings.LOAD_NO_CACHE
-                    webViewClient = CustomWebViewScreenClient(timeStamp,timeStampQuery)
-                    addJavascriptInterface(WebViewScreenInterface(context,openNewPage),"mobileApp")
+                    webViewClient = CustomWebViewHeaderClient(timeStamp,timeStampQuery,headers.value)
+                    addJavascriptInterface(WebViewHeaderScreenInterface(context,onNativeLogin),"mobileApp")
                 }
             },
             update = { webView ->
-                webView.loadUrl(url.value?:"")
+                webView.loadUrl(url.value?:"",headers.value)
             }
         )
 
@@ -84,26 +96,21 @@ fun WebViewScreen(
 
 }
 
-class WebViewScreenInterface(private val mContext: Context,val  openNewPage: (data:JavaScriptData) -> Unit) {
+class WebViewHeaderScreenInterface(private val mContext: Context, val  onNativeLogin: () -> Unit) {
 
     @JavascriptInterface
-    fun fixturesPageWebView(json: String) {
-        try {
-            val jsonObject = JSONObject(json)
-            val data = JavaScriptData(
-                displayTitle = jsonObject.getString("display_title"),
-                url =  jsonObject.getString("webview_url")
-            )
-            openNewPage(data)
-        } catch (e: Exception) {
-
-        }
+    fun nativeLogin() {
+        onNativeLogin()
     }
 
 }
 
 
-class CustomWebViewScreenClient(private val timeStamp: Boolean, private val timeStampQuery: String?): WebViewClient(){
+class CustomWebViewHeaderClient(
+    private val timeStamp: Boolean,
+    private val timeStampQuery: String?,
+    private val header: HashMap<String, String?>
+): WebViewClient(){
     override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
         val webUrl = try {
             Utils.addQueryParameter(
@@ -117,12 +124,12 @@ class CustomWebViewScreenClient(private val timeStamp: Boolean, private val time
         Log.d("WebViewUrl", "shouldOverrideUrlLoading: " + webUrl)
         webUrl?.let {
             try {
-                view?.loadUrl(it)
+                view?.loadUrl(it,header)
                 //chromeTabIntent.openCustomTab(this@WebViewActivity, it)
             } catch (e: ActivityNotFoundException) {
-                view?.loadUrl(it)
+                view?.loadUrl(it,header)
             } catch (_: Exception) {
-                view?.loadUrl(it)
+                view?.loadUrl(it,header)
             }
         }
         return true
@@ -138,4 +145,3 @@ class CustomWebViewScreenClient(private val timeStamp: Boolean, private val time
         //loader.show(false)
     }
 }
-
