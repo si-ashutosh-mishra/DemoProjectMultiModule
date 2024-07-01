@@ -6,6 +6,7 @@ sealed class Screen(val route:String) {
     object StandingDetailsScreen : Screen("standings_details")
     object AppHomeScreen : Screen("app_home")
 
+    object WebViewScreen : Screen("webview")
     fun withArgs(vararg args:String?):String{
         return buildString {
             append(route)

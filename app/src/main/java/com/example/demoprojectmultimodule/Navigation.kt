@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.common_webview.presentation.WebViewScreen
 import com.example.feature_app_home.presentation.apphome.AppHome
 import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
 import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
@@ -41,6 +42,13 @@ fun Navigation() {
         composable(route = Screen.AppHomeScreen.route) {
             AppHome {
                 navController.navigate(Screen.StandingDetailsScreen.route)
+            }
+        }
+        composable(route = Screen.WebViewScreen.route){
+            WebViewScreen("WebView",
+                "https://www.punjabkingsipl.in/news/icc-t20-world-cup-2024-arshdeep-rabada-and-bairstow-dazzle-in-the-super-eights",
+                false){
+
             }
         }
     }
