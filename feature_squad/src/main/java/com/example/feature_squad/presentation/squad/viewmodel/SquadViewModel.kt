@@ -7,7 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.base.helper.NetworkThrowable
 import com.example.base.helper.Resource
+import com.example.feature_squad.business.domain.model.squad.PlayerComparator
+import com.example.feature_squad.business.domain.model.squad.PlayerFilterData
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
+import com.example.feature_squad.business.domain.model.squad.SquadModel
+import com.example.feature_squad.business.domain.model.squad.StaffItem
 import com.example.feature_squad.business.interceptor.GetSquadListing
 import com.example.feature_squad.data.remote.SquadConfigContract
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,6 +31,11 @@ class SquadViewModel @Inject constructor(
     private val _playerList = MutableLiveData<List<PlayerItem>>()
     val player: LiveData<List<PlayerItem>>
         get() = _playerList
+
+    private val _squadStaffListing = MutableLiveData<SquadModel?>()
+
+    val squadStaffListing: LiveData<SquadModel?>
+        get() = _squadStaffListing
 
     init {
         getSquadList()
@@ -50,6 +59,9 @@ class SquadViewModel @Inject constructor(
                         } else {
                             Log.d("Squad List", it.data?.squadList.orEmpty().toString())
                             _playerList.postValue(it.data?.squadList.orEmpty())
+                            _squadStaffListing.postValue(getFilterPlayerList(it.data?.squadList.orEmpty(), it.data?.staffList.orEmpty()))
+                            Log.d("Squad filter", "${getFilterPlayerList(it.data?.squadList.orEmpty(),
+                                it.data?.staffList.orEmpty())}")
                             Resource.Success(
                                 data = it.data?.squadList.orEmpty(),
                             )
@@ -57,6 +69,36 @@ class SquadViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+
+    private fun getFilterPlayerList(
+        squadList: List<PlayerItem>?,
+        staffList: List<StaffItem>
+    ): SquadModel {
+
+        val filteredPlayersList = mutableListOf<PlayerFilterData>()
+
+        val skillList = squadConfigContract.getSkillList()
+
+        skillList.forEach { skillItem ->
+
+            val list = squadList?.filter { it.skillId == skillItem.skill_id }?.sortedWith(
+                PlayerComparator()
+            ) ?: emptyList()
+
+            if (list.isNotEmpty()) {
+                filteredPlayersList.add(
+                    PlayerFilterData(
+                        skillItem.skill_name,
+                        skillItem.skill_id,
+                        list
+                    )
+                )
+            }
+        }
+
+        return SquadModel(filteredPlayersList, staffList)
     }
 
 }
