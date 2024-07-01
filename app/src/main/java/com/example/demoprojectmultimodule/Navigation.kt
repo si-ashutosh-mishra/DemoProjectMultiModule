@@ -6,7 +6,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
 import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
 import com.example.photo_listing.presentation.photolist.typetwo.PhotoListingTypeTwo
 import com.example.standing.presentation.standing.StandingsScreen
