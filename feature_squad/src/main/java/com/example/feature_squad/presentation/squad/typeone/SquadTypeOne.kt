@@ -37,6 +37,7 @@ fun ScreenPreview() {
 
 @Composable
 fun SquadTypeOne(
+
     @DrawableRes playerImage: Int = R.drawable.ic_player,
     backgroundPlayerName : Color = Color.Yellow,
     bottomBackground : Color = Color.Magenta,
@@ -50,9 +51,9 @@ fun SquadTypeOne(
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.Bold
     ),
-    @DrawableRes captainImage: Int = R.drawable.ic_captain,
-    @DrawableRes overseasImage: Int = R.drawable.ic_overseas,
-
+    isCaptain : Boolean = false,
+    isOverseas : Boolean = false,
+    
 ){
     Box(
         modifier = Modifier
@@ -61,18 +62,24 @@ fun SquadTypeOne(
             .fillMaxWidth()
     ) {
         Row (modifier = Modifier.align(Alignment.TopEnd)){
-            Image(painter = painterResource(overseasImage),
+            if(isOverseas) {
+                Image(
+                    painter = painterResource(R.drawable.ic_overseas),
+                    modifier = Modifier
+                        .width(20.dp)
+                        .height(15.dp),
+                    contentScale = ContentScale.Fit,
+                    contentDescription = ""
+                )
+            }
+            if(isCaptain){
+            Image(painter = painterResource(R.drawable.ic_captain),
                 modifier = Modifier
                     .width(20.dp)
                     .height(15.dp),
                 contentScale = ContentScale.Fit,
                 contentDescription = "")
-            Image(painter = painterResource(captainImage),
-                modifier = Modifier
-                    .width(20.dp)
-                    .height(15.dp),
-                contentScale = ContentScale.Fit,
-                contentDescription = "")
+                }
         }
         Column {
             Image(

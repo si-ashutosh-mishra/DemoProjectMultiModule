@@ -1,4 +1,4 @@
-package com.example.feature_squad.presentation.squad.typetwo
+package com.example.feature_squad.presentation.squad.typeone
 
 import android.util.Log
 import androidx.annotation.DrawableRes
@@ -39,14 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_squad.R
+import com.example.feature_squad.presentation.squad.typetwo.SquadTypeTwo
 import com.example.feature_squad.presentation.squad.viewmodel.SquadViewModel
 
-//@Preview
-//@Composable
-//fun Preview() {
-//    SquadHorizontalScroll()
-//}
-
+@Preview
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SquadHorizontalScroll (
