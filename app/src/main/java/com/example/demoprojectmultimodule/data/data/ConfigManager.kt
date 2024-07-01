@@ -3,15 +3,19 @@ package com.example.demoprojectmultimodule.data.data
 import com.example.base.helper.BaseConfigContract
 import com.example.demoprojectmultimodule.data.data.model.AppTypePath
 import com.example.demoprojectmultimodule.util.AppType
-import com.example.content_listing.data.remote.ContentListingConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
+import com.example.feature_squad.business.domain.model.squad.SkillItem
 import com.example.feature_squad.data.remote.SquadConfigContract
+import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.example.standing.data.remote.StandingConfigContract
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ConfigManager @Inject constructor(
+    private val gson: Gson
 ) : BaseConfigContract, FixtureConfigContract, StandingConfigContract,
     ContentListingConfigContract, SquadConfigContract {
 
@@ -58,9 +62,13 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getContentImageUrl(
-        imagePath: String?, imageName: String?, imageRatio: String?
+        imagePath: String?, imageName: String?, imageRatio: String?,
     ): String {
-        return ""
+        return getBaseUrl() + getBaseContentImageUrl().replace("{image_path}",
+            imageRatio?.let { imagePath?.replace("/0/", "/$imageRatio/") } ?: imagePath.orEmpty())
+            .replace(
+                "{image_name}", imageName.orEmpty()
+            )
     }
 
     override fun getContentSharingUrl(entityCategory: String?, titleAlias: String?): String {
@@ -68,10 +76,17 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getReelsSharingUrl(
-        entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?
+        entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?,
     ): String {
         return ""
     }
+
+    override fun getStandingTitleList(): List<String> {
+        return listOf("MP", "W", "L", "NRR", "PTS")
+    }
+
+    private fun getBaseContentImageUrl() =
+        "static-assets/waf-images/{image_path}{image_name}?v=1.30"
 
     override fun getSquadListingUrl(seriesId: String?, teamId: String?): String {
         /*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_SQUAD_FEED_URL)
@@ -174,6 +189,17 @@ class ConfigManager @Inject constructor(
                 it.split(",")
         }*/
         return emptyList()
+    }
+
+    override fun getSkillList(): List<SkillItem> {
+        val type = TypeToken.getParameterized(List::class.java, SkillItem::class.java).type
+        return try {
+            gson.fromJson("""[{"skill_id":"1","skill_name":"Batters"},{"skill_id":"3","skill_name":"All-Rounders"},{"skill_id":"4","skill_name":"Wicket-Keepers"},{"skill_id":"2","skill_name":"Bowlers"}]""", type)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            listOf()
+        }
+//        return null
     }
 }
 

@@ -87,4 +87,6 @@ dependencies {
 
     implementation(libs.retrofit.okHttp)
     implementation(libs.retrofit.okHttp.interceptor)
+
+    implementation(libs.page.indicator)
 }

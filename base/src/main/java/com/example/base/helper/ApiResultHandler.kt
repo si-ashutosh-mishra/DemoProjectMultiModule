@@ -21,7 +21,7 @@ abstract class ApiResultHandler<Result, Data>(
 
             is ApiResult.Success -> {
                 if (response.data == null) {
-                    Resource.Error(throwable = NetworkThrowable(null, "No response from api"))
+                    Resource.Error(throwable = NetworkThrowable(null, "No response from api."))
                 } else {
                     handleSuccess(resultObj = response.data)
                 }
