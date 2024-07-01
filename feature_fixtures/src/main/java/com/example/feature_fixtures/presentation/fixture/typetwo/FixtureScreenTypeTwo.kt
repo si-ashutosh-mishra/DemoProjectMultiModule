@@ -82,7 +82,7 @@ fun FixtureScreenTypeTwo(
 
     LifeCycleObserver(fetchData = {
         viewModel.cancelApiCoroutine()
-        viewModel.getFixtureList(teamId)
+        viewModel.getFixtureList(teamId,true)
     }) {
         viewModel.cancelApiCoroutine()
     }
