@@ -76,24 +76,24 @@ fun StandingsScreen(
     circularTeamBGColor: Color = White20,
     topRadius: Dp = 20.dp,
     bottomRadius: Dp = 20.dp,
-    currentTeamID: Int? = null,
     isShowForm: Boolean = true,
     swapPosition: Int? = null,
     isSwapRequired: Boolean = false,
     requiredTeamCount: Int? = null,
     showBack: Boolean = true,
-    showFilter: Boolean = true
+    showFilter: Boolean = true,
 ) {
 
     val viewModel: StandingViewModel = hiltViewModel()
+
+    val currentTeamID = viewModel.standingConfigContract.getCurrentTeamID()
 
     LaunchedEffect(key1 = Unit) {
         viewModel.loadStanding(
             isShowForm = isShowForm,
             isSwapRequired = isSwapRequired,
             requiredTeamCount = requiredTeamCount,
-            swapPosition = swapPosition,
-            currentTeamId = currentTeamID
+            swapPosition = swapPosition
         )
     }
 

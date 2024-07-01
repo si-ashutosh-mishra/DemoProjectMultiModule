@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.standing.R
+import com.example.standing.business.domain.model.standing.IPLStandings
 import com.example.standing.presentation.standing.LeftDataSection
 import com.example.standing.presentation.standing.RightDataSection
 import com.example.standing.presentation.standing.StandingViewModel
@@ -79,19 +80,10 @@ fun StandingHome(
     selectedTeamBGColor: Color = Color.Blue,
     circularTeamBGColor: Color = White70,
     currentTeamID: Int? = null,
-    requiredTeamCount: Int? = null,
     showMore: Boolean = true,
     showTitle: Boolean = true,
-    //pointsTableList: List<IPLStandings>? = null,
+    pointsTableList: List<IPLStandings?>? = null,
 ) {
-
-    val viewModel: StandingViewModel = hiltViewModel()
-
-    LaunchedEffect(key1 = Unit) {
-        viewModel.loadStanding(requiredTeamCount = requiredTeamCount)
-
-    }
-    val pointsTableList by viewModel.standingLiveData.observeAsState(initial = emptyList())
 
     if (!pointsTableList.isNullOrEmpty()) {
         Box(
