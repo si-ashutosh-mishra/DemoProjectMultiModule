@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class StandingViewModel @Inject constructor(
     private val getStandingsData: GetStandingData,
-    private val standingConfigContract: StandingConfigContract
+    val standingConfigContract: StandingConfigContract
 ) : BaseViewModel() {
 
     private val _standingLiveData = MutableLiveData<List<IPLStandings?>>()
@@ -27,8 +27,7 @@ class StandingViewModel @Inject constructor(
         isShowForm: Boolean = false,
         isSwapRequired: Boolean = false,
         requiredTeamCount: Int? = null,
-        swapPosition: Int? = null,
-        currentTeamId: Int? = null,
+        swapPosition: Int? = null
     ) {
         viewModelScope.launch {
             getStandingsData(
@@ -37,7 +36,7 @@ class StandingViewModel @Inject constructor(
                 isSwapRequired = isSwapRequired,
                 teamCount = requiredTeamCount,
                 swapPosition = swapPosition,
-                currentTeamId = currentTeamId
+                currentTeamId = standingConfigContract.getCurrentTeamID()
             ).collectLatest {
                 when (it) {
                     is Resource.Loading -> setLoading(true)

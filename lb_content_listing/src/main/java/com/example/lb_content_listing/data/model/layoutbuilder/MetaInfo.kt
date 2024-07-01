@@ -33,6 +33,7 @@ data class MetaInfo(
     @SerializedName("show_timestamp") val showTimestamp: Boolean?,
     @SerializedName("show_title") val showTitle: Int?,
     @SerializedName("show_widget_title") val showWidgetTitle: Int?,
+    @SerializedName("show_more_title") val showMoreTitle: Int?,
     @SerializedName("showitem_icon_content") val showitemIconContent: Int?,
     @SerializedName("view") val view: String?,
     @SerializedName("widget_title_tag") val widgetTitleTag: String?,
@@ -55,7 +56,6 @@ data class MetaInfo(
     @SerializedName("feed_info") val feedInfo: FeedInfo?,
     @SerializedName("match_counts") val matchCounts: MatchCounts?,
     @SerializedName("is_carousel") val isCarousel: Boolean?,
-    @SerializedName("sort_order") val sortOrder: Int?,
 )
 
 data class MoreLinks(
