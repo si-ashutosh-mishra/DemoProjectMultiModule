@@ -1,6 +1,5 @@
 package com.example.standing.presentation.standing
 
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -19,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,58 +28,52 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.standing.R
 import com.example.standing.presentation.theme.DarkBlue
-import com.example.standing.presentation.theme.interBold
-import com.example.standing.presentation.theme.interRegular
+import com.example.standing.presentation.theme.White20
 
 @Composable
 fun StandingsScreen(
     navController: NavController,
-    @ColorRes toolBarBGColor: Int = R.color.black,
-    @ColorRes titleBarIconTintColor: Int = R.color.white,
+    toolBarBGColor: Color = Color.Black,
+    titleBarIconTintColor: Color = Color.White,
     toolBarTitleTextStyle: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
         fontSize = 14.sp,
-        fontFamily = interBold,
         fontWeight = FontWeight.Bold,
     ),
-    toolBarTitle: String = stringResource(R.string.points_table),
+    toolBarTitle: String = "Point Table",
     @DrawableRes mainBg: Int = R.drawable.kkr_bg_standings,
-    @ColorRes titleBarBGColor: Int = R.color.kkr_toolbar,
+    titleBarBGColor: Color = Color.Blue,
     titleTextStyle: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
         fontSize = 14.sp,
-        fontFamily = interBold,
         fontWeight = FontWeight.Normal,
     ),
     valueTextStyle: TextStyle = TextStyle(
         color = DarkBlue,
         textAlign = TextAlign.Center,
         fontSize = 12.sp,
-        fontFamily = interRegular,
         fontWeight = FontWeight.Normal,
     ),
     teamPosStyle: TextStyle = TextStyle(
         color = DarkBlue,
         textAlign = TextAlign.Center,
         fontSize = 12.sp,
-        fontFamily = interBold,
         fontWeight = FontWeight.Normal
     ),
     teamNameStyle: TextStyle = TextStyle(
         color = DarkBlue,
         textAlign = TextAlign.Start,
         fontSize = 12.sp,
-        fontFamily = interBold,
         fontWeight = FontWeight.Normal,
     ),
 
-    @ColorRes leftViewBgColor: Int = R.color.golden_dark_50,
-    @ColorRes qualifiedBGColor: Int = R.color.red,
-    @ColorRes rightViewBgColor: Int = R.color.white,
-    @ColorRes selectedTeamBGColor: Int = R.color.kkr_toolbar_50,
-    @ColorRes circularTeamBGColor: Int = R.color.white_20,
+    leftViewBgColor: Color = Color.Yellow,
+    qualifiedBGColor: Color = Color.Red,
+    rightViewBgColor: Color = Color.White,
+    selectedTeamBGColor: Color = Color.Blue,
+    circularTeamBGColor: Color = White20,
     topRadius: Dp = 20.dp,
     bottomRadius: Dp = 20.dp,
     currentTeamID: Int? = null,

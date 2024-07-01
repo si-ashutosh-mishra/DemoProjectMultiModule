@@ -62,9 +62,13 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getContentImageUrl(
-        imagePath: String?, imageName: String?, imageRatio: String?
+        imagePath: String?, imageName: String?, imageRatio: String?,
     ): String {
-        return ""
+        return getBaseUrl() + getBaseContentImageUrl().replace("{image_path}",
+            imageRatio?.let { imagePath?.replace("/0/", "/$imageRatio/") } ?: imagePath.orEmpty())
+            .replace(
+                "{image_name}", imageName.orEmpty()
+            )
     }
 
     override fun getContentSharingUrl(entityCategory: String?, titleAlias: String?): String {
@@ -72,10 +76,17 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getReelsSharingUrl(
-        entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?
+        entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?,
     ): String {
         return ""
     }
+
+    override fun getStandingTitleList(): List<String> {
+        return listOf("MP", "W", "L", "NRR", "PTS")
+    }
+
+    private fun getBaseContentImageUrl() =
+        "static-assets/waf-images/{image_path}{image_name}?v=1.30"
 
     override fun getSquadListingUrl(seriesId: String?, teamId: String?): String {
         /*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_SQUAD_FEED_URL)

@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.sp
 import com.example.standing.presentation.theme.DarkBlue
 import com.example.standing.presentation.theme.Green
 import com.example.standing.presentation.theme.Red
-import com.example.standing.presentation.theme.interBold
 
 @Composable
 fun ItemWinLose(winLoss: String?) {
@@ -52,7 +51,6 @@ fun ItemWinLose(winLoss: String?) {
             text = winLoss,
             color = Color.White,
             fontSize = 12.sp,
-            fontFamily = interBold,
             textAlign = TextAlign.Center
         )
     }

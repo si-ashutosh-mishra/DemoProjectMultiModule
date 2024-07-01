@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
@@ -26,14 +27,14 @@ fun LeftDataSection(
     list: List<IPLStandings?>,
     topRadius: Dp,
     bottomRadius: Dp,
-    titleBarBGColor: Int,
+    titleBarBGColor: Color,
     titleTextStyle: TextStyle,
     teamPosStyle: TextStyle,
     teamNameStyle: TextStyle,
-    leftViewBgColor: Int,
-    selectedTeamBGColor: Int,
-    circularTeamBGColor: Int,
-    qualifiedBGColor: Int,
+    leftViewBgColor: Color,
+    selectedTeamBGColor: Color,
+    circularTeamBGColor: Color,
+    qualifiedBGColor: Color,
     currentTeamID: Int?,
 
     ) {
@@ -50,7 +51,7 @@ fun LeftDataSection(
                 .fillMaxWidth()
                 .height(50.dp)
                 .background(
-                    colorResource(id = titleBarBGColor)
+                    titleBarBGColor
                 )
         ) {
             Text(

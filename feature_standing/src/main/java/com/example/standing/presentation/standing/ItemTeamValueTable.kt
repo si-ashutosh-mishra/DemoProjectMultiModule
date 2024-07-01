@@ -8,7 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.example.standing.business.domain.model.standing.IPLStandings
@@ -17,22 +17,20 @@ import com.example.standing.business.domain.model.standing.IPLStandings
 @Composable
 fun ItemTeamValueTable(
     index: Int,
-    titleBarBGColor: Int,
-    rightViewBgColor: Int,
+    titleBarBGColor: Color,
+    rightViewBgColor: Color,
     iplStanding: IPLStandings,
     titleTextStyle: TextStyle,
     valueTextStyle: TextStyle,
     currentTeamID: Int?,
-    selectedTeamBGColor: Int
+    selectedTeamBGColor: Color
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .height(50.dp)
             .background(
-                if (index == 0) colorResource(id = titleBarBGColor) else if (currentTeamID == iplStanding.teamID) colorResource(
-                    id = selectedTeamBGColor
-                ) else colorResource(id = rightViewBgColor)
+                if (index == 0) titleBarBGColor else if (currentTeamID == iplStanding.teamID) selectedTeamBGColor else rightViewBgColor
             ),
     ) {
         iplStanding.scoreList.forEachIndexed { _, s ->

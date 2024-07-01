@@ -1,6 +1,5 @@
 package com.example.standing.presentation.standinghome
 
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -35,57 +34,50 @@ import com.example.standing.presentation.standing.LeftDataSection
 import com.example.standing.presentation.standing.RightDataSection
 import com.example.standing.presentation.standing.StandingViewModel
 import com.example.standing.presentation.theme.DarkBlue
-import com.example.standing.presentation.theme.interBold
-import com.example.standing.presentation.theme.interRegular
+import com.example.standing.presentation.theme.White70
 
 
 @Composable
 fun StandingHome(
     title: String = "Standing",
     standingHeadingStyle: TextStyle = TextStyle(
-        color = Color.Black, textAlign = TextAlign.Center, fontSize = 16.sp, fontFamily = interBold
+        color = Color.Black, textAlign = TextAlign.Center, fontSize = 16.sp
     ),
 
-    @ColorRes widgetBackGroundColor: Int? = null,
+    widgetBackGroundColor: Int? = null,
     @DrawableRes widgetBackGroundImage: Int? = R.drawable.kkr_bg_standings,
     @DrawableRes viewMoreLogo: Int = R.drawable.ic_view_more,
     onViewMoreClick: () -> Unit,
     topRadius: Dp = 20.dp,
     bottomRadius: Dp = 20.dp,
-    @ColorRes titleBarBGColor: Int = R.color.kkr_toolbar,
+    titleBarBGColor: Color = Color.Blue,
     titleTextStyle: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
         fontSize = 14.sp,
-        fontFamily = interBold,
         fontWeight = FontWeight.Normal,
     ),
     valueTextStyle: TextStyle = TextStyle(
         color = DarkBlue,
         textAlign = TextAlign.Center,
         fontSize = 12.sp,
-        fontFamily = interRegular,
         fontWeight = FontWeight.Normal,
     ),
     teamPosStyle: TextStyle = TextStyle(
-        color = DarkBlue,
-        textAlign = TextAlign.Center,
-        fontSize = 12.sp,
-        fontFamily = interBold,
+        color = DarkBlue, textAlign = TextAlign.Center, fontSize = 12.sp,
         fontWeight = FontWeight.Normal
     ),
     teamNameStyle: TextStyle = TextStyle(
         color = DarkBlue,
         textAlign = TextAlign.Start,
         fontSize = 12.sp,
-        fontFamily = interBold,
         fontWeight = FontWeight.Normal,
     ),
-    @ColorRes leftViewBgColor: Int = R.color.golden_dark_50,
-    @ColorRes qualifiedBGColor: Int = R.color.red,
-    @ColorRes rightViewBgColor: Int = R.color.white,
-    @ColorRes selectedTeamBGColor: Int = R.color.kkr_toolbar_50,
-    @ColorRes circularTeamBGColor: Int = R.color.white_20,
+    leftViewBgColor: Color = Color.Yellow,
+    qualifiedBGColor: Color = Color.Red,
+    rightViewBgColor: Color = Color.White,
+    selectedTeamBGColor: Color = Color.Blue,
+    circularTeamBGColor: Color = White70,
     currentTeamID: Int? = null,
     requiredTeamCount: Int? = null,
     showMore: Boolean = true,
@@ -111,7 +103,7 @@ fun StandingHome(
                 Image(
                     painterResource(id = widgetBackGroundImage),
                     contentDescription = null,
-                    contentScale = ContentScale.FillBounds, // or some other scale
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier.matchParentSize()
                 )
             }
