@@ -1,9 +1,9 @@
 package com.example.feature_news.business.domain.model.news
 
-import com.example.content_listing.business.domain.model.AssetItem
 import com.example.feature_news.business.domain.model.listing.ListingEntityData
 import com.example.feature_news.presentation.news.typeone.NewsItemViewType
-import com.knightclub.app.business.domain.model.listing.BannerItem
+import com.example.lb_content_listing.business.domain.model.AssetItem
+import com.example.feature_news.business.domain.model.listing.BannerItem
 
 
 sealed class NewsListingItem(val type: NewsItemViewType) {

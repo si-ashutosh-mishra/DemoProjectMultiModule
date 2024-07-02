@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
 import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
-import com.example.feature_news.presentation.news.typeone.NewsTypeOne
+import com.example.feature_news.presentation.news.NewsTypeOne
 import com.example.feature_news.presentation.newslist.typeone.NewsListTypeOne
 import com.example.standing.presentation.standing.StandingsScreen
 import com.example.standing.presentation.standinghome.StandingHome

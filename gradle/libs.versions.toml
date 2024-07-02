@@ -64,6 +64,7 @@ androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtim
 coil = { group = "io.coil-kt",name = "coil-compose", version.ref = "coilVersion" }
 page-indicator = { group = "com.google.accompanist",name = "accompanist-pager-indicators", version.ref = "pageIndicatorVersion" }
 androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "pagingCommonAndroid" }
+androidx-paging-compose-android = { group = "androidx.paging", name = "paging-compose-android", version = "3.3.0" }
 
 
 

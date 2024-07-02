@@ -1,9 +1,9 @@
 package com.example.feature_news.business.interactor
 
 import com.example.base.helper.Resource
-import com.example.content_listing.business.repository.LBRepository
 import com.example.feature_news.business.domain.model.news.NewsListingItem
 import com.example.feature_news.data.mapper.NewsModuleEntityMapper
+import com.example.lb_content_listing.business.repository.LBRepository
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -19,10 +19,7 @@ class GetNewsLB @Inject constructor(
         return flow{
             val result = lbRepository.getLBListing(url).first{ it !is Resource.Loading }.data
 
-            val module = result?.module?.filter { it.showInApp == 1 }
-                ?.sortedBy { it.metaInfo?.widgetOrder ?: 0 }
-
-            emit(Resource.Success(data = newsModuleEntityMapper.toDomain(module)
+            emit(Resource.Success(data = newsModuleEntityMapper.toDomain(result)
                 ?.filter { it !is NewsListingItem.Unknown }))
         }
     }

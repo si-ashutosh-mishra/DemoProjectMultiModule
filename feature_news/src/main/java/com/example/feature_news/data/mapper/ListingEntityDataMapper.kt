@@ -2,8 +2,8 @@ package com.example.feature_news.data.mapper
 
 
 import com.example.base.helper.EntityMapper
-import com.example.content_listing.data.model.layoutbuilder.Module
 import com.example.feature_news.business.domain.model.listing.ListingEntityData
+import com.example.lb_content_listing.data.model.layoutbuilder.Module
 import javax.inject.Inject
 
 class ListingEntityDataMapper @Inject constructor(): EntityMapper<Module, ListingEntityData> {

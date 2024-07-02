@@ -41,6 +41,7 @@ class ContentListingRepositoryImpl @Inject constructor(
             ) {
                 override suspend fun handleSuccess(resultObj: BaseResponse<Content>): Resource<List<AssetItem>?> {
                     return if (resultObj.status == 200) {
+                        println("news list url "+ url)
                         Resource.Success(resultObj.content?.assetItemEntities?.map {
                             assetItemEntityMapper.toDomain(it, imageRatio)
                         })

@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.dagger.hilt)
     //implementation(libs.hilt.view.model)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.paging.compose.android)
     //implementation(libs.lifecycle.viewmodel.compose)
     kapt(libs.dagger.hilt.compiler)
     kapt(libs.hilt.compiler)
@@ -78,6 +79,8 @@ dependencies {
 
     //pageindicator
     implementation(libs.page.indicator)
+
+    implementation(libs.androidx.paging.common.android)
 
 
     testImplementation(libs.junit)

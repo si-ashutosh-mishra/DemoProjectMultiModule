@@ -1,12 +1,8 @@
 package com.example.feature_news.presentation.news.typeone
 
-import android.util.Log
 import androidx.annotation.ColorRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,8 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
@@ -32,53 +26,24 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.content_listing.business.domain.model.AssetItem
 import com.example.feature_news.R
 import com.example.feature_news.presentation.theme.light_gray
 import com.example.feature_news.presentation.theme.purple
 import com.example.feature_news.presentation.theme.textcolor_gray
+import com.example.lb_content_listing.business.domain.model.AssetItem
 
 @Composable
-fun ItemCategoryArticle(
-    title: String,
-    titleFontSize: TextUnit,
-    titleFontStyle: FontFamily,
+fun ItemCategoryArticleOne(
     assetList: List<AssetItem>,
     tagFontSize: TextUnit = 10.sp,
     @ColorRes tagColor: Color =  light_gray,
     @ColorRes tagTextColor: Color =  purple,
-    tagRadious: Dp = 20.dp,
+    tagRadius: Dp = 20.dp,
     tagFontStyle: FontFamily = FontFamily(Font(R.font.rubik_medium)),
     newsTitleFontSize: TextUnit = 14.sp,
     newsTitleFontFamily: FontFamily = FontFamily(Font(R.font.rubik_regular)),
     @ColorRes newsTitleColor : Color = textcolor_gray,
-    clickViewAll: () -> Unit
-) {
-    Log.d("MTIMAGEURL", "${assetList.get(0).imageUrl}")
-    val mContext = LocalContext.current
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 15.dp, end = 15.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text = title.uppercase(),
-            fontSize = titleFontSize,
-            fontFamily = titleFontStyle
-        )
-
-        Text(text = "View All".uppercase(), fontSize = 13.sp, modifier = Modifier.clickable {
-            clickViewAll()
-        })
-    }
-    Spacer(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(15.dp)
-    )
-
+){
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -106,7 +71,7 @@ fun ItemCategoryArticle(
                         modifier = Modifier
                             .background(
                                 color = tagColor,
-                                shape = RoundedCornerShape(tagRadious)
+                                shape = RoundedCornerShape(tagRadius)
                             )
                             .padding(horizontal = 14.dp, vertical = 4.dp)
                     )
@@ -131,7 +96,4 @@ fun ItemCategoryArticle(
             Spacer(modifier = Modifier.size(10.dp))
         }
     }
-
-
-
 }

@@ -1,9 +1,10 @@
-package com.example.feature_news.presentation.news.typeone
+package com.example.feature_news.presentation.news
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,8 +19,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -35,8 +38,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_news.R
-import com.example.feature_news.presentation.news.NewsViewModel
 import com.example.feature_news.business.domain.model.news.NewsListingItem
+import com.example.feature_news.presentation.news.typeone.CarouselTypeOneScreen
+import com.example.feature_news.presentation.news.typeone.NewsItemViewType
+import com.example.feature_news.presentation.news.typetwo.LazyColumnWithMultipleItem
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -44,8 +49,6 @@ import com.example.feature_news.business.domain.model.news.NewsListingItem
 fun NewsTypeOne(
     onViewMoreClick: () -> Unit,
 ) {
-
-    val mContext = LocalContext.current
 
     val viewModel: NewsViewModel = hiltViewModel()
 
@@ -57,26 +60,35 @@ fun NewsTypeOne(
         viewModel.fetchData("https://www.knightclub.in/apiv4/gettemplatedata?url=kkr-app-home/app-news&is_app=1")
     }
 
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        itemsIndexed(
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())
+    ) {
+
+        /*itemsIndexed(
             items = list,
             key = { _: Int, item: NewsListingItem ->
                 item.type.id
             },
-        ) { _, item ->
+        ) { _, item ->*/
+        list.forEach {item ->
             when (item.type.id) {
                 NewsItemViewType.CAROUSEL.id -> {
                     (item as NewsListingItem.Carousel).let { items ->
                         val count = items.items.size
                         Box(
-                            modifier = Modifier.fillMaxWidth().height(330.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(330.dp),
                             contentAlignment = Alignment.BottomCenter
                         ) {
                             val pagerState =
                                 rememberPagerState(initialPage = 0, 0f) { count }
 
                             HorizontalPager(
-                                modifier = Modifier.fillMaxWidth().height(330.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(330.dp),
                                 state = pagerState,
                                 pageSpacing = 0.dp,
                                 userScrollEnabled = true,
@@ -87,7 +99,7 @@ fun NewsTypeOne(
                                 pageContent = {
                                     CarouselTypeOneScreen(
                                         item = items.items[it]
-                                        )
+                                    )
                                 })
                             Row(
                                 Modifier
@@ -99,13 +111,14 @@ fun NewsTypeOne(
                                 repeat(count) { iteration ->
                                     val color =
                                         if (pagerState.currentPage == iteration) Color.Yellow else Color.LightGray
-                                    if(pagerState.currentPage == iteration){
+                                    if (pagerState.currentPage == iteration) {
                                         Box(
                                             modifier = Modifier
                                                 .padding(2.dp)
                                                 .clip(shape = RoundedCornerShape(10.dp))
                                                 .background(color)
-                                                .width(22.dp).height(8.dp)
+                                                .width(22.dp)
+                                                .height(8.dp)
                                         )
                                     } else {
                                         Box(
@@ -124,6 +137,12 @@ fun NewsTypeOne(
                                 .fillMaxWidth()
                                 .height(30.dp)
                         )
+                    }
+                }
+
+                NewsItemViewType.BANNER.id -> {
+                    (item as NewsListingItem.Banner).let {
+                        NewsBanner(banner = it)
                     }
                 }
 

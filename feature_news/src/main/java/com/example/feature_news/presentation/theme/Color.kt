@@ -43,5 +43,7 @@ val kkr_purple_dark = Color(0xFF340D53)
 val light_gray = Color(0xFFD3D3D3)
 val textcolor_gray = Color(0xFF252525)
 val purple = Color(0xFF3A225D)
+val black_90 = Color(0xCC000000)
+val white_50 = Color(0x80FFFFFF)
 
 val share_gray = Color(0xFF2A2A2A)

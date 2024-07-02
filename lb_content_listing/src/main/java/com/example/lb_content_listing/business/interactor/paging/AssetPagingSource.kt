@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.first
 
 abstract class AssetPagingSource : PagingSource<Int, AssetItem>() {
 
-    override fun getRefreshKey(state: PagingState<Int, AssetItem>): Int = 1
+    override fun getRefreshKey(state: PagingState<Int, AssetItem>): Int = state.anchorPosition ?: 1
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, AssetItem> {
         val currentPageNo = params.key ?: 1
@@ -20,7 +20,7 @@ abstract class AssetPagingSource : PagingSource<Int, AssetItem>() {
         } else {
             loadingDialog(false)
             val data = resource.data.orEmpty()
-
+            println("KKR news list "+currentPageNo +","+ data.size)
             LoadResult.Page(
                 data = data,
                 prevKey = null,

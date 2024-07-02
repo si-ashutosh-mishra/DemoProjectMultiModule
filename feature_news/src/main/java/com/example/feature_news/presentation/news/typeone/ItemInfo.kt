@@ -20,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -31,7 +30,6 @@ import androidx.compose.ui.unit.sp
 import com.example.feature_news.R
 import com.example.feature_news.presentation.theme.share_gray
 import com.example.feature_news.presentation.theme.textcolor_gray
-import com.knightclub.app.business.domain.model.listing.BannerItem
 
 @Composable
 fun ItemDateTimeLikeShare(

@@ -28,11 +28,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.feature_news.R
 import com.example.feature_news.presentation.theme.black
-import com.example.feature_news.presentation.theme.light_gray
-import com.example.feature_news.presentation.theme.purple
 import com.example.feature_news.presentation.theme.white
 import com.example.feature_news.presentation.theme.yellow
-import com.knightclub.app.business.domain.model.listing.BannerItem
+import com.example.feature_news.business.domain.model.listing.BannerItem
 
 @Composable
 fun CarouselTypeOneScreen(

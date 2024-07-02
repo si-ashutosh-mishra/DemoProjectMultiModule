@@ -1,6 +1,7 @@
-package com.knightclub.app.business.domain.model.listing
+package com.example.feature_news.business.domain.model.listing
 
-import com.example.content_listing.business.domain.model.AssetUtils
+import com.example.lb_content_listing.business.domain.model.AssetUtils
+
 
 data class BannerItem(
     val assetId: Int?,

@@ -1,24 +1,26 @@
 package com.example.feature_news.data.mapper
 
 
+import com.example.base.helper.BaseConfigContract
 import com.example.base.helper.EntityMapper
 import com.example.base.utils.CalendarUtils
-import com.example.content_listing.business.domain.model.AssetUtils
-import com.example.content_listing.data.mapper.AssetItemEntityMapper
-import com.example.content_listing.data.model.layoutbuilder.Module
-import com.example.content_listing.data.remote.ContentListingConfigContract
 import com.example.feature_news.business.domain.model.news.NewsListingItem
 import com.example.feature_news.presentation.news.typeone.NewsItemViewType
 import com.example.feature_news.utils.ImageRatioMapper
+import com.example.lb_content_listing.business.domain.model.AssetUtils
+import com.example.lb_content_listing.data.mapper.AssetItemEntityMapper
+import com.example.lb_content_listing.data.model.layoutbuilder.Module
+import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.knightclub.app.business.domain.model.Component
 import com.knightclub.app.business.domain.model.WidgetView
-import com.knightclub.app.business.domain.model.listing.BannerItem
+import com.example.feature_news.business.domain.model.listing.BannerItem
 import javax.inject.Inject
 
 class NewsModuleEntityMapper @Inject constructor(
     private val assetItemEntityMapper: AssetItemEntityMapper,
     private val listingEntityDataMapper: ListingEntityDataMapper,
-    private val contentListingConfigContract: ContentListingConfigContract
+    private val contentListingConfigContract: ContentListingConfigContract,
+    private val baseConfigContract: BaseConfigContract
 ) :EntityMapper<List<Module>?, List<NewsListingItem>?> {
 
     override fun toDomain(entity: List<Module>?): List<NewsListingItem>? {
@@ -68,7 +70,6 @@ class NewsModuleEntityMapper @Inject constructor(
                                     reactCount = null,
                                     assetType = AssetUtils.getAssetType(
                                         assetTypeId = assetMap.assetType,
-                                        //secondaryEntityRoleMapId = assetMap.entitydata?.find { entity -> entity.priority == 2 }?.entityRoleMapId
                                     ),
                                     sharingUrl = sharingUrl,
                                     tag = categoryTag
@@ -83,7 +84,7 @@ class NewsModuleEntityMapper @Inject constructor(
                     else
                         NewsListingItem.Banner(
                             title = module.displayTitle.orEmpty(),
-                            bannerImage = "",//configManager.getBaseUrl() + module.metaInfo.bannerImage,
+                            bannerImage = baseConfigContract.getBaseUrl() + module.metaInfo?.bannerImage,//configManager.getBaseUrl() + module.metaInfo.bannerImage,
                             bannerLink = module.metaInfo?.bannerLink ?: "",
                         )
                 }
