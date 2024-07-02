@@ -159,7 +159,7 @@ fun LiveMatchCardTypeOne(
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(
-                                text = teamA?.name ?: "",
+                                text = teamA?.shortName ?: "",
                                 style = teamNameTextStyle
                             )
                         }
@@ -376,7 +376,7 @@ fun LiveMatchCardTypeOne(
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                             Text(
-                                text = teamB?.name ?: "",
+                                text = teamB?.shortName ?: "",
                                 style = teamNameTextStyle
                             )
                         }

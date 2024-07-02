@@ -1,6 +1,7 @@
 package com.example.demoprojectmultimodule.data.data
 
 import com.example.base.helper.BaseConfigContract
+import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.demoprojectmultimodule.data.data.model.AppTypePath
 import com.example.demoprojectmultimodule.util.AppType
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
@@ -10,14 +11,15 @@ import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.example.standing.data.remote.StandingConfigContract
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class ConfigManager @Inject constructor(
     private val gson: Gson
-) : BaseConfigContract, FixtureConfigContract, StandingConfigContract,
-    ContentListingConfigContract, SquadConfigContract {
+) : BaseConfigContract, FixtureConfigContract, StandingConfigContract, ContentListingConfigContract,
+    AppHomeConfigContract, SquadConfigContract {
 
     override fun getBaseUrl(): String {
         return "https://www.knightclub.in/"
@@ -54,7 +56,7 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getFixturesUrl(): String {
-        return "default.aspx?methodtype=3&client=7756e60237&sport=1&league=0&timezone=0530&language=0&tournament=4848"
+        return "default.aspx?methodtype=3&client=4737564702&sport=1&league=0&timezone=0530&language=&tournament=4723"
     }
 
     override fun getStandingUrl(): String {
@@ -87,6 +89,22 @@ class ConfigManager @Inject constructor(
 
     private fun getBaseContentImageUrl() =
         "static-assets/waf-images/{image_path}{image_name}?v=1.30"
+
+    override fun getAppHomeUrl(): String {
+        return getBaseUrl() + "apiv3/gettemplatedata?url=kkr-app-home&is_app=1"
+    }
+
+    override fun getCurrentTeamID() = 1106
+    override fun getHomeTeamCount() = 5
+    override fun swapPos() = 4
+    override fun isSwap() = true
+
+    override fun getFixturesPollingInterval(): Long {
+        return TimeUnit.SECONDS.toMillis(
+            15
+        )
+    }
+
 
     override fun getSquadListingUrl(seriesId: String?, teamId: String?): String {
         /*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_SQUAD_FEED_URL)
