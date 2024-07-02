@@ -73,6 +73,8 @@ dependencies {
     implementation(project(":feature_fixtures"))
     implementation(project(":feature_standing"))
     implementation(project(":lb_content_listing"))
+    implementation(project(":common_webview"))
+    implementation(project(":feature_app_home"))
     implementation(project(":base"))
     implementation(project(":photo_listing"))
 
