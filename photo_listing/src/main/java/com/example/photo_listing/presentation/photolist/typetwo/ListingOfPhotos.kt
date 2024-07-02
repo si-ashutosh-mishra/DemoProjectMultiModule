@@ -32,6 +32,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.lb_content_listing.business.domain.model.AssetItem
 import com.example.photo_listing.presentation.theme.Black
 
+
 @Composable
 fun ListingOfPhotos(assetItem: AssetItem,
                     itemCounts : Int,
@@ -67,7 +68,7 @@ fun ListingOfPhotos(assetItem: AssetItem,
                     contentScale = ContentScale.Crop
                     )
 
-                Text(text = " ${assetItem.totalAssets} Photos ",
+                Text(text = "  ${assetItem.totalAssets} Photos  ",
                     style = matchPhotosNumberStyle)
             }
 

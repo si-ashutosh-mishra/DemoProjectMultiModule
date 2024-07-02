@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.em
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.photo_listing.business.model.PhotoListingItem
@@ -108,7 +109,8 @@ fun PhotoListingTypeTwo(
     trainingPhotosNumberStyle: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
-        background = Black
+        background = Black,
+        letterSpacing = 0.3.em
     ),
     trainingMoreButtonTextStyle : TextStyle = TextStyle(
         color = Color.White,

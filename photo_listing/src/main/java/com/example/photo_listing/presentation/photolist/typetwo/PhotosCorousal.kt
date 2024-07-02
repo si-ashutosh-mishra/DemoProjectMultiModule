@@ -130,7 +130,7 @@ fun PhotosCorousal(data : PhotoListingItem.Carousel,
                         ) {
 
                             Text(
-                                text = data.items.get(currentPage).albumCount.toString()+" Photos",
+                                text = "  ${data.items.get(currentPage).albumCount.toString()} Photos  ",
                                 style = corousalPhotosNumberStyle
                             )
 

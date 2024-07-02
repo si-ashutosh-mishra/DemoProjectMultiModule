@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -58,19 +59,44 @@ fun PhotoListing(
     @DrawableRes matchShareLogo : Int?=null,
     matchPhotosNumberStyle: TextStyle,
     matchMoreButtonTextStyle : TextStyle,
+    listingType : Boolean = false
 ){
    // Box (){
 
-    Box(modifier = Modifier.background(if (matchPhotoBackgroundColor!=null) colorResource(id = matchPhotoBackgroundColor) else Color.Transparent)){
-
-        if (matchPhotoBackgroundImage!=null){
-            Image(painterResource(id = matchPhotoBackgroundImage),
-                contentDescription ="",
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.matchParentSize())
+        if (listingType){
+            DisplayPhotosVertically(data,
+                matchPhotoTitleStyle,
+                matchMoreButton,
+                matchPhotoListingTitleStyle,
+                matchClockIcon,
+                matchTimeTextStyle,
+                displayMatchReaction,
+                borderColorStyle,
+                reactionIcon,
+                reactionTextStyle,
+                matchShareLogo,
+                matchPhotosNumberStyle,
+                matchMoreButtonTextStyle,
+             matchPhotoBackgroundImage,
+            matchPhotoBackgroundColor)
+        }else{
+            DisplayPhotosHorizontally(data,
+            matchPhotoTitleStyle,
+            matchMoreButton,
+            matchPhotoListingTitleStyle,
+            matchClockIcon,
+            matchTimeTextStyle,
+            displayMatchReaction,
+            borderColorStyle,
+            reactionIcon,
+            reactionTextStyle,
+            matchShareLogo,
+            matchPhotosNumberStyle,
+            matchMoreButtonTextStyle,
+            matchPhotoBackgroundImage,
+            matchPhotoBackgroundColor)
         }
-
-        Column(modifier = Modifier
+      /*  Column(modifier = Modifier
             .background(Color.Transparent)
             .fillMaxSize()
             .padding(0.dp, 5.dp, 0.dp, 5.dp)) {
@@ -120,17 +146,186 @@ fun PhotoListing(
                     )
                 }
             }
+        }*/
+    }
+
+@Composable
+fun DisplayPhotosHorizontally(data : PhotoListingItem.PhotosArticle,
+                               matchPhotoTitleStyle: TextStyle,
+                              matchMoreButton: ButtonColors,
+                              matchPhotoListingTitleStyle : TextStyle,
+                              @DrawableRes matchClockIcon : Int?=null,
+                              matchTimeTextStyle : TextStyle,
+                              displayMatchReaction : Boolean = false,
+                              borderColorStyle : TextStyle,
+                              @DrawableRes reactionIcon : Int?=null,
+                              reactionTextStyle : TextStyle,
+                              @DrawableRes matchShareLogo : Int?=null,
+                              matchPhotosNumberStyle: TextStyle,
+                              matchMoreButtonTextStyle : TextStyle,
+                              @DrawableRes matchPhotoBackgroundImage : Int?=null,
+                              @ColorRes matchPhotoBackgroundColor : Int?=null){
+
+    Box(modifier = Modifier.background(if (matchPhotoBackgroundColor!=null) colorResource(id = matchPhotoBackgroundColor) else Color.Transparent)){
+
+        if (matchPhotoBackgroundImage!=null){
+            Image(painterResource(id = matchPhotoBackgroundImage),
+                contentDescription ="",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.matchParentSize())
+        }
+    }
+
+    Column(modifier = Modifier
+        .background(Color.Transparent)
+        .fillMaxSize()
+        .padding(0.dp, 5.dp, 0.dp, 5.dp)) {
+
+        Row(
+            horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(0.dp, 10.dp, 0.dp, 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = data.title,
+                style = matchPhotoTitleStyle,
+                modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp)
+            )
+
+            Button(
+                onClick = { },
+                colors = matchMoreButton,
+                modifier = Modifier
+                    .padding(0.dp, 0.dp, 10.dp, 0.dp)
+                    .height(30.dp)
+                    .width(80.dp)
+                    .align(alignment = Alignment.CenterVertically),
+                shape = RoundedCornerShape(5.dp)
+            ) {
+                Text(
+                    text = "More",
+                    style = matchMoreButtonTextStyle
+                )
+            }
+        }
+
+        LazyRow {
+            items(data.items) {
+                ListingOfPhotos(
+                    it,
+                    data.items.size,
+                    matchPhotoListingTitleStyle,
+                    matchClockIcon,
+                    matchTimeTextStyle,
+                    displayMatchReaction,
+                    borderColorStyle,
+                    reactionIcon,
+                    reactionTextStyle = reactionTextStyle,
+                    matchShareLogo,
+                    matchPhotosNumberStyle
+                )
+            }
         }
     }
 }
 
 @Composable
-fun DisplayPhotosHorizontally(){
+fun DisplayPhotosVertically(data : PhotoListingItem.PhotosArticle,
+                            matchPhotoTitleStyle: TextStyle,
+                            matchMoreButton: ButtonColors,
+                            matchPhotoListingTitleStyle : TextStyle,
+                            @DrawableRes matchClockIcon : Int?=null,
+                            matchTimeTextStyle : TextStyle,
+                            displayMatchReaction : Boolean = false,
+                            borderColorStyle : TextStyle,
+                            @DrawableRes reactionIcon : Int?=null,
+                            reactionTextStyle : TextStyle,
+                            @DrawableRes matchShareLogo : Int?=null,
+                            matchPhotosNumberStyle: TextStyle,
+                            matchMoreButtonTextStyle : TextStyle,
+                            @DrawableRes matchPhotoBackgroundImage : Int?=null,
+                            @ColorRes matchPhotoBackgroundColor : Int?=null,){
+    LazyColumn(
+        modifier = Modifier
+            .background(Color.Transparent)
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        item {
+            Box(
+                modifier = Modifier.background(
+                    if (matchPhotoBackgroundColor != null) colorResource(
+                        id = matchPhotoBackgroundColor
+                    ) else Color.Transparent
+                )
+            ) {
 
+                if (matchPhotoBackgroundImage != null) {
+                    Image(
+                        painterResource(id = matchPhotoBackgroundImage),
+                        contentDescription = "",
+                        contentScale = ContentScale.FillBounds,
+                        modifier = Modifier.matchParentSize()
+                    )
+                }
+            }
+        }
+        item{
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(0.dp, 10.dp, 0.dp, 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = data.title,
+                    style = matchPhotoTitleStyle,
+                    modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp)
+                )
+
+                Button(
+                    onClick = { },
+                    colors = matchMoreButton,
+                    modifier = Modifier
+                        .padding(0.dp, 0.dp, 10.dp, 0.dp)
+                        .height(30.dp)
+                        .width(80.dp)
+                        .align(alignment = Alignment.CenterVertically),
+                    shape = RoundedCornerShape(5.dp)
+                ) {
+                    Text(
+                        text = "More",
+                        style = matchMoreButtonTextStyle
+                    )
+                }
+            }
+        }
+
+        items(data.items) {
+            ListingOfPhotos(
+                it,
+                data.items.size,
+                matchPhotoListingTitleStyle,
+                matchClockIcon,
+                matchTimeTextStyle,
+                displayMatchReaction,
+                borderColorStyle,
+                reactionIcon,
+                reactionTextStyle,
+                matchShareLogo,
+                matchPhotosNumberStyle
+            )
+        }
+    }
 }
 
-@Composable
-fun DisplayPhotosVertically(){
+
+
+fun addButtons(){
 
 }
-//}
