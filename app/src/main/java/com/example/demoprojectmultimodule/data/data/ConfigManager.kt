@@ -114,8 +114,9 @@ class ConfigManager @Inject constructor(
             .replace(
                 ReplaceKeys.DEFAULT_TEAM_ID, teamId ?: getDefaultTeamId()
             )*/
-        return "https://stg-kc.sportz.io/cricket/static/json/iplfeeds/{team_id}_all_players_{series_id}.json".replace(
-            ReplaceKeys.DEFAULT_SERIES_ID, seriesId ?: "5553"
+//        "https://stg-kc.sportz.io/cricket/static/json/iplfeeds/3840_all_players_6338.json"
+        return getBaseUrl()+"cricket/static/json/iplfeeds/{team_id}_all_players_{series_id}.json".replace(
+            ReplaceKeys.DEFAULT_SERIES_ID, seriesId ?: "6338"
         )
             .replace(
                 ReplaceKeys.DEFAULT_TEAM_ID, teamId ?: "3840"
@@ -189,14 +190,12 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getStaffImageUrl(staffId: String?): String {
-        /*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_BASE_STAFF_IMAGE_PATH)
+        return getBaseUrl() + "static-assets/images/support-staff/{staff_id}.png?v={data_image_version}"
             .replace(ReplaceKeys.STAFF_ID, staffId.orEmpty())
             .replace(
-                ReplaceKeys.DATA_IMAGE_VERSION, firebaseRemoteConfig.getString(
-                    KEY_DATA_IMAGE_VERSION
-                )
-            )*/
-        return ""
+                ReplaceKeys.DATA_IMAGE_VERSION, "2.23"
+            )
+//        return ""
     }
 
     override fun getSquadStaffOrder(): List<String> {
@@ -224,6 +223,7 @@ class ConfigManager @Inject constructor(
 
 object ReplaceKeys {
 
+    const val STAFF_ID: String = "{staff_id}"
     const val NATIONALITY_ID: String = "{nationality_id}"
     const val DATA_IMAGE_VERSION: String = "{data_image_version}"
     const val PLAYER_ID = "{player_id}"

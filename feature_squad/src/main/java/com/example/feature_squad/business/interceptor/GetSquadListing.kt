@@ -21,7 +21,7 @@ class GetSquadListing @Inject constructor(
 ) {
     operator fun invoke(
         isPlayerNameUpperCase: Boolean = true,
-        isSupportStaffRequired: Boolean = false,
+        isSupportStaffRequired: Boolean = true,
         currentTeam: Int = 99,
         seriesId: String? = null,
         teamId: String? = null,

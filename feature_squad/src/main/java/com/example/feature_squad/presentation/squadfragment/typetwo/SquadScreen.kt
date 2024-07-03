@@ -5,6 +5,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -91,10 +92,6 @@ fun SquadFragmentVerticalScroll (
     val tabItem = playerFilterData?.map { it.title }
     var selectedTab by remember { mutableIntStateOf(0) }
 
-    PlayerStaffTab(
-//        selectedTabIndex = { selectedTab = it }
-    )
-
 
     LaunchedEffect(key1 = selectedTabIndex) {
         pagerState.animateScrollToPage(selectedTabIndex)
@@ -106,60 +103,40 @@ fun SquadFragmentVerticalScroll (
     }
 
     Column (modifier = Modifier.wrapContentSize()) {
-
-        Spacer(
-            modifier = Modifier.height(16.dp)
+        PlayerStaffTab(
+            selectedTabIndex = selectedTab,
+            selectedTabIndexU = { selectedTab = it }
         )
 
-        ScrollableTabRow (
-            edgePadding = 0.dp,
-            selectedTabIndex = pagerState.currentPage,
-            modifier = Modifier
-                .background(Color.Black)
-                .wrapContentHeight(),
-            containerColor = Color.Blue,
-            indicator = { tabPositions ->
-                val currentTabPosition = tabPositions[pagerState.currentPage]
-                val indicatorOffset by animateDpAsState(
-                    targetValue = currentTabPosition.left,
-                    animationSpec = spring(), label = ""
-                )
-                val indicatorWidth by animateDpAsState(
-                    targetValue = currentTabPosition.width,
-                    animationSpec = spring(), label = ""
-                )
+        if (selectedTab == 0)
+            ScrollableTabRow (
+                edgePadding = 0.dp,
+                selectedTabIndex = pagerState.currentPage,
+                modifier = Modifier
+                    .background(Color.Black)
+                    .wrapContentHeight(),
+                containerColor = Purple,
+                indicator = { }
+            ) {
+                tabItem?.forEachIndexed { index, tabItem ->
+                    Tab(
+                        selected = index == selectedTabIndex,
+                        onClick = {
+                            selectedTabIndex = index
+                        },
+                        text = {
+                            Text(
+                                text = tabItem,
+                                color = Color.White,
+                                style = TextStyle(
+                                    textAlign = TextAlign.Center
+                                ),
+                            )
+                        },
+                    )
+                }
 
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .wrapContentSize(align = Alignment.BottomStart)
-                        .offset(x = indicatorOffset)
-                        .width(indicatorWidth)
-                        .height(4.dp)
-                        .background(Color.Blue)
-                )
             }
-        ) {
-//
-            tabItem?.forEachIndexed { index, tabItem ->
-                Tab(
-                    selected = index == selectedTabIndex,
-                    onClick = {
-                        selectedTabIndex = index
-                    },
-                    text = {
-                        Text(
-                            text = tabItem,
-                            color = Color.White,
-                            style = TextStyle(
-                                textAlign = TextAlign.Center
-                            ),
-                        )
-                    },
-                )
-            }
-
-        }
 
         HorizontalPager(
             state = pagerState, modifier = Modifier
@@ -209,30 +186,34 @@ fun PlayerStaffTab (
         textAlign = TextAlign.Center,
         color = Color.White,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp
+        fontSize = 16.sp
     ),
     unselectedTabTextStyle: TextStyle = TextStyle(
         textAlign = TextAlign.Center,
         color = Color.White,
         fontWeight = FontWeight.Bold,
-        fontSize = 20.sp
+        fontSize = 16.sp
     ),
-//    selectedTabIndex: Int,
+    selectedTabIndex: Int,
+    selectedTabIndexU: (Int) -> Unit,
 //    content: @Composable RowScope.() -> Unit
 ) {
 
-    var selectedTabIndex by remember { mutableIntStateOf(0) }
+//    var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     TabRow(
-        modifier = Modifier,
-        selectedTabIndex = 0
+        modifier = Modifier
+            .background(color = Color(0xFF553878)),
+        selectedTabIndex = 0,
+        indicator = {}
     ) {
         Row (
             modifier = Modifier
-                .padding(10.dp)
+                .padding(30.dp)
                 .background(
                     color = tabBackgroundColor, shape = RoundedCornerShape(8.dp)
                 )
+                .border(width = 0.91.dp, color = Color(0x4DFFFFFF), shape = RoundedCornerShape(8.dp))
         ) {
             Tab(
                 modifier = Modifier
@@ -243,7 +224,7 @@ fun PlayerStaffTab (
                     ),
                 selected = selectedTabIndex == 0,
                 onClick = {
-                    selectedTabIndex = 0
+                    selectedTabIndexU(0)
                 },
                 text = {
                     Text(
@@ -261,11 +242,11 @@ fun PlayerStaffTab (
                     ),
                 selected = selectedTabIndex == 1,
                 onClick = {
-                    selectedTabIndex = 1
+                    selectedTabIndexU(1)
                 },
                 text = {
                     Text(
-                        text = "Staff",
+                        text = "Support Staff",
                         style = unselectedTabTextStyle,
                     )
                 },

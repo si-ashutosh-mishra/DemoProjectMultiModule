@@ -35,7 +35,7 @@ import com.example.feature_squad.business.domain.model.squad.StaffItem
 @Preview(showBackground = true)
 @Composable
 fun ScreenPreview() {
-    SquadFragmentTypeTwo()
+    SquadStaffItemTypeTwo()
 }
 
 @Composable
@@ -103,10 +103,11 @@ fun SquadFragmentTypeTwo(
             Row (
                 modifier = Modifier.padding(vertical = 8.dp)
             ) {
-                Image(
+                AsyncImage(
+                    model = playerDetail?.countryImageUrl,
                     modifier = Modifier.align(Alignment.CenterVertically)
                         .size(20.dp),
-                    painter = painterResource(R.drawable.lakr_bg_squad_players),
+                    placeholder = painterResource(R.drawable.lakr_bg_squad_players),
                     contentDescription = ""
                 )
 
@@ -203,10 +204,11 @@ fun SquadStaffItemTypeTwo(
             Row (
                 modifier = Modifier.padding(vertical = 8.dp)
             ) {
-                Image(
+                AsyncImage(
+                    model = staffDetail?.countryImageUrl,
                     modifier = Modifier.align(Alignment.CenterVertically)
                         .size(20.dp),
-                    painter = painterResource(R.drawable.lakr_bg_squad_players),
+                    placeholder = painterResource(R.drawable.lakr_bg_squad_players),
                     contentDescription = ""
                 )
 
@@ -221,8 +223,8 @@ fun SquadStaffItemTypeTwo(
         }
 
         AsyncImage(
-//            painter = painterResource(playerImage),
             model = staffDetail?.staffImageUrl,
+            placeholder = painterResource(playerImage),
             modifier = playerImageModifier
                 .constrainAs(playerImageId) {
                     bottom.linkTo(playerDetailCard.bottom)
