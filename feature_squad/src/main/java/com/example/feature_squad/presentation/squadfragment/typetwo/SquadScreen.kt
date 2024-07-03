@@ -46,12 +46,13 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_squad.R
 import com.example.feature_squad.presentation.squad.viewmodel.SquadViewModel
+import com.example.feature_squad.presentation.util.LAKR_Purple_Light
 import com.example.feature_squad.presentation.util.Purple
 
 @Preview
 @Composable
 fun Preview() {
-    PlayerStaffTab()
+
 }
 
 
@@ -80,14 +81,20 @@ fun SquadFragmentVerticalScroll (
 ) {
 
     val viewModel: SquadViewModel = hiltViewModel()
-    val squadList by viewModel.player.observeAsState(initial = emptyList())
     val squadStaffListing by viewModel.squadStaffListing.observeAsState()
     val playerFilterData = squadStaffListing?.playerFilteredData
+    val supportStaffFilterData = squadStaffListing?.listOfStaff
 
     val pagerState = rememberPagerState { playerFilterData?.size ?: 0 }
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     val tabItem = playerFilterData?.map { it.title }
+    var selectedTab by remember { mutableIntStateOf(0) }
+
+    PlayerStaffTab(
+//        selectedTabIndex = { selectedTab = it }
+    )
+
 
     LaunchedEffect(key1 = selectedTabIndex) {
         pagerState.animateScrollToPage(selectedTabIndex)
@@ -107,7 +114,9 @@ fun SquadFragmentVerticalScroll (
         ScrollableTabRow (
             edgePadding = 0.dp,
             selectedTabIndex = pagerState.currentPage,
-            modifier = Modifier.background(Color.Black).wrapContentHeight(),
+            modifier = Modifier
+                .background(Color.Black)
+                .wrapContentHeight(),
             containerColor = Color.Blue,
             indicator = { tabPositions ->
                 
@@ -141,18 +150,32 @@ fun SquadFragmentVerticalScroll (
 
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
                 val list = playerFilterData?.get(index)?.playersList ?: emptyList()
+                val staffList = supportStaffFilterData ?: emptyList()
+
                 LazyColumn (
                     contentPadding = PaddingValues(16.dp)
                 ) {
-                    items(list) {
-                        SquadFragmentTypeTwo (
-                            playerImageModifier = Modifier,
-                            firstNameTextStyle = firstNameTextStyle,
-                            lastNameTextStyle = lastNameTextStyle,
-                            countryNameTextStyle = countryNameTextStyle,
-                            playerDetail = it
-                        )
+
+                    if (selectedTab == 0)
+                        items(list) {
+                            SquadFragmentTypeTwo (
+                                playerImageModifier = Modifier,
+                                firstNameTextStyle = firstNameTextStyle,
+                                lastNameTextStyle = lastNameTextStyle,
+                                countryNameTextStyle = countryNameTextStyle,
+                                playerDetail = it
+                            )
                     }
+                    else
+                        items(staffList) {
+                            SquadStaffItemTypeTwo (
+                                playerImageModifier = Modifier,
+                                firstNameTextStyle = firstNameTextStyle,
+                                lastNameTextStyle = lastNameTextStyle,
+                                countryNameTextStyle = countryNameTextStyle,
+                                staffDetail = it
+                            )
+                        }
                 }
             }
         }
@@ -161,7 +184,27 @@ fun SquadFragmentVerticalScroll (
 }
 
 @Composable
-fun PlayerStaffTab () {
+fun PlayerStaffTab (
+    selectedTabColor: Color = LAKR_Purple_Light,
+    tabBackgroundColor: Color = Purple,
+    selectedTabTextStyle: TextStyle = TextStyle(
+        textAlign = TextAlign.Center,
+        color = Color.White,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
+    ),
+    unselectedTabTextStyle: TextStyle = TextStyle(
+        textAlign = TextAlign.Center,
+        color = Color.White,
+        fontWeight = FontWeight.Bold,
+        fontSize = 20.sp
+    ),
+//    selectedTabIndex: Int,
+//    content: @Composable RowScope.() -> Unit
+) {
+
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+
     TabRow(
         modifier = Modifier,
         selectedTabIndex = 0
@@ -170,26 +213,24 @@ fun PlayerStaffTab () {
             modifier = Modifier
                 .padding(10.dp)
                 .background(
-                    Purple,
-                    shape = RoundedCornerShape(8.dp)
+                    color = tabBackgroundColor, shape = RoundedCornerShape(8.dp)
                 )
-        ){
+        ) {
             Tab(
                 modifier = Modifier
-                    .weight(1f),
-                selected = true,
+                    .weight(1f)
+                    .background(
+                        color = if (selectedTabIndex == 0) selectedTabColor else tabBackgroundColor,
+                        shape = RoundedCornerShape(8.dp)
+                    ),
+                selected = selectedTabIndex == 0,
                 onClick = {
-
+                    selectedTabIndex = 0
                 },
                 text = {
                     Text(
                         text = "Player",
-                        style = TextStyle(
-                            textAlign = TextAlign.Center,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        ),
+                        style = selectedTabTextStyle,
                     )
                 },
             )
@@ -197,25 +238,21 @@ fun PlayerStaffTab () {
                 modifier = Modifier
                     .weight(1f)
                     .background(
-                        color = Color.Gray,
+                        color = if (selectedTabIndex == 1) selectedTabColor else tabBackgroundColor,
                         shape = RoundedCornerShape(8.dp)
                     ),
-                selected = true,
+                selected = selectedTabIndex == 1,
                 onClick = {
-
+                    selectedTabIndex = 1
                 },
                 text = {
                     Text(
                         text = "Staff",
-                        style = TextStyle(
-                            textAlign = TextAlign.Center,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        ),
+                        style = unselectedTabTextStyle,
                     )
                 },
             )
         }
     }
+
 }

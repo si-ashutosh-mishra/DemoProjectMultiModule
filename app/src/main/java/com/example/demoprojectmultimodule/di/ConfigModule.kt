@@ -4,6 +4,7 @@ package com.example.demoprojectmultimodule.di
 import com.example.base.helper.BaseConfigContract
 import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.example.demoprojectmultimodule.data.data.ConfigManager
+import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.feature_squad.data.remote.SquadConfigContract
 import com.example.standing.data.remote.StandingConfigContract
@@ -40,5 +41,9 @@ interface ConfigModule {
     @Binds
     @Singleton
     fun provideContentListingConfig(configManager: ConfigManager): ContentListingConfigContract
+
+    @Binds
+    @Singleton
+    fun provideAppHomeConfig(configManager: ConfigManager): AppHomeConfigContract
 
 }

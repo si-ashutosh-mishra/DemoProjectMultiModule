@@ -30,6 +30,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.AsyncImage
 import com.example.feature_squad.R
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
+import com.example.feature_squad.business.domain.model.squad.StaffItem
 
 @Preview(showBackground = true)
 @Composable
@@ -135,7 +136,105 @@ fun SquadFragmentTypeTwo(
 
     }
 
+}
 
+@Composable
+fun SquadStaffItemTypeTwo(
+    @DrawableRes playerImage: Int = R.drawable.ic_player,
+    firstNameTextStyle: TextStyle = TextStyle(
+        fontSize = 20.sp,
+        color = Color.White,
+        fontWeight = FontWeight.Light,
+        textAlign = TextAlign.Left
+    ),
+    lastNameTextStyle: TextStyle = TextStyle(
+        fontSize = 20.sp,
+        color = Color.White,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Left
+    ),
+    countryNameTextStyle: TextStyle = TextStyle(
+        fontSize = 14.sp,
+        color = Color.Gray,
+        fontWeight = FontWeight.SemiBold,
+        textAlign = TextAlign.Left
+    ),
+    playerImageModifier: Modifier = Modifier,
+    staffDetail: StaffItem? = null
+) {
+    ConstraintLayout (
+        modifier = Modifier.fillMaxWidth().height(180.dp).padding(bottom = 16.dp)
+    )  {
+        val (playerImageId, playerDetailCard) = createRefs()
+
+        Column(
+            modifier = Modifier.padding(top = 20.dp).height(180.dp)
+                .paint(
+                    painterResource(R.drawable.lakr_bg_squad_players),
+                    contentScale = ContentScale.FillBounds
+                )
+                .constrainAs(playerDetailCard) {}
+                .padding(16.dp)
+        ) {
+            Box {
+                Text(
+                    text = staffDetail?.firstName?: "Ankush", modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center),
+                    style = firstNameTextStyle,
+
+                )
+//                if (playerDetail?.overseasPlayer == true)
+                    Image(
+                        modifier = Modifier
+                            .size(16.dp)
+                            .align(Alignment.CenterEnd),
+                        painter = painterResource(R.drawable.ic_overseas),
+                        contentDescription = ""
+                    )
+            }
+
+            Text(
+                text = staffDetail?.lastName ?: "Yadav",
+                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
+                style = lastNameTextStyle
+            )
+
+            Row (
+                modifier = Modifier.padding(vertical = 8.dp)
+            ) {
+                Image(
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                        .size(20.dp),
+                    painter = painterResource(R.drawable.lakr_bg_squad_players),
+                    contentDescription = ""
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                Text(
+                    text = (staffDetail?.roleName ?: "India").uppercase(),
+                    modifier = Modifier.fillMaxWidth(),
+                    style = countryNameTextStyle
+                )
+            }
+        }
+
+        AsyncImage(
+//            painter = painterResource(playerImage),
+            model = staffDetail?.staffImageUrl,
+            modifier = playerImageModifier
+                .constrainAs(playerImageId) {
+                    bottom.linkTo(playerDetailCard.bottom)
+                    end.linkTo(playerDetailCard.end)
+                }
+                .padding(end = 20.dp)
+                .fillMaxHeight(),
+            contentScale = ContentScale.FillHeight,
+            contentDescription = "",
+        )
+
+    }
 
 }
 
