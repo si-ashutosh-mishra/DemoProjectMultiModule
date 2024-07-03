@@ -19,7 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -27,9 +29,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import com.example.feature_squad.R
+import com.example.feature_squad.business.domain.model.squad.PlayerItem
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun ScreenPreview() {
     SquadTypeOne()
@@ -37,53 +43,83 @@ fun ScreenPreview() {
 
 @Composable
 fun SquadTypeOne(
-
-    @DrawableRes playerImage: Int = R.drawable.ic_player,
+    playerImageModifier: Modifier = Modifier
+        .height(200.dp)
+        .width(250.dp)
+        .background(Color.Transparent)
+        .fillMaxWidth(),
+    @DrawableRes homeSquadBackground: Int = R.drawable.lakr_squad_bg,
     backgroundPlayerName : Color = Color.Yellow,
     bottomBackground : Color = Color.Magenta,
-    playerFirstName : String = "Shreyas",
-    playerFirstNameStyle: TextStyle  = TextStyle(color = Color.Black,
-        textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Medium
+    firstNameTextStyle: TextStyle = TextStyle(
+        fontSize = 15.sp,
+        color = Color.Black,
+        fontWeight = FontWeight.Medium,
+        textAlign = TextAlign.Center
     ),
-    playerLastName : String = "IYER",
-    playerLastNameStyle: TextStyle  = TextStyle(color = Color.Black,
-        textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Bold
+    lastNameTextStyle: TextStyle = TextStyle(
+        fontSize = 17.sp,
+        color = Color.Black,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center
     ),
-    isCaptain : Boolean = false,
-    isOverseas : Boolean = false,
-    
+    playerRoleValueTextStyle: TextStyle = TextStyle(
+        fontSize = 14.sp,
+        color = Color.Yellow,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center
+    ),
+    playerRoleHeadingTextStyle: TextStyle = TextStyle(
+        fontSize = 12.sp,
+        color = Color.Yellow,
+        fontWeight = FontWeight.Medium,
+        textAlign = TextAlign.Center
+    ),
+    skillTextStyle : TextStyle = TextStyle(color = Color.Black,
+        fontSize = 14.sp,
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.SemiBold
+    ),
+    playerDetail: PlayerItem? = null
 ){
     Box(
-        modifier = Modifier
-            .width(250.dp)
+        modifier = playerImageModifier
+            .clip(RoundedCornerShape(5.dp))
             .background(Color.Transparent)
-            .fillMaxWidth()
     ) {
+        Image(
+            painter = painterResource(homeSquadBackground),
+            modifier = Modifier.matchParentSize(),
+            contentScale = ContentScale.FillBounds,
+            contentDescription = ""
+        )
         Row (modifier = Modifier.align(Alignment.TopEnd)){
-            if(isOverseas) {
-                Image(
-                    painter = painterResource(R.drawable.ic_overseas),
-                    modifier = Modifier
-                        .width(20.dp)
-                        .height(15.dp),
-                    contentScale = ContentScale.Fit,
-                    contentDescription = ""
-                )
-            }
-            if(isCaptain){
-            Image(painter = painterResource(R.drawable.ic_captain),
-                modifier = Modifier
-                    .width(20.dp)
-                    .height(15.dp),
-                contentScale = ContentScale.Fit,
-                contentDescription = "")
+            if (playerDetail != null) {
+                if(playerDetail.overseasPlayer) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_home_overseas),
+                        modifier = Modifier
+                            .width(20.dp)
+                            .height(15.dp),
+                        contentScale = ContentScale.Fit,
+                        contentDescription = ""
+                    )
                 }
+            }
+            if (playerDetail != null) {
+                if(playerDetail.isCaptain){
+                    Image(painter = painterResource(R.drawable.ic_captain_home),
+                        modifier = Modifier
+                            .width(20.dp)
+                            .height(15.dp),
+                        contentScale = ContentScale.Fit,
+                        contentDescription = "")
+                }
+            }
         }
         Column {
-            Image(
-                painter = painterResource(playerImage),
+            AsyncImage(
+                model = playerDetail?.playerImageUrl,
                 modifier = Modifier
                     .width(250.dp)
                     .height(250.dp)
@@ -93,24 +129,37 @@ fun SquadTypeOne(
                 contentDescription = "",
             )
         }
-        Card(
-            modifier = Modifier
-                .background(bottomBackground)
-                .padding(bottom = 45.dp, top = 8.dp, start = 8.dp, end = 8.dp)
-                .align(Alignment.BottomStart),
-        ){
-            Row(modifier = Modifier.background(bottomBackground)){
-                Image(painter = painterResource(playerImage),
-                    modifier = Modifier
-                        .width(20.dp)
-                        .height(15.dp),
-                    contentScale = ContentScale.Fit,
-                    contentDescription = "")
-                Text(text = "Batter",
-                    style = TextStyle(color = Color.Black,
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold
-                    ))
+        Card (shape = RoundedCornerShape(topEnd = 5.dp),
+            modifier = Modifier.align(Alignment.BottomStart),
+        ) {
+            Card(
+                modifier = Modifier
+                    .background(bottomBackground)
+                    .padding(bottom = 45.dp, top = 5.dp, start = 3.dp)
+            ) {
+                Row(modifier = Modifier.background(bottomBackground)) {
+                    AsyncImage(
+                        model = if(playerDetail?.skillId.equals("1")){
+                            R.drawable.ic_skill_bat
+                        } else if(playerDetail?.skillId.equals("2")){
+                                R.drawable.ic_skill_bowl
+                        } else if(playerDetail?.skillId.equals("4")){
+                            R.drawable.ic_skill_wicket_keeper
+                        }else{
+                            R.drawable.ic_skill_all_rounder
+                        },
+                        modifier = Modifier
+                            .width(20.dp)
+                            .height(15.dp),
+                        contentScale = ContentScale.Fit,
+                        contentDescription = ""
+                    )
+                    Text(
+                        text = playerDetail?.skill.toString(),
+                        modifier = Modifier.padding(end = 5.dp),
+                        style = skillTextStyle
+                    )
+                }
             }
         }
 
@@ -130,13 +179,7 @@ fun SquadTypeOne(
                     Row {
                         Row (Modifier.weight(1f), horizontalArrangement = Arrangement.Center){
                             StatText(
-                                "15", "Matches", valueStyle = TextStyle(
-                                    color = Color.White,
-                                    textAlign = TextAlign.Center
-                                ), headingStyle = TextStyle(
-                                    color = Color.White,
-                                    textAlign = TextAlign.Center
-                                )
+                                playerDetail?.overAllStats?.batting?.matchesPlayed.toString(), "Matches", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
                             )
                         }
                         Divider(
@@ -149,13 +192,7 @@ fun SquadTypeOne(
                         )
                         Row (Modifier.weight(1f), horizontalArrangement = Arrangement.Center) {
                             StatText(
-                                "351", "Runs", valueStyle = TextStyle(
-                                    color = Color.White,
-                                    textAlign = TextAlign.Center
-                                ), headingStyle = TextStyle(
-                                    color = Color.White,
-                                    textAlign = TextAlign.Center
-                                )
+                                playerDetail?.overAllStats?.batting?.runs.toString(), "Runs", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
                             )
                         }
                         Divider(
@@ -168,13 +205,7 @@ fun SquadTypeOne(
                         )
                         Row (Modifier.weight(1f), horizontalArrangement = Arrangement.Center) {
                             StatText(
-                                "Test", "ABC", valueStyle = TextStyle(
-                                    color = Color.White,
-                                    textAlign = TextAlign.Center
-                                ), headingStyle = TextStyle(
-                                    color = Color.White,
-                                    textAlign = TextAlign.Center
-                                )
+                                playerDetail?.overAllStats?.bowling?.wickets.toString(), "Wickets", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
                             )
                         }
                     }
@@ -188,10 +219,10 @@ fun SquadTypeOne(
                 .align(Alignment.CenterStart)
         ){
             Column {
-                Text(text = playerFirstName,
-                    style = playerFirstNameStyle)
-                Text(text = playerLastName,
-                    style = playerLastNameStyle)
+                Text(text = playerDetail?.firstName.toString(),
+                    style = firstNameTextStyle)
+                Text(text = playerDetail?.lastName.toString(),
+                    style = lastNameTextStyle)
             }
         }
     }

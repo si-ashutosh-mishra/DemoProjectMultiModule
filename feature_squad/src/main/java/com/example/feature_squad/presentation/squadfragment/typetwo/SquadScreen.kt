@@ -110,25 +110,7 @@ fun SquadFragmentVerticalScroll (
             modifier = Modifier.background(Color.Black).wrapContentHeight(),
             containerColor = Color.Blue,
             indicator = { tabPositions ->
-                val currentTabPosition = tabPositions[pagerState.currentPage]
-                val indicatorOffset by animateDpAsState(
-                    targetValue = currentTabPosition.left,
-                    animationSpec = spring(), label = ""
-                )
-                val indicatorWidth by animateDpAsState(
-                    targetValue = currentTabPosition.width,
-                    animationSpec = spring(), label = ""
-                )
-
-                Box(
-                    Modifier
-                        .fillMaxWidth()
-                        .wrapContentSize(align = Alignment.BottomStart)
-                        .offset(x = indicatorOffset)
-                        .width(indicatorWidth)
-                        .height(4.dp)
-                        .background(Color.Blue)
-                )
+                
             }
         ) {
 //

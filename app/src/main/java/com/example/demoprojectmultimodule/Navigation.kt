@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
 import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
+import com.example.feature_squad.presentation.squad.typeone.SquadTypeOneHorizontalScroll
 import com.example.feature_squad.presentation.squadfragment.typetwo.SquadFragmentVerticalScroll
 import com.example.standing.presentation.standing.StandingsScreen
 import com.example.standing.presentation.standinghome.StandingHome
@@ -45,7 +46,7 @@ fun Navigation() {
             StandingsScreen(navController = navController)
         }
         composable(route = Screen.SquadScreen.route){
-            SquadFragmentVerticalScroll()
+            SquadTypeOneHorizontalScroll()
         }
     }
 }

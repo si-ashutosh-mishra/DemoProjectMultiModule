@@ -31,12 +31,12 @@ import coil.compose.AsyncImage
 import com.example.feature_squad.R
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
 
-@Preview(showBackground = true)
 @Composable
 fun ScreenPreview() {
     SquadTypeTwo()
 }
 
+@Preview
 @Composable
 fun SquadTypeTwo(
     @DrawableRes playerImage: Int = R.drawable.ic_player,
