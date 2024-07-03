@@ -23,6 +23,7 @@ runtimeLivedata = "1.6.7"
 coilVersion="2.4.0"
 pageIndicatorVersion = "0.30.1"
 pagingCommonAndroid = "3.3.0"
+chromeTabVersion = "1.5.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -63,6 +64,7 @@ androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtim
 coil = { group = "io.coil-kt",name = "coil-compose", version.ref = "coilVersion" }
 page-indicator = { group = "com.google.accompanist",name = "accompanist-pager-indicators", version.ref = "pageIndicatorVersion" }
 androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "pagingCommonAndroid" }
+chrome-tab = {group = "androidx.browser", name = "browser", version.ref = "chromeTabVersion"}
 
 
 

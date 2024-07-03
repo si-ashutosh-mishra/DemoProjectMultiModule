@@ -57,6 +57,8 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.androidx.runtime.livedata)
 
+    implementation(libs.chrome.tab)
+
     //hilt
     implementation(libs.dagger.hilt)
     //implementation(libs.hilt.view.model)
