@@ -6,6 +6,7 @@ import com.example.base.helper.NetworkThrowable
 import com.example.base.helper.Resource
 import com.example.base.helper.safeApiCall
 import com.example.feature_squad.business.repository.SquadRepository
+import com.example.feature_squad.data.model.CustomSquadInfo
 import com.example.feature_squad.data.model.SquadList
 import com.example.feature_squad.data.service.SquadService
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,6 +18,41 @@ class SquadRepositoryImpl @Inject constructor(
     private val squadService: SquadService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ): SquadRepository {
+
+    override fun getSquadCustomFeed(): Flow<Resource<CustomSquadInfo>> {
+        return flow {
+            val url = "static-assets/feeds/custom/en/trans.json"
+            val result = safeApiCall(ioDispatcher) {
+                squadService.getSquadCustomFeed(
+                    url
+                )
+            }
+
+            when (result) {
+                is ApiResult.GenericError -> emit(
+                    Resource.Error(
+                        NetworkThrowable(
+                            result.code,
+                            result.message ?: ""
+                        )
+                    )
+                )
+                is ApiResult.NetworkError -> emit(
+                    Resource.Error(
+                        NetworkThrowable(
+                            null,
+                            result.message ?: ""
+                        )
+                    )
+                )
+                is ApiResult.Success -> {
+                    emit(Resource.Success(result.data))
+                }
+            }
+        }
+    }
+
+
     override fun getSquadsListing(url: String?): Flow<Resource<SquadList>> {
         return flow {
             emit(Resource.Loading())

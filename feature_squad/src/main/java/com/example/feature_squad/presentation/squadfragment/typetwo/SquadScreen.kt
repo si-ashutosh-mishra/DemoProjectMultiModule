@@ -1,8 +1,6 @@
 package com.example.feature_squad.presentation.squadfragment.typetwo
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,13 +8,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,6 +18,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -39,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -47,13 +43,23 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_squad.R
 import com.example.feature_squad.presentation.squad.viewmodel.SquadViewModel
+import com.example.feature_squad.presentation.util.LAKR_Purple_Dark
 import com.example.feature_squad.presentation.util.LAKR_Purple_Light
 import com.example.feature_squad.presentation.util.Purple
 
 @Preview
 @Composable
 fun Preview() {
+//    PlayerStaffTab()
+}
 
+@Composable
+fun SquadScreen() {
+    Scaffold (
+
+    ) {
+
+    }
 }
 
 
@@ -74,11 +80,25 @@ fun SquadFragmentVerticalScroll (
         textAlign = TextAlign.Left
     ),
     countryNameTextStyle: TextStyle = TextStyle(
-        fontSize = 14.sp,
+        fontSize = 10.sp,
         color = Color.Gray,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.W500,
         textAlign = TextAlign.Left
     ),
+    selectedTabTextStyle: TextStyle = TextStyle (
+        fontSize = 14.sp,
+        fontStyle = FontStyle.Normal,
+        fontWeight = FontWeight.ExtraBold,
+        textAlign = TextAlign.Center,
+        color = Color.White,
+    ),
+    unselectedTabTextStyle: TextStyle = TextStyle (
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+        color = Color.Gray,
+    )
+
 ) {
 
     val viewModel: SquadViewModel = hiltViewModel()
@@ -91,7 +111,6 @@ fun SquadFragmentVerticalScroll (
 
     val tabItem = playerFilterData?.map { it.title }
     var selectedTab by remember { mutableIntStateOf(0) }
-
 
     LaunchedEffect(key1 = selectedTabIndex) {
         pagerState.animateScrollToPage(selectedTabIndex)
@@ -113,9 +132,8 @@ fun SquadFragmentVerticalScroll (
                 edgePadding = 0.dp,
                 selectedTabIndex = pagerState.currentPage,
                 modifier = Modifier
-                    .background(Color.Black)
                     .wrapContentHeight(),
-                containerColor = Purple,
+                containerColor = LAKR_Purple_Light,
                 indicator = { }
             ) {
                 tabItem?.forEachIndexed { index, tabItem ->
@@ -127,10 +145,7 @@ fun SquadFragmentVerticalScroll (
                         text = {
                             Text(
                                 text = tabItem,
-                                color = Color.White,
-                                style = TextStyle(
-                                    textAlign = TextAlign.Center
-                                ),
+                                style = if (selectedTabIndex == index) selectedTabTextStyle else unselectedTabTextStyle
                             )
                         },
                     )
@@ -167,7 +182,7 @@ fun SquadFragmentVerticalScroll (
                                 playerImageModifier = Modifier,
                                 firstNameTextStyle = firstNameTextStyle,
                                 lastNameTextStyle = lastNameTextStyle,
-                                countryNameTextStyle = countryNameTextStyle,
+                                staffRoleTextStyle = countryNameTextStyle,
                                 staffDetail = it
                             )
                         }
@@ -201,57 +216,67 @@ fun PlayerStaffTab (
 
 //    var selectedTabIndex by remember { mutableIntStateOf(0) }
 
-    TabRow(
+    Box (
         modifier = Modifier
-            .background(color = Color(0xFF553878)),
-        selectedTabIndex = 0,
-        indicator = {}
-    ) {
-        Row (
+            .background(color = LAKR_Purple_Dark),
+    ){
+        TabRow(
             modifier = Modifier
-                .padding(30.dp)
-                .background(
-                    color = tabBackgroundColor, shape = RoundedCornerShape(8.dp)
-                )
-                .border(width = 0.91.dp, color = Color(0x4DFFFFFF), shape = RoundedCornerShape(8.dp))
+                .padding(vertical = 10.dp, horizontal = 20.dp),
+            containerColor = LAKR_Purple_Dark,
+            selectedTabIndex = selectedTabIndex,
+            indicator = {}
         ) {
-            Tab(
+            Row (
                 modifier = Modifier
-                    .weight(1f)
                     .background(
-                        color = if (selectedTabIndex == 0) selectedTabColor else tabBackgroundColor,
-                        shape = RoundedCornerShape(8.dp)
-                    ),
-                selected = selectedTabIndex == 0,
-                onClick = {
-                    selectedTabIndexU(0)
-                },
-                text = {
-                    Text(
-                        text = "Player",
-                        style = selectedTabTextStyle,
+                        color = tabBackgroundColor, shape = RoundedCornerShape(8.dp)
                     )
-                },
-            )
-            Tab(
-                modifier = Modifier
-                    .weight(1f)
-                    .background(
-                        color = if (selectedTabIndex == 1) selectedTabColor else tabBackgroundColor,
+                    .border(
+                        width = 0.91.dp,
+                        color = Color(0x4DFFFFFF),
                         shape = RoundedCornerShape(8.dp)
-                    ),
-                selected = selectedTabIndex == 1,
-                onClick = {
-                    selectedTabIndexU(1)
-                },
-                text = {
-                    Text(
-                        text = "Support Staff",
-                        style = unselectedTabTextStyle,
                     )
-                },
-            )
+            ) {
+                Tab(
+                    modifier = Modifier
+                        .weight(1f)
+                        .background(
+                            color = if (selectedTabIndex == 0) selectedTabColor else tabBackgroundColor,
+                            shape = RoundedCornerShape(8.dp)
+                        ),
+                    selected = selectedTabIndex == 0,
+                    onClick = {
+                        selectedTabIndexU(0)
+                    },
+                    text = {
+                        Text(
+                            text = "Player",
+                            style = selectedTabTextStyle,
+                        )
+                    },
+                )
+                Tab(
+                    modifier = Modifier
+                        .weight(1f)
+                        .background(
+                            color = if (selectedTabIndex == 1) selectedTabColor else tabBackgroundColor,
+                            shape = RoundedCornerShape(8.dp)
+                        ),
+                    selected = selectedTabIndex == 1,
+                    onClick = {
+                        selectedTabIndexU(1)
+                    },
+                    text = {
+                        Text(
+                            text = "Support Staff",
+                            style = unselectedTabTextStyle,
+                        )
+                    },
+                )
+            }
         }
     }
+
 
 }
