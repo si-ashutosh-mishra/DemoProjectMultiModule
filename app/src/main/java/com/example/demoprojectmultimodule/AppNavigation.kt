@@ -32,7 +32,7 @@ fun AppNavigation(){
 //    val sheetController = LocalSheetController.current
 
     val navController = rememberNavController<ScreenDestination>(
-        startDestination = ScreenDestination.StandingMainScreen
+        startDestination = ScreenDestination.MainScreen
     )
     val dialogController = rememberNavController<DialogDestination>(
         initialBackstack = emptyList()
@@ -59,18 +59,20 @@ fun AppNavigation(){
         },
     ) { destination->
         when (destination) {
-            is ScreenDestination.StandingMainScreen -> StandingHome(requiredTeamCount = 5, onViewMoreClick = {
-                navController.navigate(ScreenDestination.StandingDetailsScreen)
-            }, showTitle = true, showMore = true)
-            is ScreenDestination.DetailScreen -> FixtureScreenTypeTwo(
-                 teamId = navController.backstack.entries.toString()
-            ) {
-                navController.navigate(ScreenDestination.DetailScreen("3841"))
-            }
+//            is ScreenDestination.StandingMainScreen -> StandingsScreen(onViewMoreClick = {
+//                navController.navigate(ScreenDestination.StandingDetailsScreen)
+//            }, showTitle = true, showMore = true)
+//            is ScreenDestination.DetailScreen -> FixtureScreenTypeTwo(
+//                null,
+//                 teamId = navController.backstack.entries.toString()
+//            ) {
+//                navController.navigate(ScreenDestination.DetailScreen("3841"))
+//            }
             is ScreenDestination.MainScreen ->  FixtureScreenTypeOne {
                 navController.navigate(ScreenDestination.DetailScreen("3841"))
             }
             is ScreenDestination.StandingDetailsScreen -> StandingsScreen()
+            else -> {}
         }
     }
 

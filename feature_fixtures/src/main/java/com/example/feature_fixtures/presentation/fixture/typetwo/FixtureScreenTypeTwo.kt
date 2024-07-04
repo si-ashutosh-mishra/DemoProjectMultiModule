@@ -33,6 +33,7 @@ import com.example.feature_fixtures.presentation.fixture.LifeCycleObserver
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FixtureScreenTypeTwo(
+    navController: NavController,
     isSponsorLogoRequired: Boolean = false,
     @DrawableRes sponsorLogo: Int? = null,
     @DrawableRes liveLogo: Int = R.drawable.ic_live,
@@ -76,7 +77,7 @@ fun FixtureScreenTypeTwo(
     teamId: String? = null,
     onClickItem: (name: String?) -> Unit
 ) {
-    val navController = LocalNavController.current
+//    val navController = LocalNavController.current
     val viewModel: FixtureViewModel = hiltViewModel()
 
     val fixtureList by viewModel.fixture.observeAsState(initial = emptyList())
@@ -93,7 +94,7 @@ fun FixtureScreenTypeTwo(
             Text(text = "Fixtures")
         }, navigationIcon = {
             IconButton(onClick = {
-                navController.pop()
+//                navController.pop()
             }) {
                 Icon(Icons.Filled.ArrowBack, "")
             }

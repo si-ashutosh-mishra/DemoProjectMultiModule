@@ -84,7 +84,7 @@ fun StandingsScreen(
     showBack: Boolean = true,
     showFilter: Boolean = true,
 ) {
-    val navController = LocalNavController.current
+//    val navController = LocalNavController.current
     val viewModel: StandingViewModel = hiltViewModel()
 
     val currentTeamID = viewModel.standingConfigContract.getCurrentTeamID()
@@ -103,7 +103,7 @@ fun StandingsScreen(
 
     Column {
         StandingToolbar(
-            onBackClick = { navController.pop() },
+            onBackClick = { /*navController.pop()*/ },
             onFilterClick = { },
             titleBarIconTintColor = titleBarIconTintColor,
             toolBarColor = toolBarBGColor,

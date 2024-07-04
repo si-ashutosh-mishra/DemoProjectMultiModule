@@ -37,9 +37,9 @@ fun Navigation() {
             }
         }
 
-        composable(route = Screen.StandingDetailsScreen.route) {
-            StandingsScreen(navController = navController)
-        }
+//        composable(route = Screen.StandingDetailsScreen.route) {
+//            StandingsScreen(navController = navController)
+//        }
 
         composable(route = Screen.AppHomeScreen.route) {
             AppHome(onFixtureViewMoreClick = {

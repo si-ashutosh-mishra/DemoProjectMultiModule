@@ -12,8 +12,8 @@ sealed class SheetDestination : Parcelable {
 
 sealed class ScreenDestination : Parcelable {
 
-    @Parcelize
-    data object StandingMainScreen : ScreenDestination()
+//    @Parcelize
+//    data object StandingMainScreen : ScreenDestination()
 
     @Parcelize
     data object MainScreen : ScreenDestination()

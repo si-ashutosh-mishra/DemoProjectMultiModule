@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun navHost(): NavController<ScreenDestination> {
     return rememberNavController(
-        startDestination = ScreenDestination.StandingMainScreen
+        startDestination = ScreenDestination.StandingDetailsScreen
     )
 }
 @Composable

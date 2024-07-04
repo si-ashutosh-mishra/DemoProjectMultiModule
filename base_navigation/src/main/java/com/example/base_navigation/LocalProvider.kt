@@ -14,7 +14,7 @@ val LocalSheetController = compositionLocalOf<NavController<SheetDestination>> {
 
 @Composable
 fun LocalProvider(
-    navHost:NavController<ScreenDestination> = rememberNavController(startDestination = ScreenDestination.StandingMainScreen),
+    navHost:NavController<ScreenDestination> = rememberNavController(startDestination = ScreenDestination.StandingDetailsScreen),
     dialogHost:NavController<DialogDestination> = rememberNavController(initialBackstack = emptyList()),
     sheetHost:NavController<SheetDestination> = rememberNavController(initialBackstack = emptyList()),
 //    viewModel: BaseViewModel
