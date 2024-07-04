@@ -1,4 +1,4 @@
-package com.example.feature_squad.presentation.squad.typetwo
+package com.example.feature_squad.presentation.squadhome.typetwo
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -31,14 +31,10 @@ import coil.compose.AsyncImage
 import com.example.feature_squad.R
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
 
-@Composable
-fun ScreenPreview() {
-    SquadTypeTwo()
-}
 
 @Preview
 @Composable
-fun SquadTypeTwo(
+fun SquadTypeTwoItem(
     @DrawableRes playerImage: Int = R.drawable.ic_player,
     playerDetailDrawable: List<Color> = listOf(
         Color(0xFF553878),
@@ -69,7 +65,6 @@ fun SquadTypeTwo(
         val (playerImageId, playerDetailCard, divider) = createRefs()
 
         AsyncImage(
-//                painter = rememberAsyncImagePainter(model = playerDetail?.playerImageUrl),
             model = playerDetail?.playerImageUrl,
             modifier = playerImageModifier
                 .constrainAs(playerImageId) {}

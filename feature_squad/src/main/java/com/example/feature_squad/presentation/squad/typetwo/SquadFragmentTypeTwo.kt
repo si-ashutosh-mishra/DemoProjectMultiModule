@@ -1,4 +1,4 @@
-package com.example.feature_squad.presentation.squadfragment.typetwo
+package com.example.feature_squad.presentation.squad.typetwo
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,7 +36,7 @@ import com.example.feature_squad.business.domain.model.squad.StaffItem
 @Preview(showBackground = true)
 @Composable
 fun ScreenPreview() {
-    SquadFragmentTypeTwo()
+    SquadStaffItemTypeTwo()
 }
 
 @Composable
@@ -103,10 +104,11 @@ fun SquadFragmentTypeTwo(
             Row (
                 modifier = Modifier.padding(vertical = 8.dp)
             ) {
-                Image(
+                AsyncImage(
+                    model = playerDetail?.countryImageUrl,
                     modifier = Modifier.align(Alignment.CenterVertically)
                         .size(20.dp),
-                    painter = painterResource(R.drawable.lakr_bg_squad_players),
+                    placeholder = painterResource(R.drawable.lakr_bg_squad_players),
                     contentDescription = ""
                 )
 
@@ -151,12 +153,12 @@ fun SquadStaffItemTypeTwo(
         fontSize = 20.sp,
         color = Color.White,
         fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Left
+        textAlign = TextAlign.Left,
     ),
-    countryNameTextStyle: TextStyle = TextStyle(
-        fontSize = 14.sp,
+    staffRoleTextStyle: TextStyle = TextStyle(
+        fontSize = 8.sp,
         color = Color.Gray,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.W400,
         textAlign = TextAlign.Left
     ),
     playerImageModifier: Modifier = Modifier,
@@ -165,7 +167,7 @@ fun SquadStaffItemTypeTwo(
     ConstraintLayout (
         modifier = Modifier.fillMaxWidth().height(180.dp).padding(bottom = 16.dp)
     )  {
-        val (playerImageId, playerDetailCard) = createRefs()
+        val (playerImageId, playerDetailCard, firstNameId, lastNameId) = createRefs()
 
         Column(
             modifier = Modifier.padding(top = 20.dp).height(180.dp)
@@ -173,7 +175,7 @@ fun SquadStaffItemTypeTwo(
                     painterResource(R.drawable.lakr_bg_squad_players),
                     contentScale = ContentScale.FillBounds
                 )
-                .constrainAs(playerDetailCard) {}
+                .constrainAs(playerDetailCard) { end.linkTo(parent.end)}
                 .padding(16.dp)
         ) {
             Box {
@@ -195,18 +197,23 @@ fun SquadStaffItemTypeTwo(
             }
 
             Text(
-                text = staffDetail?.lastName ?: "Yadav",
-                modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
-                style = lastNameTextStyle
+                text = staffDetail?.lastName ?: "Yadav abfhsdbj sbfbjsbj sdbfbsd",
+                modifier = Modifier
+                    .width(150.dp)
+                    .padding(vertical = 6.dp),
+                style = lastNameTextStyle,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
             )
 
             Row (
                 modifier = Modifier.padding(vertical = 8.dp)
             ) {
-                Image(
+                AsyncImage(
+                    model = staffDetail?.countryImageUrl,
                     modifier = Modifier.align(Alignment.CenterVertically)
                         .size(20.dp),
-                    painter = painterResource(R.drawable.lakr_bg_squad_players),
+                    placeholder = painterResource(R.drawable.lakr_bg_squad_players),
                     contentDescription = ""
                 )
 
@@ -214,31 +221,28 @@ fun SquadStaffItemTypeTwo(
 
                 Text(
                     text = (staffDetail?.roleName ?: "India").uppercase(),
-                    modifier = Modifier.fillMaxWidth(),
-                    style = countryNameTextStyle
+                    modifier = Modifier.width(100.dp),
+                    style = staffRoleTextStyle,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 2
                 )
             }
         }
 
         AsyncImage(
-//            painter = painterResource(playerImage),
             model = staffDetail?.staffImageUrl,
+            placeholder = painterResource(playerImage),
             modifier = playerImageModifier
                 .constrainAs(playerImageId) {
                     bottom.linkTo(playerDetailCard.bottom)
-                    end.linkTo(playerDetailCard.end)
+                    end.linkTo(parent.end)
                 }
-                .padding(end = 20.dp)
+                .padding(end = 10.dp)
                 .fillMaxHeight(),
             contentScale = ContentScale.FillHeight,
             contentDescription = "",
         )
 
     }
-
-}
-
-@Composable
-fun playerImage(modifier: Modifier, ) {
 
 }

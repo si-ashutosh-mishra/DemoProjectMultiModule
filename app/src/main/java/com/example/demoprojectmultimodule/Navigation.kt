@@ -1,6 +1,5 @@
 package com.example.demoprojectmultimodule
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -11,15 +10,14 @@ import com.example.common_webview.presentation.WebViewScreen
 import com.example.feature_app_home.presentation.apphome.AppHome
 import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
 import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
-import com.example.feature_squad.presentation.squad.typeone.SquadTypeOneHorizontalScroll
-import com.example.feature_squad.presentation.squadfragment.typetwo.PlayerStaffTab
-import com.example.feature_squad.presentation.squadfragment.typetwo.SquadFragmentVerticalScroll
+import com.example.feature_squad.presentation.squad.typetwo.SquadFragmentVerticalScroll
+import com.example.feature_squad.presentation.squad.typetwo.SquadScreen
 import com.example.standing.presentation.standing.StandingsScreen
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.SquadScreen.route) {
+    NavHost(navController = navController, startDestination = Screen.AppHomeScreen.route) {
         composable(route = Screen.MainScreen.route) {
             FixtureScreenTypeOne {
                 navController.navigate(Screen.DetailScreen.withArgs("3841"))
@@ -62,7 +60,7 @@ fun Navigation() {
             }
         }
         composable(route = Screen.SquadScreen.route){
-            SquadTypeOneHorizontalScroll()
+            SquadScreen()
         }
     }
 }
