@@ -1,4 +1,4 @@
-package com.example.feature_squad.presentation.squad.viewmodel
+package com.example.feature_squad.presentation.squadhome.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData

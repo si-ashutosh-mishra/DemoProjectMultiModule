@@ -1,4 +1,4 @@
-package com.example.feature_squad.presentation.squadfragment.typetwo
+package com.example.feature_squad.presentation.squad.typetwo
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

@@ -1,4 +1,4 @@
-package com.example.feature_squad.presentation.squadfragment.typetwo
+package com.example.feature_squad.presentation.squad.typetwo
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -42,7 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_squad.R
-import com.example.feature_squad.presentation.squad.viewmodel.SquadViewModel
+import com.example.feature_squad.presentation.common.SquadToolbar
+import com.example.feature_squad.presentation.squadhome.viewmodel.SquadViewModel
 import com.example.feature_squad.presentation.util.LAKR_Purple_Dark
 import com.example.feature_squad.presentation.util.LAKR_Purple_Light
 import com.example.feature_squad.presentation.util.Purple
@@ -55,10 +56,9 @@ fun Preview() {
 
 @Composable
 fun SquadScreen() {
-    Scaffold (
-
-    ) {
-
+    Column {
+        SquadToolbar()
+        SquadFragmentVerticalScroll()
     }
 }
 
