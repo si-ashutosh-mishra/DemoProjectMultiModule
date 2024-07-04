@@ -44,8 +44,9 @@ fun ScreenPreview() {
 @Composable
 fun SquadTypeOne(
     playerImageModifier: Modifier = Modifier
-        .height(200.dp)
-        .width(250.dp)
+        .height(250.dp)
+        .width(220.dp)
+        .padding(20.dp)
         .background(Color.Transparent)
         .fillMaxWidth(),
     @DrawableRes homeSquadBackground: Int = R.drawable.lakr_squad_bg,
@@ -121,7 +122,7 @@ fun SquadTypeOne(
             AsyncImage(
                 model = playerDetail?.playerImageUrl,
                 modifier = Modifier
-                    .width(250.dp)
+                    .width(200.dp)
                     .height(250.dp)
                     .padding(bottom = 30.dp)
                     .align(Alignment.CenterHorizontally),
@@ -135,7 +136,7 @@ fun SquadTypeOne(
             Card(
                 modifier = Modifier
                     .background(bottomBackground)
-                    .padding(bottom = 45.dp, top = 5.dp, start = 3.dp)
+                    .padding(bottom = 55.dp, top = 5.dp, start = 3.dp)
             ) {
                 Row(modifier = Modifier.background(bottomBackground)) {
                     AsyncImage(
@@ -176,7 +177,9 @@ fun SquadTypeOne(
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.Magenta),) {
-                    Row {
+                    Row (
+                        modifier = Modifier.fillMaxWidth()
+                    ){
                         Row (Modifier.weight(1f), horizontalArrangement = Arrangement.Center){
                             StatText(
                                 playerDetail?.overAllStats?.batting?.matchesPlayed.toString(), "Matches", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -94,9 +95,8 @@ fun SquadTypeOneHorizontalScroll (
         .height(22.dp)
 ) {
 
-    val viewModel: SquadViewModel = hiltViewModel()
-    val squadList by viewModel.player.observeAsState(initial = emptyList())
-    val pagerState = rememberPagerState { squadList.size }
+    //val viewModel: SquadViewModel = hiltViewModel()
+    //val squadList by viewModel.player.observeAsState(initial = emptyList())
 
 
     Box (modifier = Modifier
@@ -114,25 +114,24 @@ fun SquadTypeOneHorizontalScroll (
                 modifier = Modifier.height(16.dp)
             )
 
-            HorizontalPager(
+            LazyRow(
                 modifier = Modifier.padding(vertical = 8.dp),
-                state = pagerState,
+                //state = pagerState,
                 contentPadding = PaddingValues(horizontal = 55.dp),
-                pageSpacing = 15.dp
-            ) { page ->
-                val data = squadList[page]
-                Log.d("Player $page", data.toString())
-                Box(modifier = Modifier.graphicsLayer {
-                    alpha = if (page == pagerState.currentPage) 1f else 0.5f
-                }) {
-                    SquadTypeOne(
-                        playerImageModifier = Modifier.height(250.dp),
-                        firstNameTextStyle = firstNameTextStyle,
-                        lastNameTextStyle = lastNameTextStyle,
-                        playerRoleValueTextStyle = playerRoleValueTextStyle,
-                        playerRoleHeadingTextStyle = playerRoleHeadingTextStyle,
-                        playerDetail = data
-                    )
+                //pageSpacing = 15.dp
+            ) {
+                items(4) { page ->
+                    //val data = squadList[page]
+                    //Log.d("Player $page", data.toString())
+                        SquadTypeOne(
+                            playerImageModifier = Modifier.height(250.dp),
+                            firstNameTextStyle = firstNameTextStyle,
+                            lastNameTextStyle = lastNameTextStyle,
+                            playerRoleValueTextStyle = playerRoleValueTextStyle,
+                            playerRoleHeadingTextStyle = playerRoleHeadingTextStyle,
+                            playerDetail = null
+                        )
+
                 }
             }
         }
