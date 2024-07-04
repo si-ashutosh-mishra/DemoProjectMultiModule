@@ -4,7 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_app_home.business.domain.model.home.HomeItemViewType
@@ -12,6 +11,8 @@ import com.example.feature_app_home.business.domain.model.home.HomeListingItem
 import com.example.feature_app_home.presentation.apphome.viewmodel.AppHomeViewModel
 import com.example.feature_fixtures.presentation.fixture.LifeCycleObserver
 import com.example.feature_fixtures.presentation.fixture.typeone.FixturesHorizontalScrollTypeOne
+import com.example.feature_squad.presentation.squadhome.typeone.SquadHomeTypeOne
+import com.example.feature_squad.presentation.squadhome.typetwo.SquadHomeTypeTwo
 import com.example.standing.presentation.standinghome.StandingHome
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -58,6 +59,13 @@ fun AppHome(
                         FixturesHorizontalScrollTypeOne(list = data.matches,
                             onViewMoreClick = { onFixtureViewMoreClick.invoke() },
                             onClickItem = { onFixtureItemClick.invoke() })
+                    }
+
+                }
+
+                HomeItemViewType.HOME_SQUAD.id -> {
+                    (home as? HomeListingItem.HomeSquad)?.let { data ->
+                        data.items.orEmpty().let { SquadHomeTypeOne(players = it) }
                     }
 
                 }

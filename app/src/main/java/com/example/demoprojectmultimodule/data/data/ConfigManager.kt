@@ -59,6 +59,10 @@ class ConfigManager @Inject constructor(
         return "default.aspx?methodtype=3&client=4737564702&sport=1&league=0&timezone=0530&language=&tournament=4723"
     }
 
+    override fun getAppHomeFixturesUrl(): String {
+        return "default.aspx?methodtype=3&client=4737564702&sport=1&league=0&timezone=0530&language=&tournament=4723"
+    }
+
     override fun getStandingUrl(): String {
         return getBaseUrl() + "cricket/live/json/standing_5157.json"
     }
@@ -121,6 +125,10 @@ class ConfigManager @Inject constructor(
             .replace(
                 ReplaceKeys.DEFAULT_TEAM_ID, teamId ?: "3840"
             )
+    }
+    override fun getSquadCustomFeedUrl(): String {
+        //return getBaseUrl() + firebaseRemoteConfig.getString(ConfigManager.KEY_CUSTOM_TRANSLATIONS)
+        return "https://www.knightclub.in/static-assets/feeds/custom/en/trans.json"
     }
 
     override fun getPlayerImageUrl(playerId: String?): String {

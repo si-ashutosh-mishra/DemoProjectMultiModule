@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 @ViewModelScoped
-class GetSquadListing @Inject constructor(
+class GetIplSquadListing @Inject constructor(
     private val squadRepository: SquadRepository,
     private val squadConfig: SquadConfigContract,
 ) {
@@ -32,7 +32,7 @@ class GetSquadListing @Inject constructor(
 
         return combine(
             squadRepository.getSquadsListing(url = squadConfig.getSquadListingUrl(seriesId, teamId)),
-            squadRepository.getSquadCustomFeed(url = "https://www.knightclub.in/static-assets/feeds/custom/en/trans.json")
+            squadRepository.getSquadCustomFeed(url = squadConfig.getSquadCustomFeedUrl())
         ) { squadListResource, customSquadInfoResource ->
             if (squadListResource is Resource.Loading || customSquadInfoResource is Resource.Loading)
                 return@combine Resource.Loading()

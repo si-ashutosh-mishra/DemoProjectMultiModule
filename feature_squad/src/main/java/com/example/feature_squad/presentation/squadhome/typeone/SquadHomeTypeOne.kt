@@ -20,8 +20,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,14 +31,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_squad.R
-import com.example.feature_squad.presentation.squadhome.viewmodel.SquadViewModel
+import com.example.feature_squad.business.domain.model.squad.PlayerItem
 
 @Preview
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SquadTypeOneHorizontalScroll (
+fun SquadHomeTypeOne (
     @DrawableRes homeSquadBackground: Int = R.drawable.lakr_squad_bg,
     backgroundPlayerName : Color = Color.Yellow,
     firstNameTextStyle: TextStyle = TextStyle(
@@ -91,12 +88,12 @@ fun SquadTypeOneHorizontalScroll (
             color = Color.Yellow,
             shape = RoundedCornerShape(20.dp)
         )
-        .height(22.dp)
+        .height(22.dp),
+    players: List<PlayerItem> = emptyList()
 ) {
 
-    val viewModel: SquadViewModel = hiltViewModel()
-    val squadList by viewModel.player.observeAsState(initial = emptyList())
-    val pagerState = rememberPagerState { squadList.size }
+
+    val pagerState = rememberPagerState { players.size }
 
 
     Box (modifier = Modifier
@@ -118,14 +115,17 @@ fun SquadTypeOneHorizontalScroll (
                 modifier = Modifier.padding(vertical = 8.dp),
                 state = pagerState,
                 contentPadding = PaddingValues(horizontal = 55.dp),
-                pageSpacing = 15.dp
+                pageSpacing = 15.dp,
+                key = {
+                    players[it].playerId ?: ""
+                }
             ) { page ->
-                val data = squadList[page]
+                val data = players[page]
                 Log.d("Player $page", data.toString())
                 Box(modifier = Modifier.graphicsLayer {
                     alpha = if (page == pagerState.currentPage) 1f else 0.5f
                 }) {
-                    SquadTypeOne(
+                    SquadTypeOneItem(
                         playerImageModifier = Modifier.height(250.dp),
                         firstNameTextStyle = firstNameTextStyle,
                         lastNameTextStyle = lastNameTextStyle,
