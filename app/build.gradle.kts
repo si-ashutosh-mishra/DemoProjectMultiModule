@@ -74,6 +74,7 @@ dependencies {
     implementation(project(":feature_standing"))
     implementation(project(":lb_content_listing"))
     implementation(project(":base"))
+    implementation(project(":base_navigation"))
 
 
     testImplementation(libs.junit)

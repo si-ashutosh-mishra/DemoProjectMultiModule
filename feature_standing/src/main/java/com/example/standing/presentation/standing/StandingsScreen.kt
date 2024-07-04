@@ -26,13 +26,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.base_navigation.LocalNavController
+import com.example.base_navigation.navigationcomponents.pop
 import com.example.standing.R
 import com.example.standing.presentation.theme.DarkBlue
 import com.example.standing.presentation.theme.White20
 
 @Composable
 fun StandingsScreen(
-    navController: NavController,
     toolBarBGColor: Color = Color.Black,
     titleBarIconTintColor: Color = Color.White,
     toolBarTitleTextStyle: TextStyle = TextStyle(
@@ -84,7 +85,7 @@ fun StandingsScreen(
     showBack: Boolean = true,
     showFilter: Boolean = true
 ) {
-
+    val navController = LocalNavController.current
     val viewModel: StandingViewModel = hiltViewModel()
 
     LaunchedEffect(key1 = Unit) {
@@ -102,7 +103,7 @@ fun StandingsScreen(
 
     Column {
         StandingToolbar(
-            onBackClick = { navController.popBackStack() },
+            onBackClick = { navController.pop() },
             onFilterClick = { },
             titleBarIconTintColor = titleBarIconTintColor,
             toolBarColor = toolBarBGColor,
