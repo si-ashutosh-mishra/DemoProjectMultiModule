@@ -12,7 +12,7 @@ import com.example.feature_squad.business.domain.model.squad.PlayerFilterData
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
 import com.example.feature_squad.business.domain.model.squad.SquadModel
 import com.example.feature_squad.business.domain.model.squad.StaffItem
-import com.example.feature_squad.business.interceptor.GetSquadListing
+import com.example.feature_squad.business.interceptor.GetIplSquadListing
 import com.example.feature_squad.data.remote.SquadConfigContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SquadViewModel @Inject constructor(
-    private val getSquadListing: GetSquadListing,
+    private val getIplSquadListing: GetIplSquadListing,
     private val squadConfigContract: SquadConfigContract
 ) : ViewModel() {
 
@@ -41,10 +41,10 @@ class SquadViewModel @Inject constructor(
         getSquadList()
     }
 
-    fun getSquadList(teamId: String? = null) {
+    private fun getSquadList(teamId: String? = null) {
         this.teamId = teamId
         viewModelScope.launch {
-            val result = getSquadListing().collectLatest {
+            val result = getIplSquadListing().collectLatest {
                 when (it) {
                     is Resource.Loading -> Resource.Loading()
                     is Resource.Error -> Resource.Error(throwable = it.throwable)

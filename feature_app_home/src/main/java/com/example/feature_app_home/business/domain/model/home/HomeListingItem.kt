@@ -1,6 +1,7 @@
 package com.example.feature_app_home.business.domain.model.home
 
 import com.example.feature_fixtures.business.domain.model.masthead.IPLMatch
+import com.example.feature_squad.business.domain.model.squad.PlayerItem
 import com.example.standing.business.domain.model.standing.IPLStandings
 
 
@@ -19,6 +20,14 @@ sealed class HomeListingItem(val type: HomeItemViewType, open val dataAvailable:
         val matches: List<IPLMatch>,
         override val dataAvailable: Boolean = false,
     ) : HomeListingItem(type = HomeItemViewType.HOME_FIXTURES, dataAvailable = dataAvailable)
+
+    data class HomeSquad(
+        val widgetTitle: String,
+        val showWidgetTitle: Boolean,
+        val showMore: Boolean,
+        val items: List<PlayerItem>?,
+        override val dataAvailable: Boolean = false,
+    ) : HomeListingItem(type = HomeItemViewType.HOME_SQUAD, dataAvailable = dataAvailable)
 
     object Unknown : HomeListingItem(type = HomeItemViewType.UNKNOWN)
 }

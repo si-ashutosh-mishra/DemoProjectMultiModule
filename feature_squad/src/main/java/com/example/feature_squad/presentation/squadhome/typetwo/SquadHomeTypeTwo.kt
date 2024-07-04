@@ -1,6 +1,5 @@
 package com.example.feature_squad.presentation.squadhome.typetwo
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -21,8 +20,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,19 +33,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_squad.R
-import com.example.feature_squad.presentation.squadhome.viewmodel.SquadViewModel
-
-//@Preview
-//@Composable
-//fun Preview() {
-//    SquadHorizontalScroll()
-//}
+import com.example.feature_squad.business.domain.model.squad.PlayerItem
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SquadHorizontalScroll (
+fun SquadHomeTypeTwo(
     @DrawableRes homeSquadBackground: Int = R.drawable.lakr_squad_bg,
     firstNameTextStyle: TextStyle = TextStyle(
         fontSize = 16.sp,
@@ -69,16 +59,14 @@ fun SquadHorizontalScroll (
         textAlign = TextAlign.Center
     ),
     squadTitleTxtStyle: TextStyle = TextStyle(
-        color = Color.White,
-        fontSize = 20.sp
-    )
+        color = Color.White, fontSize = 20.sp
+    ),
+    players: List<PlayerItem> = emptyList()
 ) {
 
-    val viewModel: SquadViewModel = hiltViewModel()
-    val squadList by viewModel.player.observeAsState(initial = emptyList())
-    val pagerState = rememberPagerState { squadList.size }
+    val pagerState = rememberPagerState { players.size }
 
-    Box (modifier = Modifier.wrapContentSize()) {
+    Box(modifier = Modifier.wrapContentSize()) {
 
         Image(
             painter = painterResource(homeSquadBackground),
@@ -87,7 +75,7 @@ fun SquadHorizontalScroll (
             contentDescription = ""
         )
 
-        Column  {
+        Column {
             HomeSquadHeadline(
                 modifier = Modifier.padding(
                     top = 50.dp
@@ -98,18 +86,19 @@ fun SquadHorizontalScroll (
                 modifier = Modifier.height(16.dp)
             )
 
-            HorizontalPager(
-                modifier = Modifier.padding(vertical = 8.dp),
+            HorizontalPager(modifier = Modifier.padding(vertical = 8.dp),
                 state = pagerState,
                 contentPadding = PaddingValues(horizontal = 55.dp),
-                pageSpacing = 15.dp
-            ) { page ->
-                val data = squadList[page]
-                Log.d("Player $page", data.toString())
+                pageSpacing = 15.dp,
+                key = {
+                    players[it].playerId ?: ""
+                }) { page ->
+                val data = players[page]
+
                 Box(modifier = Modifier.graphicsLayer {
                     alpha = if (page == pagerState.currentPage) 1f else 0.5f
                 }) {
-                    SquadTypeTwo(
+                    SquadTypeTwoItem(
                         playerImageModifier = Modifier.height(250.dp),
                         firstNameTextStyle = firstNameTextStyle,
                         lastNameTextStyle = lastNameTextStyle,
@@ -127,8 +116,7 @@ fun HomeSquadHeadline(
     modifier: Modifier = Modifier,
     squadTitle: String = "Squad",
     squadTitleTxtStyle: TextStyle = TextStyle(
-        color = Color.White,
-        fontSize = 20.sp
+        color = Color.White, fontSize = 20.sp
     ),
     moreButtonModifier: Modifier = Modifier
         .padding(end = 8.dp)
@@ -136,23 +124,22 @@ fun HomeSquadHeadline(
             shape = RoundedCornerShape(2.dp)
         )
         .background(
-            color = Color.Transparent,
-            shape = RoundedCornerShape(4.dp)
+            color = Color.Transparent, shape = RoundedCornerShape(4.dp)
         )
         .border(
-            BorderStroke(0.5.dp, SolidColor(Color.White)),
-            shape = RoundedCornerShape(4.dp)
+            BorderStroke(0.5.dp, SolidColor(Color.White)), shape = RoundedCornerShape(4.dp)
         )
         .padding(horizontal = 12.dp, vertical = 6.dp),
     moreButtonTextStyle: TextStyle = TextStyle(
-        color = Color.White,
-        fontSize = 10.sp
+        color = Color.White, fontSize = 10.sp
     )
 
-){
+) {
 
-    Row (
-        modifier = modifier.fillMaxWidth().padding(vertical = 8.dp)
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
     ) {
         Text(
             modifier = Modifier
@@ -163,9 +150,7 @@ fun HomeSquadHeadline(
         )
 
         Text(
-            modifier = moreButtonModifier
-                .align(Alignment.CenterVertically)
-            ,
+            modifier = moreButtonModifier.align(Alignment.CenterVertically),
             textAlign = TextAlign.End,
             text = "More",
             style = moreButtonTextStyle

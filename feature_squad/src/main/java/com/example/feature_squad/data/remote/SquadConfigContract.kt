@@ -4,6 +4,7 @@ import com.example.feature_squad.business.domain.model.squad.SkillItem
 
 interface SquadConfigContract {
     fun getSquadListingUrl(seriesId: String?, teamId: String?): String
+    fun getSquadCustomFeedUrl(): String
     fun getPlayerImageUrl(playerId: String?): String
     fun getCountryNationalityIdImageUrl(nationalityId: String?): String
     fun getTeamNationalityId(currentTeam: Int): String?

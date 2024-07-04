@@ -36,11 +36,11 @@ import com.example.feature_squad.business.domain.model.squad.PlayerItem
 @Preview
 @Composable
 fun ScreenPreview() {
-    SquadTypeOne()
+    SquadTypeOneItem()
 }
 
 @Composable
-fun SquadTypeOne(
+fun SquadTypeOneItem(
     playerImageModifier: Modifier = Modifier
         .height(200.dp)
         .width(250.dp)
