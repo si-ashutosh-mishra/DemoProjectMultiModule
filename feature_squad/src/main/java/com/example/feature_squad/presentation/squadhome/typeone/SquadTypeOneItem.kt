@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
@@ -29,6 +30,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.example.feature_squad.R
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
@@ -41,10 +44,8 @@ fun ScreenPreview() {
 
 @Composable
 fun SquadTypeOneItem(
-    playerImageModifier: Modifier = Modifier
-        .height(250.dp)
-        .width(220.dp)
-        .padding(20.dp)
+    modifier: Modifier = Modifier
+        .width(200.dp)
         .background(Color.Transparent)
         .fillMaxWidth(),
     @DrawableRes homeSquadBackground: Int = R.drawable.lakr_squad_bg,
@@ -82,7 +83,7 @@ fun SquadTypeOneItem(
     playerDetail: PlayerItem? = null
 ){
     Box(
-        modifier = playerImageModifier
+        modifier = modifier
             .clip(RoundedCornerShape(5.dp))
             .background(Color.Transparent)
     ) {
@@ -92,6 +93,7 @@ fun SquadTypeOneItem(
             contentScale = ContentScale.FillBounds,
             contentDescription = ""
         )
+
         Row (modifier = Modifier.align(Alignment.TopEnd)){
             if (playerDetail != null) {
                 if(playerDetail.overseasPlayer) {
@@ -116,115 +118,183 @@ fun SquadTypeOneItem(
                 }
             }
         }
-        Column {
+
+        ConstraintLayout {
+
+            val (playerImageId, playerStatsCard, skillDetail, playerDetails) = createRefs()
+
             AsyncImage(
                 model = playerDetail?.playerImageUrl,
+                placeholder = painterResource(R.drawable.ic_player),
                 modifier = Modifier
-                    .width(200.dp)
-                    .height(250.dp)
-                    .padding(bottom = 30.dp)
-                    .align(Alignment.CenterHorizontally),
+                    .fillMaxWidth()
+                    .height(200.dp)
+                    .constrainAs(playerImageId) {
+                        bottom.linkTo(playerStatsCard.top)
+                        height = Dimension.fillToConstraints
+                    },
                 contentScale = ContentScale.Fit,
                 contentDescription = "",
             )
-        }
-        Card (shape = RoundedCornerShape(topEnd = 5.dp),
-            modifier = Modifier.align(Alignment.BottomStart),
-        ) {
-            Card(
-                modifier = Modifier
-                    .background(bottomBackground)
-                    .padding(bottom = 55.dp, top = 5.dp, start = 3.dp)
-            ) {
-                Row(modifier = Modifier.background(bottomBackground)) {
-                    AsyncImage(
-                        model = if(playerDetail?.skillId.equals("1")){
-                            R.drawable.ic_skill_bat
-                        } else if(playerDetail?.skillId.equals("2")){
-                                R.drawable.ic_skill_bowl
-                        } else if(playerDetail?.skillId.equals("4")){
-                            R.drawable.ic_skill_wicket_keeper
-                        }else{
-                            R.drawable.ic_skill_all_rounder
-                        },
-                        modifier = Modifier
-                            .width(20.dp)
-                            .height(15.dp),
-                        contentScale = ContentScale.Fit,
-                        contentDescription = ""
-                    )
-                    Text(
-                        text = playerDetail?.skill.toString(),
-                        modifier = Modifier.padding(end = 5.dp),
-                        style = skillTextStyle
-                    )
-                }
-            }
-        }
 
-        Card(
-            modifier = Modifier
-                .background(bottomBackground)
-                .padding(all = 4.dp)
-                .align(Alignment.BottomStart),
-            shape = RoundedCornerShape(0.dp),
-        ) {
-            Column(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color.Magenta),) {
-                    Row (
-                        modifier = Modifier.fillMaxWidth()
-                    ){
-                        Row (Modifier.weight(1f), horizontalArrangement = Arrangement.Center){
-                            StatText(
-                                playerDetail?.overAllStats?.batting?.matchesPlayed.toString(), "Matches", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
-                            )
-                        }
-                        Divider(
-                            color = Color.White,
-                            modifier = Modifier
-                                .wrapContentHeight(Alignment.Top)
-                                .padding(5.dp)
-                                .height(25.dp)
-                                .width(1.dp)
-                        )
-                        Row (Modifier.weight(1f), horizontalArrangement = Arrangement.Center) {
-                            StatText(
-                                playerDetail?.overAllStats?.batting?.runs.toString(), "Runs", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
-                            )
-                        }
-                        Divider(
-                            color = Color.White,
-                            modifier = Modifier
-                                .wrapContentHeight(Alignment.Top)
-                                .padding(5.dp)
-                                .height(25.dp)
-                                .width(1.dp)
-                        )
-                        Row (Modifier.weight(1f), horizontalArrangement = Arrangement.Center) {
-                            StatText(
-                                playerDetail?.overAllStats?.bowling?.wickets.toString(), "Wickets", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
-                            )
-                        }
+            Column (
+                modifier = Modifier
+                    .padding(bottom = 10.dp)
+                    .constrainAs(playerDetails) {
+                        bottom.linkTo(skillDetail.top)
                     }
-                }
-            }
-        }
-        Box(
-            modifier = Modifier
-                .background(backgroundPlayerName)
-                .padding(all = 8.dp)
-                .align(Alignment.CenterStart)
-        ){
-            Column {
+                    .background(backgroundPlayerName)
+                    .padding(all = 8.dp)
+//                    .align(Alignment.CenterStart)
+            ) {
                 Text(text = playerDetail?.firstName.toString(),
                     style = firstNameTextStyle)
                 Text(text = playerDetail?.lastName.toString(),
                     style = lastNameTextStyle)
             }
+
+            Card (
+                shape = RoundedCornerShape(topEnd = 5.dp),
+                modifier = Modifier
+                    .wrapContentSize()
+                    .constrainAs(skillDetail) {
+                        bottom.linkTo(playerStatsCard.top)
+                        start.linkTo(parent.start)
+                    },
+            ) {
+                Card(
+                    modifier = Modifier
+                        .background(bottomBackground)
+                        .padding(vertical = 3.dp, horizontal = 5.dp)
+                ) {
+                    Row(modifier = Modifier.background(bottomBackground)) {
+                        AsyncImage(
+                            model = if(playerDetail?.skillId.equals("1")){
+                                R.drawable.ic_skill_bat
+                            } else if(playerDetail?.skillId.equals("2")){
+                                R.drawable.ic_skill_bowl
+                            } else if(playerDetail?.skillId.equals("4")){
+                                R.drawable.ic_skill_wicket_keeper
+                            }else{
+                                R.drawable.ic_skill_all_rounder
+                            },
+                            modifier = Modifier
+                                .width(20.dp)
+                                .height(15.dp),
+                            contentScale = ContentScale.Fit,
+                            contentDescription = ""
+                        )
+                        Text(
+                            text = playerDetail?.skill.toString(),
+                            modifier = Modifier.padding(end = 5.dp),
+                            style = skillTextStyle
+                        )
+                    }
+                }
+            }
+
+            Row (
+                modifier = Modifier
+                    .constrainAs(playerStatsCard) {
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                    }
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .background(Color.Magenta)
+                    .padding(all = 4.dp)
+            ){
+
+                /*Column (
+                    modifier = Modifier
+                        .weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = playerDetail?.overAllStats?.batting?.matchesPlayed.toString(),
+                        style = TextStyle(
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
+                    )
+                    Text(
+                        text = "Matches".uppercase(),
+                        style = TextStyle(
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
+                    )
+                }
+*/
+                Row (
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentHeight(), horizontalArrangement = Arrangement.Center){
+                    StatText(
+                        playerDetail?.overAllStats?.batting?.matchesPlayed.toString(), "Matches", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
+                    )
+                }
+
+                Divider(
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .height(25.dp)
+                        .width(1.dp)
+                )
+
+                Row (
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentHeight(), horizontalArrangement = Arrangement.Center) {
+                    StatText(
+                        playerDetail?.overAllStats?.batting?.runs.toString(), "Runs", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
+                    )
+                }
+
+                Divider(
+                    color = Color.White,
+                    modifier = Modifier
+                        .padding(5.dp)
+                        .height(25.dp)
+                        .width(1.dp)
+                )
+
+                Row (
+                    modifier = Modifier
+                        .weight(1f)
+                        .wrapContentHeight(), horizontalArrangement = Arrangement.Center) {
+                    StatText(
+                        playerDetail?.overAllStats?.bowling?.wickets.toString(), "Wickets", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
+                    )
+                }
+            }
         }
+    }
+}
+
+
+@Composable
+fun StatText(
+//    modifier: Modifier = Modifier.weight(1f),
+    value : String,
+    heading : String,
+    valueStyle: TextStyle = TextStyle(
+        color = Color.Black,
+        textAlign = TextAlign.Center
+    ),
+    headingStyle: TextStyle = TextStyle(
+        color = Color.Black,
+        textAlign = TextAlign.Center
+    )
+){
+    Column (
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally){
+        Text(text = value,
+            style = valueStyle)
+        Text(text = heading.uppercase(),
+            style = headingStyle)
     }
 }
