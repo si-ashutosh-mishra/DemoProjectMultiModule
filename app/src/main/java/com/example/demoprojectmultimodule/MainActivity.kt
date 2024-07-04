@@ -19,8 +19,6 @@ import com.example.base_navigation.SheetDestination
 import com.example.base_navigation.navigationcomponents.NavController
 import com.example.base_navigation.navigationcomponents.rememberNavController
 import com.example.demoprojectmultimodule.ui.theme.DemoProjectMultiModuleTheme
-import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
-import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

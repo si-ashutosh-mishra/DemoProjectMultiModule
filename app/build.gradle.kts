@@ -71,8 +71,11 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
     implementation(project(":feature_fixtures"))
+    implementation(project(":feature_squad"))
     implementation(project(":feature_standing"))
     implementation(project(":lb_content_listing"))
+    implementation(project(":common_webview"))
+    implementation(project(":feature_app_home"))
     implementation(project(":base"))
     implementation(project(":base_navigation"))
 
@@ -84,4 +87,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+
+    implementation(libs.retrofit.gsonconverter)
 }

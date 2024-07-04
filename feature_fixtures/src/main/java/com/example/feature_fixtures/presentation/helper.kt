@@ -1,4 +1,4 @@
-package com.example.feature_fixtures.presentation.fixture
+package com.example.feature_fixtures.presentation
 
 class helper {
 }
