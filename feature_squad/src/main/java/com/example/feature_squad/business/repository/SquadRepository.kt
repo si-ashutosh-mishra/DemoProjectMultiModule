@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SquadRepository {
 
-    fun getSquadCustomFeed(): Flow<Resource<CustomSquadInfo>>
+    fun getSquadCustomFeed(url: String): Flow<Resource<CustomSquadInfo>>
     fun getSquadsListing(url: String?): Flow<Resource<SquadList>>
 
 }

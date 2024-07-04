@@ -1,23 +1,26 @@
 package com.example.feature_squad.business.interceptor
 
+import androidx.core.text.HtmlCompat
+import com.example.base.helper.NetworkThrowable
 import com.example.base.helper.Resource
 import com.example.feature_squad.business.domain.model.squad.PlayerComparator
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
 import com.example.feature_squad.business.domain.model.squad.SquadStaff
 import com.example.feature_squad.business.domain.model.squad.StaffItem
 import com.example.feature_squad.business.repository.SquadRepository
+import com.example.feature_squad.data.model.CustomSquadInfo
 import com.example.feature_squad.data.model.SquadList
 import com.example.feature_squad.data.model.Staff
 import com.example.feature_squad.data.remote.SquadConfigContract
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
 @ViewModelScoped
 class GetSquadListing @Inject constructor(
     private val squadRepository: SquadRepository,
-    private val configManager: SquadConfigContract,
+    private val squadConfig: SquadConfigContract,
 ) {
     operator fun invoke(
         isPlayerNameUpperCase: Boolean = true,
@@ -27,66 +30,118 @@ class GetSquadListing @Inject constructor(
         teamId: String? = null,
     ): Flow<Resource<SquadStaff>> {
 
-        return squadRepository.getSquadsListing(
-            url = configManager.getSquadListingUrl(seriesId, teamId)
-        ).map {
-            when (it) {
-                is Resource.Error -> Resource.Error(throwable = it.throwable)
-                is Resource.Loading -> Resource.Loading()
-                else -> {
+        return combine(
+            squadRepository.getSquadsListing(url = squadConfig.getSquadListingUrl(seriesId, teamId)),
+            squadRepository.getSquadCustomFeed(url = "https://www.knightclub.in/static-assets/feeds/custom/en/trans.json")
+        ) { squadListResource, customSquadInfoResource ->
+            if (squadListResource is Resource.Loading || customSquadInfoResource is Resource.Loading)
+                return@combine Resource.Loading()
 
-                    Resource.Success(
-                        data = SquadStaff(
-                            squadList = getPlayerItems(
-                                isPlayerNameUpperCase,
-                                squadList = it.data,
-                                currentTeam
-                            ),
-                            if (isSupportStaffRequired) getStaffItem(
-                                it.data?.supportStaff.orEmpty(),
-                                currentTeam
-                            ) else emptyList()
-                        )
-                    )
-                }
+            if (squadListResource is Resource.Error) {
+                return@combine Resource.Error(throwable = NetworkThrowable(code = null, message = ""))
             }
 
+            if (squadListResource is Resource.Success)
+                return@combine Resource.Success(
+                    data = SquadStaff(
+                        squadList = getPlayerItems(
+                            isPlayerNameUpperCase,
+                            squadList = squadListResource.data,
+                            currentTeam,
+                            customSquadInfo = customSquadInfoResource.data
+                        ),
+                        if (isSupportStaffRequired) getStaffItem(
+                            squadListResource.data?.supportStaff.orEmpty(),
+                            currentTeam
+                        ) else emptyList()
+                    )
+                )
+            return@combine Resource.Loading()
         }
     }
 
     private fun getPlayerItems(
         isPlayerNameUpperCase: Boolean,
         squadList: SquadList?,
-        currentTeam: Int
+        currentTeam: Int,
+        customSquadInfo: CustomSquadInfo?
     ): List<PlayerItem> {
         val players = squadList?.players?.map {
-            val firstName = it.playerDetails?.name?.substringBefore(" ")
-            val lastName = it.playerDetails?.name?.substringAfter(" ")
+            val playerInfo = it.playerDetails?.id?.let { id ->
+                try {
+                    customSquadInfo?.players?.find { it.id?.toString() == id }
+                } catch (e: Exception) {
+                    null
+                }
+            }
 
-            PlayerItem(
-                playerId = it.playerDetails?.id,
-                skillId = it.playerDetails?.skillId,
-                skill = it.playerDetails?.skill,
-                firstName = if (isPlayerNameUpperCase) firstName?.uppercase() else firstName
-                    ?: "",
-                lastName = if (isPlayerNameUpperCase) lastName?.uppercase() else lastName
-                    ?: "",
-                playerImageUrl = configManager.getPlayerImageUrl(it.playerDetails?.id),
-                country = it.playerDetails?.nationality,
-                countryImageUrl = configManager.getCountryNationalityIdImageUrl(it.playerDetails?.nationalityId),
-                overseasPlayer = it.playerDetails?.nationalityId != configManager.getTeamNationalityId(
-                    currentTeam = currentTeam
-                ),
-                bio = null,
-                isCaptain = it.playerDetails?.isCaptain ?: false,
-                isViceCaptain = it.playerDetails?.isViceCaptain ?: false,
-                overAllStats = it.overAllStats
-            )
-        }
-            .orEmpty()
-            .toMutableList()
+            val skill = it.playerDetails?.skill?.let { skill ->
+                if (it.playerDetails.isCaptain == true) {
+                    "Captain / $skill"
+                } else {
+                    skill
+                }
+            }
 
-        val playerOrder = configManager.getSquadPlayerOrder()
+            if (playerInfo == null) {
+                val firstName = it.playerDetails?.name?.substringBefore(" ")
+                val lastName = it.playerDetails?.name?.substringAfter(" ")
+
+                val skill = it.playerDetails?.skill?.let { skill ->
+                    if (it.playerDetails.isCaptain == true) {
+                        "Captain / $skill"
+                    } else {
+                        skill
+                    }
+                }
+
+                PlayerItem(
+                    playerId = it.playerDetails?.id,
+                    skillId = it.playerDetails?.skillId,
+                    skill = skill,
+                    firstName = if (isPlayerNameUpperCase) firstName?.uppercase() else firstName
+                        ?: "",
+                    lastName = if (isPlayerNameUpperCase) lastName?.uppercase() else lastName
+                        ?: "",
+                    playerImageUrl = squadConfig.getPlayerImageUrl(playerId = it.playerDetails?.id),
+                    country = it.playerDetails?.nationality,
+                    countryImageUrl = squadConfig.getCountryNationalityIdImageUrl(it.playerDetails?.nationalityId?:""),
+                    overseasPlayer = it.playerDetails?.nationalityId != "4",
+                    bio = null,
+                    isCaptain = it.playerDetails?.isCaptain ?: false,
+                    isViceCaptain = it.playerDetails?.isViceCaptain ?: false,
+                    overAllStats = it.overAllStats
+                )
+            }
+            else {
+                val firstName = playerInfo.name?.substringBefore(" ")
+                val lastName = playerInfo.name?.substringAfter(" ")
+
+                PlayerItem(
+                    playerId = it.playerDetails.id,
+                    skillId = playerInfo.skill?.id.toString(),
+                    skill = skill,
+                    firstName = if (isPlayerNameUpperCase) firstName?.uppercase() else firstName ?: "",
+                    lastName = if (isPlayerNameUpperCase) lastName?.uppercase() else lastName ?: "",
+                    playerImageUrl = squadConfig.getPlayerImageUrl(it.playerDetails.id),
+                    country = it.playerDetails.nationality,
+                    countryImageUrl = squadConfig.getCountryNationalityIdImageUrl(it.playerDetails.nationalityId ?: ""),
+                    overseasPlayer = it.playerDetails.nationalityId != "4",
+                    bio = playerInfo.bio?.let { bio ->
+                        HtmlCompat.fromHtml(
+                            bio,
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        ).toString()
+                    },
+                    isCaptain = it.playerDetails.isCaptain ?: false,
+                    isViceCaptain = it.playerDetails.isViceCaptain ?: false,
+                    overAllStats = it.overAllStats
+                )
+            }
+
+        }.orEmpty().toMutableList()
+
+        val playerOrder = squadConfig.getSquadPlayerOrder()
 
         return if (playerOrder.isNotEmpty()) {
             val squadMap: HashMap<String, PlayerItem> = hashMapOf()
@@ -126,15 +181,15 @@ class GetSquadListing @Inject constructor(
                 lastName = lastName,
                 roleId = it.roleId,
                 roleName = it.roleName,
-                staffImageUrl = configManager.getStaffImageUrl(it.id),
+                staffImageUrl = squadConfig.getStaffImageUrl(it.id),
                 countryId = it.nationalityId,
                 countryName = it.nationalityName,
-                countryImageUrl = configManager.getCountryNationalityIdImageUrl(it.nationalityId),
-                overseasPlayer = it.nationalityId != configManager.getTeamNationalityId(currentTeam = currentTeam)
+                countryImageUrl = squadConfig.getCountryNationalityIdImageUrl(it.nationalityId),
+                overseasPlayer = it.nationalityId != squadConfig.getTeamNationalityId(currentTeam = currentTeam)
             )
         }.toMutableList()
 
-        val staffOrder = configManager.getSquadStaffOrder()
+        val staffOrder = squadConfig.getSquadStaffOrder()
 
         if (staffOrder.isNotEmpty()) {
             val staffMap: HashMap<String, StaffItem> = hashMapOf()

@@ -19,9 +19,9 @@ class SquadRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ): SquadRepository {
 
-    override fun getSquadCustomFeed(): Flow<Resource<CustomSquadInfo>> {
+    override fun getSquadCustomFeed(url: String): Flow<Resource<CustomSquadInfo>> {
         return flow {
-            val url = "static-assets/feeds/custom/en/trans.json"
+//            val url = "https://www.knightclub.in/static-assets/feeds/custom/en/trans.json"
             val result = safeApiCall(ioDispatcher) {
                 squadService.getSquadCustomFeed(
                     url
