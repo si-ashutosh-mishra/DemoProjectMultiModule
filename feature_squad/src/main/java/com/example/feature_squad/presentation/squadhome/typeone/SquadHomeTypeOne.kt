@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.feature_squad.R
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
+import com.example.feature_squad.presentation.squadfragment.typeone.SquadTypeOneScreen
 
 @Preview
 @OptIn(ExperimentalFoundationApi::class)
@@ -121,7 +122,7 @@ fun SquadHomeTypeOne (
                 items(4) { page ->
                     //val data = squadList[page]
                     //Log.d("Player $page", data.toString())
-                        SquadTypeOne(
+                        SquadTypeOneItem(
                             playerImageModifier = Modifier.height(250.dp),
                             firstNameTextStyle = firstNameTextStyle,
                             lastNameTextStyle = lastNameTextStyle,
