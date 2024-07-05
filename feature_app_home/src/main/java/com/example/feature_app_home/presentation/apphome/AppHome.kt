@@ -1,5 +1,6 @@
 package com.example.feature_app_home.presentation.apphome
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -65,7 +66,14 @@ fun AppHome(
 
                 HomeItemViewType.HOME_SQUAD.id -> {
                     (home as? HomeListingItem.HomeSquad)?.let { data ->
-                        data.items.orEmpty().let { SquadHomeTypeOne(players = it) }
+                        data.items.orEmpty().let {
+                            SquadHomeTypeTwo(
+                                players = it,
+                                onPlayerItemClick = { player ->
+                                    Log.d("onClick PlayerDetail", player.toString())
+                                }
+                            )
+                        }
                     }
 
                 }

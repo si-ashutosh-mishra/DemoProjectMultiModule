@@ -61,6 +61,7 @@ fun SquadHomeTypeTwo(
     squadTitleTxtStyle: TextStyle = TextStyle(
         color = Color.White, fontSize = 20.sp
     ),
+    onPlayerItemClick: (PlayerItem?) -> Unit = {},
     players: List<PlayerItem> = emptyList()
 ) {
 
@@ -103,7 +104,8 @@ fun SquadHomeTypeTwo(
                         firstNameTextStyle = firstNameTextStyle,
                         lastNameTextStyle = lastNameTextStyle,
                         playerRoleTextStyle = playerRoleTextStyle,
-                        playerDetail = data
+                        playerDetail = data,
+                        onPlayerItemClick = onPlayerItemClick
                     )
                 }
             }

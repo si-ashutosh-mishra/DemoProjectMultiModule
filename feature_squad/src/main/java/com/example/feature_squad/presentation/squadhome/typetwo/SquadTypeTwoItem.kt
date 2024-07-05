@@ -3,6 +3,7 @@ package com.example.feature_squad.presentation.squadhome.typetwo
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -59,9 +60,17 @@ fun SquadTypeTwoItem(
         textAlign = TextAlign.Center
     ),
     playerImageModifier: Modifier = Modifier.height(200.dp),
-    playerDetail: PlayerItem? = null
+    playerDetail: PlayerItem? = null,
+    onPlayerItemClick: (PlayerItem?) -> Unit = {}
 ) {
-    ConstraintLayout() {
+    ConstraintLayout(
+        modifier = Modifier
+            .clickable(
+                enabled = true,
+                onClick = { onPlayerItemClick(playerDetail) }
+            )
+
+    ) {
         val (playerImageId, playerDetailCard, divider) = createRefs()
 
         AsyncImage(
