@@ -6,6 +6,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -62,6 +63,7 @@ fun SquadHomeTypeTwo(
         color = Color.White, fontSize = 20.sp
     ),
     onPlayerItemClick: (PlayerItem?) -> Unit = {},
+    onMoreClick: () -> Unit = {},
     players: List<PlayerItem> = emptyList()
 ) {
 
@@ -80,7 +82,9 @@ fun SquadHomeTypeTwo(
             HomeSquadHeadline(
                 modifier = Modifier.padding(
                     top = 50.dp
-                ), squadTitleTxtStyle = squadTitleTxtStyle
+                ),
+                squadTitleTxtStyle = squadTitleTxtStyle,
+                onMoreClick = onMoreClick
             )
 
             Spacer(
@@ -134,7 +138,8 @@ fun HomeSquadHeadline(
         .padding(horizontal = 12.dp, vertical = 6.dp),
     moreButtonTextStyle: TextStyle = TextStyle(
         color = Color.White, fontSize = 10.sp
-    )
+    ),
+    onMoreClick: () -> Unit
 
 ) {
 
@@ -152,7 +157,9 @@ fun HomeSquadHeadline(
         )
 
         Text(
-            modifier = moreButtonModifier.align(Alignment.CenterVertically),
+            modifier = moreButtonModifier
+                .align(Alignment.CenterVertically)
+                .clickable(enabled = true, onClick = onMoreClick),
             textAlign = TextAlign.End,
             text = "More",
             style = moreButtonTextStyle
