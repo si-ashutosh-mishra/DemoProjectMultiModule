@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,8 +30,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_squad.R
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
+import com.example.feature_squad.presentation.squadhome.viewmodel.SquadViewModel
 
 @Preview
 @Composable
@@ -38,37 +42,37 @@ fun SquadHomeTypeOne (
     backgroundPlayerName : Color = Color.Yellow,
     firstNameTextStyle: TextStyle = TextStyle(
         fontSize = 15.sp,
-        color = Color.Black,
+        color = Color(0xFF3A225D),
         fontWeight = FontWeight.Medium,
         textAlign = TextAlign.Center
     ),
     lastNameTextStyle: TextStyle = TextStyle(
         fontSize = 17.sp,
-        color = Color.Black,
+        color = Color(0xFF3A225D),
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center
     ),
     playerRoleValueTextStyle: TextStyle = TextStyle(
         fontSize = 12.sp,
-        color = Color.Yellow,
+        color = Color.White,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center
     ),
     playerRoleHeadingTextStyle: TextStyle = TextStyle(
         fontSize = 12.sp,
-        color = Color.Yellow,
+        color = Color.White,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center
     ),
     squadTitleTextStyle: TextStyle = TextStyle(
-        color = Color.Black,
-        fontSize = 20.sp,
+        color = Color(0xFF252525),
+        fontSize = 18.sp,
         fontWeight = FontWeight.SemiBold
     ),
     squadTitle: String = "Players",
     moreButtonModifier: Modifier = Modifier
         .background(
-            color = Color.Blue,
+            color = Color(0xFF3A225D),
             shape = RoundedCornerShape(20.dp)
         )
         .height(22.dp)
@@ -81,15 +85,15 @@ fun SquadHomeTypeOne (
     moreButtonArrowModifier : Modifier = Modifier
         .padding(horizontal = 12.dp, vertical = 6.dp)
         .background(
-            color = Color.Yellow,
+            color = Color(0xFFF2C029),
             shape = RoundedCornerShape(20.dp)
         )
         .height(22.dp),
     players: List<PlayerItem> = emptyList()
 ) {
 
-    //val viewModel: SquadViewModel = hiltViewModel()
-    //val squadList by viewModel.player.observeAsState(initial = emptyList())
+    val viewModel: SquadViewModel = hiltViewModel()
+    val squadList by viewModel.player.observeAsState(initial = emptyList())
 
 
     Box (modifier = Modifier
@@ -100,7 +104,12 @@ fun SquadHomeTypeOne (
             HomeSquadHeadline(
                 modifier = Modifier
                     .padding(horizontal = 20.dp),
-                squadTitleTextStyle = squadTitleTextStyle
+                squadTitle = squadTitle,
+                squadTitleTextStyle = squadTitleTextStyle,
+                moreButtonModifier = moreButtonModifier,
+                moreButtonTextStyle = moreButtonTextStyle,
+                moreButtonArrow = moreButtonArrow,
+                moreButtonArrowModifier = moreButtonArrowModifier
             )
 
             Spacer(
@@ -114,7 +123,7 @@ fun SquadHomeTypeOne (
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(horizontal = 5.dp),
             ) {
-                items(players.size) {
+                items(squadList.size) {
                     val data = players[it]
 //                    Log.d("Player $page", data.toString())
                         SquadTypeOneItem(
@@ -141,21 +150,23 @@ fun HomeSquadHeadline(
     ),
     moreButtonModifier: Modifier = Modifier
         .background(
-            color = Color.Blue,
+            color = Color(0xFF3A225D),
             shape = RoundedCornerShape(20.dp)
         )
+        .height(22.dp)
         .padding(horizontal = 12.dp, vertical = 6.dp),
     moreButtonTextStyle: TextStyle = TextStyle(
         color = Color.White,
-        fontSize = 12.sp
+        fontSize = 10.sp
     ),
     @DrawableRes moreButtonArrow: Int = R.drawable.arrow,
     moreButtonArrowModifier : Modifier = Modifier
         .padding(horizontal = 12.dp, vertical = 6.dp)
         .background(
-            color = Color.Yellow,
+            color = Color(0xFFF2C029),
             shape = RoundedCornerShape(20.dp)
         )
+        .height(22.dp),
     ){
 
     Row (

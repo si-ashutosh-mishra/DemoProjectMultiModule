@@ -1,5 +1,6 @@
 package com.example.feature_squad.presentation.squadhome.typeone
 
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -32,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.core.graphics.toColorInt
 import coil.compose.AsyncImage
 import com.example.feature_squad.R
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
@@ -48,9 +51,11 @@ fun SquadTypeOneItem(
         .width(200.dp)
         .background(Color.Transparent)
         .fillMaxWidth(),
-    @DrawableRes homeSquadBackground: Int = R.drawable.lakr_squad_bg,
-    backgroundPlayerName : Color = Color.Yellow,
-    bottomBackground : Color = Color.Magenta,
+    @DrawableRes homeSquadBackground: Int = R.drawable.bg_player_home,
+    playerNameBackgroundModifier : Modifier = Modifier
+        .padding(bottom = 10.dp)
+        .background(Color(0xFFF2C029)),
+    bottomBackgroundModifier: Modifier = Modifier.background(Color(0xFF3A225D)),
     firstNameTextStyle: TextStyle = TextStyle(
         fontSize = 15.sp,
         color = Color.Black,
@@ -75,7 +80,7 @@ fun SquadTypeOneItem(
         fontWeight = FontWeight.Medium,
         textAlign = TextAlign.Center
     ),
-    skillTextStyle : TextStyle = TextStyle(color = Color.Black,
+    skillTextStyle : TextStyle = TextStyle(color = Color.White,
         fontSize = 14.sp,
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.SemiBold
@@ -94,9 +99,19 @@ fun SquadTypeOneItem(
             contentDescription = ""
         )
 
-        Row (modifier = Modifier.align(Alignment.TopEnd)){
+        Column (modifier = Modifier.align(Alignment.TopEnd).padding(end = 15.dp, top = 10.dp)){
             if (playerDetail != null) {
-                if(playerDetail.overseasPlayer) {
+                if (playerDetail.isCaptain) {
+                    Image(
+                        painter = painterResource(R.drawable.ic_captain_home),
+                        modifier = Modifier
+                            .width(20.dp)
+                            .height(15.dp),
+                        contentScale = ContentScale.Fit,
+                        contentDescription = ""
+                    )
+                }
+                if (playerDetail.overseasPlayer) {
                     Image(
                         painter = painterResource(R.drawable.ic_home_overseas),
                         modifier = Modifier
@@ -105,16 +120,6 @@ fun SquadTypeOneItem(
                         contentScale = ContentScale.Fit,
                         contentDescription = ""
                     )
-                }
-            }
-            if (playerDetail != null) {
-                if(playerDetail.isCaptain){
-                    Image(painter = painterResource(R.drawable.ic_captain_home),
-                        modifier = Modifier
-                            .width(20.dp)
-                            .height(15.dp),
-                        contentScale = ContentScale.Fit,
-                        contentDescription = "")
                 }
             }
         }
@@ -138,12 +143,10 @@ fun SquadTypeOneItem(
             )
 
             Column (
-                modifier = Modifier
-                    .padding(bottom = 10.dp)
+                modifier = playerNameBackgroundModifier
                     .constrainAs(playerDetails) {
                         bottom.linkTo(skillDetail.top)
-                    }
-                    .background(backgroundPlayerName)
+                }
                     .padding(all = 8.dp)
 //                    .align(Alignment.CenterStart)
             ) {
@@ -163,11 +166,10 @@ fun SquadTypeOneItem(
                     },
             ) {
                 Card(
-                    modifier = Modifier
-                        .background(bottomBackground)
+                    bottomBackgroundModifier
                         .padding(vertical = 3.dp, horizontal = 5.dp)
                 ) {
-                    Row(modifier = Modifier.background(bottomBackground)) {
+                    Row(modifier = bottomBackgroundModifier) {
                         AsyncImage(
                             model = if(playerDetail?.skillId.equals("1")){
                                 R.drawable.ic_skill_bat
@@ -194,38 +196,15 @@ fun SquadTypeOneItem(
             }
 
             Row (
-                modifier = Modifier
+                modifier = bottomBackgroundModifier
                     .constrainAs(playerStatsCard) {
                         bottom.linkTo(parent.bottom)
                         start.linkTo(parent.start)
                     }
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .background(Color.Magenta)
                     .padding(all = 4.dp)
             ){
-
-                /*Column (
-                    modifier = Modifier
-                        .weight(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = playerDetail?.overAllStats?.batting?.matchesPlayed.toString(),
-                        style = TextStyle(
-                            color = Color.White,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-                    Text(
-                        text = "Matches".uppercase(),
-                        style = TextStyle(
-                            color = Color.White,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-                }
-*/
                 Row (
                     modifier = Modifier
                         .weight(1f)
@@ -280,11 +259,11 @@ fun StatText(
     value : String,
     heading : String,
     valueStyle: TextStyle = TextStyle(
-        color = Color.Black,
+        color = Color.White,
         textAlign = TextAlign.Center
     ),
     headingStyle: TextStyle = TextStyle(
-        color = Color.Black,
+        color = Color.White,
         textAlign = TextAlign.Center
     )
 ){
