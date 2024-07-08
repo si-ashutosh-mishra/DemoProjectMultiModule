@@ -43,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_squad.R
+import com.example.feature_squad.business.domain.model.squad.PlayerItem
+import com.example.feature_squad.business.domain.model.squad.StaffItem
 import com.example.feature_squad.presentation.common.SquadToolbar
 import com.example.feature_squad.presentation.squadhome.viewmodel.SquadViewModel
 import com.example.feature_squad.presentation.util.LAKR_Purple_Dark
@@ -56,17 +58,23 @@ fun Preview() {
 }
 
 @Composable
-fun SquadScreen() {
+fun SquadScreen(
+    onPlayerItemClick: (PlayerItem?) -> Unit = {},
+    onStaffItemClick: (StaffItem?) -> Unit = {},
+) {
     Column {
         SquadToolbar()
-        SquadFragmentVerticalScroll()
+        SquadVerticalScroll(
+            onPlayerItemClick = onPlayerItemClick,
+            onStaffItemClick = onStaffItemClick
+        )
     }
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SquadFragmentVerticalScroll (
+fun SquadVerticalScroll (
     @DrawableRes homeSquadBackground: Int = R.drawable.lakr_squad_bg,
     firstNameTextStyle: TextStyle = TextStyle(
         fontSize = 16.sp,
@@ -98,8 +106,9 @@ fun SquadFragmentVerticalScroll (
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center,
         color = Color.Gray,
-    )
-
+    ),
+    onPlayerItemClick: (PlayerItem?) -> Unit = {},
+    onStaffItemClick: (StaffItem?) -> Unit = {},
 ) {
 
     val viewModel: SquadViewModel = hiltViewModel()
@@ -178,7 +187,8 @@ fun SquadFragmentVerticalScroll (
                                 firstNameTextStyle = firstNameTextStyle,
                                 lastNameTextStyle = lastNameTextStyle,
                                 countryNameTextStyle = countryNameTextStyle,
-                                playerDetail = it
+                                playerDetail = it,
+                                onPlayerItemClick = onPlayerItemClick
                             )
                         }
                     }
@@ -190,7 +200,8 @@ fun SquadFragmentVerticalScroll (
                                 firstNameTextStyle = firstNameTextStyle,
                                 lastNameTextStyle = lastNameTextStyle,
                                 staffRoleTextStyle = countryNameTextStyle,
-                                staffDetail = it
+                                staffDetail = it,
+                                onStaffItemClick = onStaffItemClick
                             )
                         }
                     }

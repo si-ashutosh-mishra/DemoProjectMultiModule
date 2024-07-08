@@ -67,7 +67,7 @@ fun AppHome(
                 HomeItemViewType.HOME_SQUAD.id -> {
                     (home as? HomeListingItem.HomeSquad)?.let { data ->
                         data.items.orEmpty().let {
-                            SquadHomeTypeTwo(
+                            SquadHomeTypeOne(
                                 players = it,
                                 onPlayerItemClick = { player ->
                                     Log.d("onClick PlayerDetail", player.toString())

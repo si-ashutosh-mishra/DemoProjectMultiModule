@@ -2,6 +2,7 @@ package com.example.feature_squad.presentation.squad.typetwo
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -59,10 +60,17 @@ fun SquadPlayerItemTypeTwo(
         textAlign = TextAlign.Left
     ),
     playerImageModifier: Modifier = Modifier,
-    playerDetail: PlayerItem? = null
+    playerDetail: PlayerItem? = null,
+    onPlayerItemClick: (PlayerItem?) -> Unit = {},
 ) {
     ConstraintLayout (
-        modifier = Modifier.fillMaxWidth().height(180.dp).padding(bottom = 16.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .padding(bottom = 16.dp)
+            .clickable(enabled = true) {
+                onPlayerItemClick(playerDetail)
+            }
     )  {
         val (playerImageId, playerDetailCard) = createRefs()
 

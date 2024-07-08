@@ -3,6 +3,7 @@ package com.example.feature_squad.presentation.squadhome.typeone
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -89,7 +90,9 @@ fun SquadHomeTypeOne (
             shape = RoundedCornerShape(20.dp)
         )
         .height(22.dp),
-    players: List<PlayerItem> = emptyList()
+    players: List<PlayerItem> = emptyList(),
+    onPlayerItemClick: (PlayerItem?) -> Unit = {},
+    onMoreClick: () -> Unit = {},
 ) {
 
     val viewModel: SquadViewModel = hiltViewModel()
@@ -109,7 +112,8 @@ fun SquadHomeTypeOne (
                 moreButtonModifier = moreButtonModifier,
                 moreButtonTextStyle = moreButtonTextStyle,
                 moreButtonArrow = moreButtonArrow,
-                moreButtonArrowModifier = moreButtonArrowModifier
+                moreButtonArrowModifier = moreButtonArrowModifier,
+                onMoreClick = onMoreClick
             )
 
             Spacer(
@@ -131,7 +135,8 @@ fun SquadHomeTypeOne (
                             lastNameTextStyle = lastNameTextStyle,
                             playerRoleValueTextStyle = playerRoleValueTextStyle,
                             playerRoleHeadingTextStyle = playerRoleHeadingTextStyle,
-                            playerDetail = data
+                            playerDetail = data,
+                            onPlayerItemClick = onPlayerItemClick
                         )
                 }
             }
@@ -167,7 +172,8 @@ fun HomeSquadHeadline(
             shape = RoundedCornerShape(20.dp)
         )
         .height(22.dp),
-    ){
+    onMoreClick: () -> Unit = {},
+){
 
     Row (
         modifier = modifier
@@ -181,7 +187,11 @@ fun HomeSquadHeadline(
             text = squadTitle.uppercase(),
             style = squadTitleTextStyle,
         )
-        Row (modifier = moreButtonArrowModifier, verticalAlignment = Alignment.CenterVertically) {
+        Row (
+            modifier = moreButtonArrowModifier
+                .clickable(enabled = true) { onMoreClick() },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(
                 modifier = moreButtonModifier,
                 textAlign = TextAlign.End,
