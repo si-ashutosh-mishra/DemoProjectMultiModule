@@ -10,6 +10,7 @@ import com.example.common_webview.presentation.WebViewScreen
 import com.example.feature_app_home.presentation.apphome.AppHome
 import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
 import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
+import com.example.photo_listing.presentation.photolist.typeone.DisplayPhotoListingGridLayout
 import com.example.photo_listing.presentation.photolist.typetwo.PhotoListingTypeTwo
 import com.example.standing.presentation.standing.StandingsScreen
 
@@ -18,7 +19,9 @@ fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.PhotoListingScreen.route) {
         composable(route = Screen.PhotoListingScreen.route) {
-           PhotoListingTypeTwo(navController = navController)
+          //PhotoListingTypeTwo(navController = navController)
+            DisplayPhotoListingGridLayout(navController)
+
             /* FixtureScreenTypeOne {
     NavHost(navController = navController, startDestination = Screen.AppHomeScreen.route) {
         composable(route = Screen.MainScreen.route) {

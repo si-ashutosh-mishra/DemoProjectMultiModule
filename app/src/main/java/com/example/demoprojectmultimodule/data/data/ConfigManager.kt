@@ -13,10 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class ConfigManager @Inject constructor(
 ) : BaseConfigContract, FixtureConfigContract, StandingConfigContract,
-    ContentListingConfigContract, PhotoListingConfig {
-) : BaseConfigContract, FixtureConfigContract, StandingConfigContract, ContentListingConfigContract,
-    AppHomeConfigContract {
-
+    ContentListingConfigContract, PhotoListingConfig , AppHomeConfigContract {
     override fun getBaseUrl(): String {
         return "https://www.knightclub.in/"
     }
