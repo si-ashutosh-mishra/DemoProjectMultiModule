@@ -6,6 +6,7 @@ import com.example.lb_content_listing.data.remote.ContentListingConfigContract
 import com.example.demoprojectmultimodule.data.data.ConfigManager
 import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
+import com.example.feature_squad.data.remote.SquadConfigContract
 import com.example.photo_listing.data.remote.PhotoListingConfig
 import com.example.standing.data.remote.StandingConfigContract
 import dagger.Binds
@@ -29,6 +30,10 @@ interface ConfigModule {
     @Binds
     @Singleton
     fun provideFixtureConfig(configManager: ConfigManager): FixtureConfigContract
+
+    @Binds
+    @Singleton
+    fun provideSquadConfig(configManager: ConfigManager): SquadConfigContract
 
     @Binds
     @Singleton

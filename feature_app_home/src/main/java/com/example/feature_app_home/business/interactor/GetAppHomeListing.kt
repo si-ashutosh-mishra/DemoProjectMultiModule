@@ -9,8 +9,13 @@ import com.example.feature_fixtures.business.domain.model.masthead.EventState
 import com.example.feature_fixtures.business.domain.model.masthead.IPLMatch
 import com.example.feature_fixtures.business.interceptor.GetListOfMatches
 import com.example.feature_fixtures.presentation.fixture.utils.FixturesType
+import com.example.feature_squad.business.domain.model.squad.PlayerComparator
+import com.example.feature_squad.business.domain.model.squad.PlayerItem
+import com.example.feature_squad.business.interceptor.GetIplSquadListing
+import com.example.feature_squad.data.remote.SquadConfigContract
 import com.example.lb_content_listing.business.repository.LBRepository
 import com.example.standing.business.interactor.GetStandingData
+import com.example.standing.data.remote.StandingConfigContract
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -29,6 +34,9 @@ class GetAppHomeListing @Inject constructor(
     private val getStandingsData: GetStandingData,
     private val appHomeConfigContract: AppHomeConfigContract,
     private val getListOfMatches: GetListOfMatches,
+    private val getIplSquadListing: GetIplSquadListing,
+    private val squadConfigContract: SquadConfigContract,
+    private val standingConfigContract: StandingConfigContract,
 ) {
 
     private var _cacheHomeListing: List<HomeListingItem>? = null
@@ -79,7 +87,7 @@ class GetAppHomeListing @Inject constructor(
                         do {
                             val allListOfMatches = getListOfMatches(
                                 FixturesType.HOME.id,
-                                url = appHomeConfigContract.getFixturesUrl(),
+                                url = appHomeConfigContract.getAppHomeFixturesUrl(),
                                 teamId = appHomeConfigContract.getCurrentTeamID().toString(),
                                 itemCount = 5
                             ).first { it !is Resource.Loading }.data?.allListOfMatches.orEmpty()
@@ -118,7 +126,7 @@ class GetAppHomeListing @Inject constructor(
         return when (homeListingItem) {
             is HomeListingItem.HomeStandingData -> {
                 getStandingsData(
-                    url = appHomeConfigContract.getStandingUrl(),
+                    url = standingConfigContract.getStandingUrl(),
                     teamCount = appHomeConfigContract.getHomeTeamCount(),
                     currentTeamId = appHomeConfigContract.getCurrentTeamID(),
                     isSwapRequired = appHomeConfigContract.isSwap(),
@@ -145,6 +153,43 @@ class GetAppHomeListing @Inject constructor(
                                     items = it.data.orEmpty(), dataAvailable = true
                                 )
                             )
+                        }
+                    }
+                }
+            }
+            is HomeListingItem.HomeSquad -> {
+                getIplSquadListing().map {
+                    when (it) {
+                        is Resource.Loading -> {
+                            Resource.Loading()
+                        }
+                        is Resource.Error -> {
+                            Resource.Error(throwable = it.throwable)
+                        }
+                        else -> if (it.data?.squadList.isNullOrEmpty()) {
+                            Resource.Error(
+                                throwable = NetworkThrowable(
+                                    null,
+                                    ""
+                                )
+                            )
+                        } else {
+
+                            val filteredPlayersList = mutableListOf<PlayerItem>()
+
+                            val skillList = squadConfigContract.getSkillList()
+
+                            skillList.forEach { skillItem ->
+                                val list =
+                                    it.data?.squadList?.filter { it.skillId == skillItem.skill_id }
+                                        ?.sortedWith(PlayerComparator()) ?: emptyList()
+                                if (list.isNotEmpty()) {
+                                    filteredPlayersList.addAll(
+                                        list
+                                    )
+                                }
+                            }
+                            Resource.Success(data = homeListingItem.copy(items = filteredPlayersList, dataAvailable = true))
                         }
                     }
                 }

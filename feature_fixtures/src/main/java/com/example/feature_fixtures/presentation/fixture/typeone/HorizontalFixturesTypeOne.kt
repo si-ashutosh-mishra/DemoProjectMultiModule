@@ -124,7 +124,10 @@ fun FixturesHorizontalScrollTypeOne(
             HorizontalPager(
                 state = pagerState,
                 contentPadding = PaddingValues(horizontal = 15.dp),
-                pageSpacing = 0.dp
+                pageSpacing = 0.dp,
+                key = {
+                    list[it]?.gameId?:""
+                }
             ) {
                 val data = list[it]
                 when (data?.eventState) {
