@@ -17,7 +17,7 @@ import com.example.standing.presentation.standing.StandingsScreen
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.AppHomeScreen.route) {
+    NavHost(navController = navController, startDestination = Screen.SquadScreen.route) {
         composable(route = Screen.MainScreen.route) {
             FixtureScreenTypeOne {
                 navController.navigate(Screen.DetailScreen.withArgs("3841"))
