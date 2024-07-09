@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface ContentListingRepository {
 
     fun getEntityListing(
-        url: String, imageRatio: String
+        url: String, imageRatio: String?
     ): Flow<Resource<List<AssetItem>?>>
 
 

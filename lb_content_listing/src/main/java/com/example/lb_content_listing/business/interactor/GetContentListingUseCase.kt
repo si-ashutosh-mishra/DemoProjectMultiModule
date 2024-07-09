@@ -14,7 +14,7 @@ class GetContentListingUseCase @Inject constructor(
     private val contentListingRepository: ContentListingRepository,
 
     ) {
-    operator fun invoke(url: String, imageRatio: String): Flow<Resource<List<AssetItem>?>> {
+    operator fun invoke(url: String, imageRatio: String?): Flow<Resource<List<AssetItem>?>> {
         return contentListingRepository.getEntityListing(url, imageRatio)
     }
 }

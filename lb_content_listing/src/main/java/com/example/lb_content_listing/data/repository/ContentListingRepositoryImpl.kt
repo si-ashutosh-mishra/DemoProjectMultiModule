@@ -24,7 +24,7 @@ class ContentListingRepositoryImpl @Inject constructor(
 ) : ContentListingRepository {
 
     override fun getEntityListing(
-        url: String, imageRatio: String
+        url: String, imageRatio: String?
     ): Flow<Resource<List<AssetItem>?>> {
         return flow {
 
