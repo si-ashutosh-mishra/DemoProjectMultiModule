@@ -9,6 +9,9 @@ import com.example.feature_squad.business.domain.model.squad.SquadStaff
 import com.example.feature_squad.business.domain.model.squad.StaffItem
 import com.example.feature_squad.business.repository.SquadRepository
 import com.example.feature_squad.data.model.CustomSquadInfo
+import com.example.feature_squad.data.model.OverAllStats
+import com.example.feature_squad.data.model.PlayerStats
+import com.example.feature_squad.data.model.SkillEnum
 import com.example.feature_squad.data.model.SquadList
 import com.example.feature_squad.data.model.Staff
 import com.example.feature_squad.data.remote.SquadConfigContract
@@ -110,7 +113,7 @@ class GetIplSquadListing @Inject constructor(
                     bio = null,
                     isCaptain = it.playerDetails?.isCaptain ?: false,
                     isViceCaptain = it.playerDetails?.isViceCaptain ?: false,
-                    overAllStats = it.overAllStats
+                    playerStats = getPlayerStatItems(skillId = it.playerDetails?.skillId?:"0", overAllStats = it.overAllStats)
                 )
             }
             else {
@@ -135,7 +138,7 @@ class GetIplSquadListing @Inject constructor(
                     },
                     isCaptain = it.playerDetails.isCaptain ?: false,
                     isViceCaptain = it.playerDetails.isViceCaptain ?: false,
-                    overAllStats = it.overAllStats
+                    playerStats = getPlayerStatItems(skillId = it.playerDetails.skillId?:"0", overAllStats = it.overAllStats)
                 )
             }
 
@@ -164,6 +167,32 @@ class GetIplSquadListing @Inject constructor(
             selectedSquadList
         } else {
             players.sortedWith(PlayerComparator())
+        }
+    }
+
+
+    private fun getPlayerStatItems(
+        overAllStats: OverAllStats?,
+        skillId: String
+    ): PlayerStats {
+        return when (skillId) {
+            SkillEnum.BATSMAN.skillId, SkillEnum.WICKET_KEEPER.skillId -> {
+                PlayerStats(
+                    matches = (overAllStats?.batting?.matchesPlayed ?: 0).toString(),
+                    runs = (overAllStats?.batting?.runs ?: 0).toString(),
+                    wickets = (overAllStats?.bowling?.wickets ?: 0).toString()
+                )
+            }
+
+            SkillEnum.BOWLER.skillId -> {
+                PlayerStats(
+                    matches = (overAllStats?.bowling?.matchesPlayed ?: 0).toString(),
+                    runs = (overAllStats?.batting?.runs ?: 0).toString(),
+                    wickets = (overAllStats?.bowling?.wickets ?: 0).toString()
+                )
+            }
+
+            else -> PlayerStats()
         }
     }
 

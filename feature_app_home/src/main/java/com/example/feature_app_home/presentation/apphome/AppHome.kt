@@ -76,6 +76,15 @@ fun AppHome(
                                     Log.d("onClick More", "======================")
                                 }
                             )
+                            /*SquadHomeTypeTwo(
+                                players = it,
+                                onPlayerItemClick = { player ->
+                                    Log.d("onClick PlayerDetail", player.toString())
+                                },
+                                onMoreClick = {
+                                    Log.d("onClick More", "======================")
+                                }
+                            )*/
                         }
                     }
 
