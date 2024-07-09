@@ -1,5 +1,6 @@
 package com.example.feature_squad.presentation.squad.typetwo
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -18,7 +19,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -42,6 +43,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.feature_squad.R
+import com.example.feature_squad.business.domain.model.squad.PlayerItem
+import com.example.feature_squad.business.domain.model.squad.StaffItem
 import com.example.feature_squad.presentation.common.SquadToolbar
 import com.example.feature_squad.presentation.squadhome.viewmodel.SquadViewModel
 import com.example.feature_squad.presentation.util.LAKR_Purple_Dark
@@ -55,17 +58,23 @@ fun Preview() {
 }
 
 @Composable
-fun SquadScreen() {
+fun SquadScreen(
+    onPlayerItemClick: (PlayerItem?) -> Unit = {},
+    onStaffItemClick: (StaffItem?) -> Unit = {},
+) {
     Column {
         SquadToolbar()
-        SquadFragmentVerticalScroll()
+        SquadVerticalScroll(
+            onPlayerItemClick = onPlayerItemClick,
+            onStaffItemClick = onStaffItemClick
+        )
     }
 }
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SquadFragmentVerticalScroll (
+fun SquadVerticalScroll (
     @DrawableRes homeSquadBackground: Int = R.drawable.lakr_squad_bg,
     firstNameTextStyle: TextStyle = TextStyle(
         fontSize = 16.sp,
@@ -97,8 +106,9 @@ fun SquadFragmentVerticalScroll (
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center,
         color = Color.Gray,
-    )
-
+    ),
+    onPlayerItemClick: (PlayerItem?) -> Unit = {},
+    onStaffItemClick: (StaffItem?) -> Unit = {},
 ) {
 
     val viewModel: SquadViewModel = hiltViewModel()
@@ -153,39 +163,48 @@ fun SquadFragmentVerticalScroll (
 
             }
 
+
         HorizontalPager(
-            state = pagerState, modifier = Modifier
+            state = pagerState,
+            modifier = Modifier
                 .fillMaxWidth()
         ) { index ->
 
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-                val list = playerFilterData?.get(index)?.playersList ?: emptyList()
-                val staffList = supportStaffFilterData ?: emptyList()
+            val list = remember { mutableStateOf(playerFilterData?.get(index)?.playersList ?: emptyList()) }
+            val staffList = remember { mutableStateOf(supportStaffFilterData ?: emptyList()) }
 
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+                Log.d("HorizontalPager Box", "")
                 LazyColumn (
                     contentPadding = PaddingValues(16.dp)
                 ) {
-
-                    if (selectedTab == 0)
-                        items(list) {
-                            SquadFragmentTypeTwo (
+                Log.d("HorizontalPager LazyColumn", "")
+                    if (selectedTab == 0) {
+                        Log.d("HorizontalPager selectedTab", "0")
+                        items(list.value) {
+                            SquadPlayerItemTypeTwo(
                                 playerImageModifier = Modifier,
                                 firstNameTextStyle = firstNameTextStyle,
                                 lastNameTextStyle = lastNameTextStyle,
                                 countryNameTextStyle = countryNameTextStyle,
-                                playerDetail = it
+                                playerDetail = it,
+                                onPlayerItemClick = onPlayerItemClick
                             )
+                        }
                     }
-                    else
-                        items(staffList) {
-                            SquadStaffItemTypeTwo (
+                    else {
+                        Log.d("HorizontalPager selectedTab ", "== 1")
+                        items(staffList.value) {
+                            SquadStaffItemTypeTwo(
                                 playerImageModifier = Modifier,
                                 firstNameTextStyle = firstNameTextStyle,
                                 lastNameTextStyle = lastNameTextStyle,
                                 staffRoleTextStyle = countryNameTextStyle,
-                                staffDetail = it
+                                staffDetail = it,
+                                onStaffItemClick = onStaffItemClick
                             )
                         }
+                    }
                 }
             }
         }
