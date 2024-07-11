@@ -24,9 +24,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.base_navigation.LocalNavController
+import com.example.base_navigation.navigationcomponents.hiltViewModel
 import com.example.base_navigation.navigationcomponents.pop
 import com.example.standing.R
 import com.example.standing.presentation.theme.DarkBlue
@@ -85,7 +85,7 @@ fun StandingsScreen(
     showFilter: Boolean = true,
 ) {
 //    val navController = LocalNavController.current
-    val viewModel: StandingViewModel = hiltViewModel()
+    val viewModel = hiltViewModel<StandingViewModel>()
 
     val currentTeamID = viewModel.standingConfigContract.getCurrentTeamID()
 

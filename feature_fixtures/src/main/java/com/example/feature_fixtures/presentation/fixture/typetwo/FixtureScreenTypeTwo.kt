@@ -1,5 +1,6 @@
 package com.example.feature_fixtures.presentation.fixture.typetwo
 
+import android.util.Log
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
@@ -21,9 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.base_navigation.LocalNavController
+import com.example.base_navigation.navigationcomponents.hiltViewModel
 import com.example.base_navigation.navigationcomponents.pop
 import com.example.feature_fixtures.R
 import com.example.feature_fixtures.business.domain.model.masthead.EventState
@@ -33,7 +34,6 @@ import com.example.feature_fixtures.presentation.fixture.LifeCycleObserver
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FixtureScreenTypeTwo(
-    navController: NavController,
     isSponsorLogoRequired: Boolean = false,
     @DrawableRes sponsorLogo: Int? = null,
     @DrawableRes liveLogo: Int = R.drawable.ic_live,
@@ -78,10 +78,10 @@ fun FixtureScreenTypeTwo(
     onClickItem: (name: String?) -> Unit
 ) {
 //    val navController = LocalNavController.current
-    val viewModel: FixtureViewModel = hiltViewModel()
+    val viewModel = hiltViewModel<FixtureViewModel>()
 
     val fixtureList by viewModel.fixture.observeAsState(initial = emptyList())
-
+    Log.e("TAG", "FixtureScreenTypeTwo: "+ teamId.toString())
     LifeCycleObserver(fetchData = {
         viewModel.cancelApiCoroutine()
         viewModel.getFixtureList(teamId,true)

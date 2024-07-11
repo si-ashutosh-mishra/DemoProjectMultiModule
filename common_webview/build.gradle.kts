@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":base_navigation"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

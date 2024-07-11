@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.base_navigation.navigationcomponents.hiltViewModel
 import com.example.feature_fixtures.R
 import com.example.feature_fixtures.business.domain.model.masthead.EventState
 import com.example.feature_fixtures.presentation.fixture.viewmodel.FixtureViewModel
@@ -64,7 +64,7 @@ fun FixtureScreenTypeOne(
     teamId: String? = null,
     onClickItem: (name: String?) -> Unit
 ) {
-    val viewModel: FixtureViewModel = hiltViewModel()
+    val viewModel = hiltViewModel<FixtureViewModel>()
 
     val fixtureList by viewModel.fixture.observeAsState(initial = emptyList())
 

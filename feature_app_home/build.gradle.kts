@@ -50,6 +50,7 @@ dependencies {
     implementation(project(":lb_content_listing"))
     implementation(project(":feature_fixtures"))
     implementation(project(":feature_squad"))
+    implementation(project(":base_navigation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -12,17 +12,23 @@ sealed class SheetDestination : Parcelable {
 
 sealed class ScreenDestination : Parcelable {
 
-//    @Parcelize
-//    data object StandingMainScreen : ScreenDestination()
-
     @Parcelize
     data object MainScreen : ScreenDestination()
 
     @Parcelize
-    data class DetailScreen(val text: String) : ScreenDestination()
+    data class DetailScreen(val data: String) : ScreenDestination()
 
     @Parcelize
     data object StandingDetailsScreen : ScreenDestination()
+
+    @Parcelize
+    data object AppHomeScreen : ScreenDestination()
+
+    @Parcelize
+    data object SquadScreen : ScreenDestination()
+
+    @Parcelize
+    data object WebViewScreen : ScreenDestination()
 
 }
 

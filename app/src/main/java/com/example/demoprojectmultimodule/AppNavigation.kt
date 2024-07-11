@@ -20,8 +20,11 @@ import com.example.base_navigation.navigationcomponents.NavBackHandler
 import com.example.base_navigation.navigationcomponents.navigate
 import com.example.base_navigation.navigationcomponents.pop
 import com.example.base_navigation.navigationcomponents.rememberNavController
+import com.example.common_webview.presentation.WebViewScreen
+import com.example.feature_app_home.presentation.apphome.AppHome
 import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
 import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
+import com.example.feature_squad.presentation.squad.typetwo.SquadScreen
 import com.example.standing.presentation.standing.StandingsScreen
 import com.example.standing.presentation.standinghome.StandingHome
 
@@ -32,7 +35,7 @@ fun AppNavigation(){
 //    val sheetController = LocalSheetController.current
 
     val navController = rememberNavController<ScreenDestination>(
-        startDestination = ScreenDestination.MainScreen
+        startDestination = ScreenDestination.AppHomeScreen
     )
     val dialogController = rememberNavController<DialogDestination>(
         initialBackstack = emptyList()
@@ -59,43 +62,49 @@ fun AppNavigation(){
         },
     ) { destination->
         when (destination) {
-//            is ScreenDestination.StandingMainScreen -> StandingsScreen(onViewMoreClick = {
-//                navController.navigate(ScreenDestination.StandingDetailsScreen)
-//            }, showTitle = true, showMore = true)
-//            is ScreenDestination.DetailScreen -> FixtureScreenTypeTwo(
-//                null,
-//                 teamId = navController.backstack.entries.toString()
-//            ) {
-//                navController.navigate(ScreenDestination.DetailScreen("3841"))
-//            }
-            is ScreenDestination.MainScreen ->  FixtureScreenTypeOne {
+            is ScreenDestination.AppHomeScreen ->  AppHome(onFixtureViewMoreClick = {
+                navController.navigate(ScreenDestination.MainScreen)
+            }, onFixtureItemClick = {
+                //
+            }, onStandingViewMoreClick = {
+                navController.navigate(ScreenDestination.StandingDetailsScreen)
+            })
+            is ScreenDestination.DetailScreen -> FixtureScreenTypeTwo(teamId = destination.data){}
+            is ScreenDestination.MainScreen -> FixtureScreenTypeOne {
                 navController.navigate(ScreenDestination.DetailScreen("3841"))
             }
+            is ScreenDestination.SquadScreen ->  SquadScreen()
             is ScreenDestination.StandingDetailsScreen -> StandingsScreen()
-            else -> {}
+            is ScreenDestination.WebViewScreen -> WebViewScreen(
+                "WebView",
+                "https://www.punjabkingsipl.in/news/icc-t20-world-cup-2024-arshdeep-rabada-and-bairstow-dazzle-in-the-super-eights",
+                false
+            ) {
+
+            }
         }
     }
 
-//    DialogNavHost(dialogController) { destination ->
-//        Dialog(onDismissRequest = { dialogController.pop() }) {
-//            when (destination) {
-//                DialogDestination.First -> {  }
-//                DialogDestination.Second -> {  }
-//                DialogDestination.Third -> {  }
-//            }
-//        }
-//    }
+    DialogNavHost(dialogController) { destination ->
+        Dialog(onDismissRequest = { dialogController.pop() }) {
+            when (destination) {
+                DialogDestination.First -> {  }
+                DialogDestination.Second -> {  }
+                DialogDestination.Third -> {  }
+            }
+        }
+    }
 
-//    BottomSheetNavHost(
-//        controller = sheetController,
-//        onDismissRequest = { sheetController.pop() }
-//    ) { destination ->
-//        Surface {
-//            when (destination) {
-//               is SheetDestination.First -> { /* ... */ }
-//            }
-//        }
-//    }
+    BottomSheetNavHost(
+        controller = sheetController,
+        onDismissRequest = { sheetController.pop() }
+    ) { destination ->
+        Surface {
+            when (destination) {
+               is SheetDestination.First -> { /* ... */ }
+            }
+        }
+    }
 
     /*NEED TO CHECK W+ETHERE WE ARE GETTING DAta from last index in bottomsheet*/
 }
