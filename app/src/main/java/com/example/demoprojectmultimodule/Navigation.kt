@@ -1,5 +1,6 @@
 //package com.example.demoprojectmultimodule
 //
+//import android.util.Log
 //import androidx.compose.runtime.Composable
 //import androidx.navigation.NavType
 //import androidx.navigation.compose.NavHost
@@ -10,7 +11,6 @@
 //import com.example.feature_app_home.presentation.apphome.AppHome
 //import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTypeOne
 //import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
-//import com.example.feature_squad.presentation.squad.typetwo.SquadFragmentVerticalScroll
 //import com.example.feature_squad.presentation.squad.typetwo.SquadScreen
 //import com.example.standing.presentation.standing.StandingsScreen
 //
@@ -37,9 +37,9 @@
 //            }
 //        }
 //
-////        composable(route = Screen.StandingDetailsScreen.route) {
-////            StandingsScreen(navController = navController)
-////        }
+//        composable(route = Screen.StandingDetailsScreen.route) {
+//            StandingsScreen(navController = navController)
+//        }
 //
 //        composable(route = Screen.AppHomeScreen.route) {
 //            AppHome(onFixtureViewMoreClick = {
@@ -60,7 +60,14 @@
 //            }
 //        }
 //        composable(route = Screen.SquadScreen.route){
-//            SquadScreen()
+//            SquadScreen(
+//                onPlayerItemClick = { player ->
+//                    Log.d("onClick PlayerDetail", player.toString())
+//                },
+//                onStaffItemClick = { staff ->
+//                    Log.d("onClick StaffDetail", staff.toString())
+//                }
+//            )
 //        }
 //    }
 //}

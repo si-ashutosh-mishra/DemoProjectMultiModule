@@ -20,7 +20,7 @@ class GetContentListingPagination @Inject constructor(
 ) {
 
     operator fun invoke(
-        url: String, imageRatio: String,
+        url: String, imageRatio: String?,
     ): Flow<PagingData<AssetItem>> {
         return Pager(
             config = PagingConfig(pageSize = Constants.PAGE_SIZE)
