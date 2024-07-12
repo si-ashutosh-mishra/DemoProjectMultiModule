@@ -12,7 +12,6 @@ import com.example.feature_app_home.business.domain.model.home.HomeListingItem
 import com.example.feature_app_home.presentation.apphome.viewmodel.AppHomeViewModel
 import com.example.feature_fixtures.presentation.fixture.LifeCycleObserver
 import com.example.feature_fixtures.presentation.fixture.typeone.FixturesHorizontalScrollTypeOne
-import com.example.feature_squad.presentation.squadhome.typeone.SquadHomeTypeOne
 import com.example.feature_squad.presentation.squadhome.typetwo.SquadHomeTypeTwo
 import com.example.standing.presentation.standinghome.StandingHome
 
@@ -21,6 +20,7 @@ import com.example.standing.presentation.standinghome.StandingHome
 fun AppHome(
     onStandingViewMoreClick: () -> Unit,
     onFixtureViewMoreClick: () -> Unit,
+    onSquadViewMoreClick: () -> Unit,
     onFixtureItemClick: () -> Unit,
 ) {
 
@@ -67,24 +67,20 @@ fun AppHome(
                 HomeItemViewType.HOME_SQUAD.id -> {
                     (home as? HomeListingItem.HomeSquad)?.let { data ->
                         data.items.orEmpty().let {
-                            SquadHomeTypeOne(
+                            /*SquadHomeTypeOne(
                                 players = it,
                                 onPlayerItemClick = { player ->
                                     Log.d("onClick PlayerDetail", player.toString())
                                 },
-                                onMoreClick = {
-                                    Log.d("onClick More", "======================")
-                                }
-                            )
-                            /*SquadHomeTypeTwo(
-                                players = it,
-                                onPlayerItemClick = { player ->
-                                    Log.d("onClick PlayerDetail", player.toString())
-                                },
-                                onMoreClick = {
-                                    Log.d("onClick More", "======================")
-                                }
+                                onMoreClick = onSquadViewMoreClick
                             )*/
+                            SquadHomeTypeTwo(
+                                players = it,
+                                onPlayerItemClick = { player ->
+                                    Log.d("onClick PlayerDetail", player.toString())
+                                },
+                                onMoreClick = onSquadViewMoreClick
+                            )
                         }
                     }
 

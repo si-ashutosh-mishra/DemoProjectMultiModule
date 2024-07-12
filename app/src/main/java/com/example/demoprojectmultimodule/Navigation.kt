@@ -43,12 +43,18 @@ fun Navigation() {
 
         composable(route = Screen.AppHomeScreen.route) {
             AppHome(onFixtureViewMoreClick = {
-                navController.navigate(Screen.MainScreen.route)
-            }, onFixtureItemClick = {
-                //
-            }, onStandingViewMoreClick = {
-                navController.navigate(Screen.StandingDetailsScreen.route)
-            })
+                    navController.navigate(Screen.MainScreen.route)
+                },
+                onFixtureItemClick = {
+                    //
+                },
+                onSquadViewMoreClick = {
+                    navController.navigate(Screen.SquadScreen.route)
+                },
+                onStandingViewMoreClick = {
+                    navController.navigate(Screen.StandingDetailsScreen.route)
+                }
+            )
         }
         composable(route = Screen.WebViewScreen.route) {
             WebViewScreen(
