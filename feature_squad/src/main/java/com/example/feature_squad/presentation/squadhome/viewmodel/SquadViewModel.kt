@@ -28,12 +28,7 @@ class SquadViewModel @Inject constructor(
 
     private var teamId: String? = null
 
-    private val _playerList = MutableLiveData<List<PlayerItem>>()
-    val player: LiveData<List<PlayerItem>>
-        get() = _playerList
-
     private val _squadStaffListing = MutableLiveData<SquadModel?>()
-
     val squadStaffListing: LiveData<SquadModel?>
         get() = _squadStaffListing
 
@@ -57,11 +52,7 @@ class SquadViewModel @Inject constructor(
                                 )
                             )
                         } else {
-                            Log.d("Squad List", it.data?.squadList.orEmpty().toString())
-                            _playerList.postValue(it.data?.squadList.orEmpty())
                             _squadStaffListing.postValue(getFilterPlayerList(it.data?.squadList.orEmpty(), it.data?.staffList.orEmpty()))
-                            Log.d("Squad filter", "${getFilterPlayerList(it.data?.squadList.orEmpty(),
-                                it.data?.staffList.orEmpty())}")
                             Resource.Success(
                                 data = it.data?.squadList.orEmpty(),
                             )
