@@ -1,9 +1,9 @@
 package com.example.demoprojectmultimodule.data.data
 
 import com.example.base.helper.BaseConfigContract
-import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.demoprojectmultimodule.data.data.model.AppTypePath
 import com.example.demoprojectmultimodule.util.AppType
+import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.feature_squad.business.domain.model.squad.SkillItem
 import com.example.feature_squad.data.remote.SquadConfigContract
@@ -110,8 +110,7 @@ class ConfigManager @Inject constructor(
     }
 
 
-    override fun getSquadListingUrl(seriesId: String?, teamId: String?): String {
-        /*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_SQUAD_FEED_URL)
+    override fun getSquadListingUrl(seriesId: String?, teamId: String?): String {/*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_SQUAD_FEED_URL)
             .replace(
                 ReplaceKeys.DEFAULT_SERIES_ID, seriesId ?: getDefaultSeriesId()
             )
@@ -119,20 +118,19 @@ class ConfigManager @Inject constructor(
                 ReplaceKeys.DEFAULT_TEAM_ID, teamId ?: getDefaultTeamId()
             )*/
 //        "https://stg-kc.sportz.io/cricket/static/json/iplfeeds/3840_all_players_6338.json"
-        return getBaseUrl()+"cricket/static/json/iplfeeds/{team_id}_all_players_{series_id}.json".replace(
+        return getBaseUrl() + "cricket/static/json/iplfeeds/{team_id}_all_players_{series_id}.json".replace(
             ReplaceKeys.DEFAULT_SERIES_ID, seriesId ?: "6338"
-        )
-            .replace(
+        ).replace(
                 ReplaceKeys.DEFAULT_TEAM_ID, teamId ?: "3840"
             )
     }
+
     override fun getSquadCustomFeedUrl(): String {
         //return getBaseUrl() + firebaseRemoteConfig.getString(ConfigManager.KEY_CUSTOM_TRANSLATIONS)
         return "https://www.knightclub.in/static-assets/feeds/custom/en/trans.json"
     }
 
-    override fun getPlayerImageUrl(playerId: String?): String {
-        /*val appTypePath = getAppTypePath()
+    override fun getPlayerImageUrl(playerId: String?): String {/*val appTypePath = getAppTypePath()
         val playerImagePathFinder = when (getAppType()) {
             AppType.KKR.id -> appTypePath?.kKR?.kkrPlayerImage
             AppType.LAKR.id -> appTypePath?.lAKR?.lakrPlayerImage
@@ -147,33 +145,32 @@ class ConfigManager @Inject constructor(
                     KEY_DATA_IMAGE_VERSION
                 )
             ).replace(ReplaceKeys.PLAYER_IMAGE_PATH_FINDER, playerImagePathFinder ?: "")*/
-        return "https://stg-kc.sportz.io/static-assets/images/players/lakr/" +
-                "{player_id}.png?v={data_image_version}"
-                    .replace(ReplaceKeys.PLAYER_IMAGE_PATH_FINDER,"kkr")
-                    .replace(ReplaceKeys.PLAYER_ID, playerId.orEmpty())
-                    .replace(ReplaceKeys.DATA_IMAGE_VERSION,"2.23")
+        return getBaseUrl() + "static-assets/images/players/lakr/" + "{player_id}.png?v={data_image_version}".replace(
+                ReplaceKeys.PLAYER_IMAGE_PATH_FINDER,
+                "kkr"
+            ).replace(ReplaceKeys.PLAYER_ID, playerId.orEmpty())
+            .replace(ReplaceKeys.DATA_IMAGE_VERSION, "2.28")
     }
 
-    override fun getCountryNationalityIdImageUrl(nationalityId: String?): String {
-        /*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_BASE_COUNTRY_CODE_IMAGE_PATH)
+    override fun getCountryNationalityIdImageUrl(nationalityId: String?): String {/*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_BASE_COUNTRY_CODE_IMAGE_PATH)
             .replace(ReplaceKeys.NATIONALITY_ID, nationalityId.orEmpty())
             .replace(
                 ReplaceKeys.DATA_IMAGE_VERSION, firebaseRemoteConfig.getString(
                     KEY_DATA_IMAGE_VERSION
                 )
             )*/
-        return "https://stg-kc.sportz.io/static-assets/images/countries/" +
-                "{nationality_id}.png?v={data_image_version}".
-                replace(ReplaceKeys.NATIONALITY_ID, nationalityId.orEmpty())
-                    .replace(
-                        ReplaceKeys.DATA_IMAGE_VERSION, ""
-                    )
+        return getBaseUrl() + "static-assets/images/countries/" + "{nationality_id}.png?v={data_image_version}".replace(
+            ReplaceKeys.NATIONALITY_ID,
+            nationalityId.orEmpty()
+        ).replace(
+                ReplaceKeys.DATA_IMAGE_VERSION, ""
+            )
     }
 
     override fun getTeamNationalityId(currentTeam: Int): String? {
         val appTypePath = getAppTypePath()
 
-        return when (currentTeam ?: getAppType()) {
+        return when (currentTeam) {
             AppType.KKR.id -> appTypePath?.kKR?.kkrNationalityId
             AppType.LAKR.id -> appTypePath?.lAKR?.lakrNationalityId
             AppType.TKR.id -> appTypePath?.tKR?.tkrNationalityId
@@ -187,8 +184,7 @@ class ConfigManager @Inject constructor(
         return null
     }
 
-    override fun getSquadPlayerOrder(): List<String> {
-        /*return firebaseRemoteConfig.getString(KEY_SQUAD_PLAYER_ORDER).let {
+    override fun getSquadPlayerOrder(): List<String> {/*return firebaseRemoteConfig.getString(KEY_SQUAD_PLAYER_ORDER).let {
             if (it.isBlank())
                 emptyList()
             else
@@ -198,16 +194,16 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getStaffImageUrl(staffId: String?): String {
-        return getBaseUrl() + "static-assets/images/support-staff/{staff_id}.png?v={data_image_version}"
-            .replace(ReplaceKeys.STAFF_ID, staffId.orEmpty())
-            .replace(
-                ReplaceKeys.DATA_IMAGE_VERSION, "2.23"
+        return getBaseUrl() + "static-assets/images/support-staff/{staff_id}.png?v={data_image_version}".replace(
+                ReplaceKeys.STAFF_ID,
+                staffId.orEmpty()
+            ).replace(
+                ReplaceKeys.DATA_IMAGE_VERSION, "2.28"
             )
 //        return ""
     }
 
-    override fun getSquadStaffOrder(): List<String> {
-        /*return firebaseRemoteConfig.getString(KEY_SQUAD_STAFF_ORDER).let {
+    override fun getSquadStaffOrder(): List<String> {/*return firebaseRemoteConfig.getString(KEY_SQUAD_STAFF_ORDER).let {
             if (it.isBlank())
                 emptyList()
             else
@@ -219,7 +215,10 @@ class ConfigManager @Inject constructor(
     override fun getSkillList(): List<SkillItem> {
         val type = TypeToken.getParameterized(List::class.java, SkillItem::class.java).type
         return try {
-            gson.fromJson("""[{"skill_id":"1","skill_name":"Batters"},{"skill_id":"3","skill_name":"All-Rounders"},{"skill_id":"4","skill_name":"Wicket-Keepers"},{"skill_id":"2","skill_name":"Bowlers"}]""", type)
+            gson.fromJson(
+                """[{"skill_id":"1","skill_name":"Batters"},{"skill_id":"3","skill_name":"All-Rounders"},{"skill_id":"4","skill_name":"Wicket-Keepers"},{"skill_id":"2","skill_name":"Bowlers"}]""",
+                type
+            )
         } catch (e: Exception) {
             e.printStackTrace()
             listOf()

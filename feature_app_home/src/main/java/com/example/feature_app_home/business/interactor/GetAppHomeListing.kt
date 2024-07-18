@@ -158,7 +158,7 @@ class GetAppHomeListing @Inject constructor(
                 }
             }
             is HomeListingItem.HomeSquad -> {
-                getIplSquadListing().map {
+                getIplSquadListing(isSupportStaffRequired = false).map {
                     when (it) {
                         is Resource.Loading -> {
                             Resource.Loading()
@@ -174,22 +174,7 @@ class GetAppHomeListing @Inject constructor(
                                 )
                             )
                         } else {
-
-                            val filteredPlayersList = mutableListOf<PlayerItem>()
-
-                            val skillList = squadConfigContract.getSkillList()
-
-                            skillList.forEach { skillItem ->
-                                val list =
-                                    it.data?.squadList?.filter { it.skillId == skillItem.skill_id }
-                                        ?.sortedWith(PlayerComparator()) ?: emptyList()
-                                if (list.isNotEmpty()) {
-                                    filteredPlayersList.addAll(
-                                        list
-                                    )
-                                }
-                            }
-                            Resource.Success(data = homeListingItem.copy(items = filteredPlayersList, dataAvailable = true))
+                            Resource.Success(data = homeListingItem.copy(items = it.data?.squadList, dataAvailable = true))
                         }
                     }
                 }

@@ -35,6 +35,7 @@ import androidx.constraintlayout.compose.Dimension
 import coil.compose.AsyncImage
 import com.example.feature_squad.R
 import com.example.feature_squad.business.domain.model.squad.PlayerItem
+import com.example.feature_squad.business.domain.model.squad.StaffItem
 import com.example.feature_squad.presentation.squadhome.typeone.StatText
 
 @Preview
@@ -45,41 +46,40 @@ fun SquadFragmentScreenPreview() {
 
 @Composable
 fun SquadFragmentTypeOne(
-    skillName : String = "---",
-    skillValue : String = "---",
-    matchesCount : String = "---",
     modifier: Modifier = Modifier
-        .width(200.dp)
+        .width(220.dp)
         .background(Color.Transparent)
         .fillMaxWidth(),
     @DrawableRes homeSquadBackground: Int = R.drawable.bg_player_home,
-    backgroundPlayerName : Color = Color.Yellow,
-    bottomBackground : Color = Color.Magenta,
+    playerNameBackgroundModifier : Modifier = Modifier
+        .padding(bottom = 10.dp)
+        .background(Color(0xFFF2C029)),
+    bottomBackgroundModifier: Modifier = Modifier.background(Color(0xFF3A225D)),
     firstNameTextStyle: TextStyle = TextStyle(
         fontSize = 15.sp,
-        color = Color.Black,
+        color = Color(0xFF3A225D),
         fontWeight = FontWeight.Medium,
         textAlign = TextAlign.Center
     ),
     lastNameTextStyle: TextStyle = TextStyle(
         fontSize = 17.sp,
-        color = Color.Black,
+        color = Color(0xFF3A225D),
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center
     ),
     playerRoleValueTextStyle: TextStyle = TextStyle(
-        fontSize = 14.sp,
-        color = Color.Yellow,
+        fontSize = 12.sp,
+        color = Color.White,
         fontWeight = FontWeight.Bold,
         textAlign = TextAlign.Center
     ),
     playerRoleHeadingTextStyle: TextStyle = TextStyle(
-        fontSize = 12.sp,
-        color = Color.Yellow,
-        fontWeight = FontWeight.Medium,
+        fontSize = 10.sp,
+        color = Color.White,
+        fontWeight = FontWeight.Light,
         textAlign = TextAlign.Center
     ),
-    skillTextStyle : TextStyle = TextStyle(color = Color.Black,
+    skillTextStyle : TextStyle = TextStyle(color = Color.White,
         fontSize = 14.sp,
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.SemiBold
@@ -98,7 +98,9 @@ fun SquadFragmentTypeOne(
             contentDescription = ""
         )
 
-        Row(modifier = Modifier.align(Alignment.TopEnd)) {
+        Column(modifier = Modifier
+            .align(Alignment.TopEnd)
+            .padding(end = 10.dp, top = 10.dp)) {
             if (playerDetail != null) {
                 if (playerDetail.overseasPlayer) {
                     Image(
@@ -134,7 +136,7 @@ fun SquadFragmentTypeOne(
                 placeholder = painterResource(R.drawable.ic_player),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(220.dp)
                     .constrainAs(playerImageId) {
                         bottom.linkTo(playerStatsCard.top)
                         height = Dimension.fillToConstraints
@@ -144,14 +146,12 @@ fun SquadFragmentTypeOne(
             )
 
             Column(
-                modifier = Modifier
-                    .padding(bottom = 10.dp)
+                modifier = playerNameBackgroundModifier
                     .constrainAs(playerDetails) {
                         bottom.linkTo(skillDetail.top)
                     }
-                    .background(backgroundPlayerName)
+                    .fillMaxWidth(0.95f)
                     .padding(all = 8.dp)
-//                    .align(Alignment.CenterStart)
             ) {
                 Text(
                     text = playerDetail?.firstName.toString(),
@@ -173,11 +173,10 @@ fun SquadFragmentTypeOne(
                     },
             ) {
                 Card(
-                    modifier = Modifier
-                        .background(bottomBackground)
+                    bottomBackgroundModifier
                         .padding(vertical = 3.dp, horizontal = 5.dp)
                 ) {
-                    Row(modifier = Modifier.background(bottomBackground)) {
+                    Row(modifier = bottomBackgroundModifier) {
                         AsyncImage(
                             model = if (playerDetail?.skillId.equals("1")) {
                                 R.drawable.ic_skill_bat
@@ -204,15 +203,16 @@ fun SquadFragmentTypeOne(
             }
 
             Row(
-                modifier = Modifier
+                modifier = bottomBackgroundModifier
                     .constrainAs(playerStatsCard) {
                         bottom.linkTo(parent.bottom)
                         start.linkTo(parent.start)
                     }
                     .fillMaxWidth()
                     .wrapContentHeight()
-                    .background(Color.Magenta)
-                    .padding(all = 4.dp)
+                    .padding(all = 6.dp)
+                ,horizontalArrangement = Arrangement.Center
+                ,verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(
                     modifier = Modifier
@@ -220,7 +220,7 @@ fun SquadFragmentTypeOne(
                         .wrapContentHeight(), horizontalArrangement = Arrangement.Center
                 ) {
                     StatText(
-                        matchesCount,
+                        playerDetail?.playerStats?.matches.toString(),
                         "Matches",
                         valueStyle = playerRoleValueTextStyle,
                         headingStyle = playerRoleHeadingTextStyle
@@ -240,13 +240,142 @@ fun SquadFragmentTypeOne(
                         .weight(1f)
                         .wrapContentHeight(), horizontalArrangement = Arrangement.Center
                 ) {
-                    StatText(
-                        skillValue,
-                        skillName,
-                        valueStyle = playerRoleValueTextStyle,
-                        headingStyle = playerRoleHeadingTextStyle
-                    )
+                    if(playerDetail?.skillId.equals("2")){
+                        StatText(
+                            playerDetail?.playerStats?.wickets.toString(),
+                            "Wickets",
+                            valueStyle = playerRoleValueTextStyle,
+                            headingStyle = playerRoleHeadingTextStyle
+                        )
+                    }else {
+                        StatText(
+                            playerDetail?.playerStats?.runs.toString(),
+                            "Runs",
+                            valueStyle = playerRoleValueTextStyle,
+                            headingStyle = playerRoleHeadingTextStyle
+                        )
+                    }
                 }
+                if(playerDetail?.skillId.equals("3")){
+                    Divider(
+                        color = Color.White,
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .height(25.dp)
+                            .width(1.dp)
+                    )
+
+                    Row(
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentHeight(), horizontalArrangement = Arrangement.Center
+                    ) {
+                        StatText(
+                            playerDetail?.playerStats?.wickets.toString(),
+                            "Wickets",
+                            valueStyle = playerRoleValueTextStyle,
+                            headingStyle = playerRoleHeadingTextStyle
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun StaffFragmentTypeOne(
+    modifier: Modifier = Modifier
+        .width(220.dp)
+        .background(Color.Transparent)
+        .fillMaxWidth(),
+    @DrawableRes homeSquadBackground: Int = R.drawable.bg_player_home,
+    playerNameBackgroundModifier : Modifier = Modifier
+        .padding(bottom = 10.dp)
+        .background(Color(0xFFF2C029)),
+    bottomBackgroundModifier: Modifier = Modifier.background(Color(0xFF3A225D)),
+    firstNameTextStyle: TextStyle = TextStyle(
+        fontSize = 15.sp,
+        color = Color(0xFF3A225D),
+        fontWeight = FontWeight.Medium,
+        textAlign = TextAlign.Center
+    ),
+    lastNameTextStyle: TextStyle = TextStyle(
+        fontSize = 17.sp,
+        color = Color(0xFF3A225D),
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center
+    ),
+    roleBottomTextStyle: TextStyle = TextStyle(
+        fontSize = 12.sp,
+        color = Color.White,
+        fontWeight = FontWeight.Medium,
+        textAlign = TextAlign.Center
+    ),
+    staffDetail: StaffItem? = null
+){
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(5.dp))
+            .background(Color.Transparent)
+    ) {
+        Image(
+            painter = painterResource(homeSquadBackground),
+            modifier = Modifier.matchParentSize(),
+            contentScale = ContentScale.FillBounds,
+            contentDescription = ""
+        )
+
+        ConstraintLayout {
+
+            val (playerImageId, playerStatsCard, skillDetail, playerDetails) = createRefs()
+
+            AsyncImage(
+                model = staffDetail?.staffImageUrl,
+                placeholder = painterResource(R.drawable.ic_player),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp)
+                    .constrainAs(playerImageId) {
+                        bottom.linkTo(playerStatsCard.top)
+                        height = Dimension.fillToConstraints
+                    },
+                contentScale = ContentScale.Fit,
+                contentDescription = "",
+            )
+
+            Column(
+                modifier = playerNameBackgroundModifier
+                    .constrainAs(playerDetails) {
+                        bottom.linkTo(skillDetail.top)
+                    }
+                    .padding(all = 8.dp)
+                    .fillMaxWidth(0.95f)
+            ) {
+                Text(
+                    text = staffDetail?.firstName.toString(),
+                    style = firstNameTextStyle
+                )
+                Text(
+                    text = staffDetail?.lastName.toString(),
+                    style = lastNameTextStyle
+                )
+            }
+
+            Box(
+                modifier = bottomBackgroundModifier
+                    .constrainAs(playerStatsCard) {
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                    }
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(all = 4.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = staffDetail?.roleName.toString(),
+                    style = roleBottomTextStyle
+                )
             }
         }
     }

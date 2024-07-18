@@ -101,7 +101,11 @@ fun SquadTypeOneItem(
             contentDescription = ""
         )
 
-        Column (modifier = Modifier.align(Alignment.TopEnd).padding(end = 15.dp, top = 10.dp)){
+        Column (
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(end = 15.dp, top = 10.dp)
+        ){
             if (playerDetail != null) {
                 if (playerDetail.isCaptain) {
                     Image(
@@ -148,9 +152,8 @@ fun SquadTypeOneItem(
                 modifier = playerNameBackgroundModifier
                     .constrainAs(playerDetails) {
                         bottom.linkTo(skillDetail.top)
-                }
+                    }
                     .padding(all = 8.dp)
-//                    .align(Alignment.CenterStart)
             ) {
                 Text(text = playerDetail?.firstName.toString(),
                     style = firstNameTextStyle)
@@ -173,14 +176,11 @@ fun SquadTypeOneItem(
                 ) {
                     Row(modifier = bottomBackgroundModifier) {
                         AsyncImage(
-                            model = if(playerDetail?.skillId.equals("1")){
-                                R.drawable.ic_skill_bat
-                            } else if(playerDetail?.skillId.equals("2")){
-                                R.drawable.ic_skill_bowl
-                            } else if(playerDetail?.skillId.equals("4")){
-                                R.drawable.ic_skill_wicket_keeper
-                            }else{
-                                R.drawable.ic_skill_all_rounder
+                            model = when (playerDetail?.skillId) {
+                                "1" -> R.drawable.ic_skill_bat
+                                "2" -> R.drawable.ic_skill_bowl
+                                "4" -> R.drawable.ic_skill_wicket_keeper
+                                else -> R.drawable.ic_skill_all_rounder
                             },
                             modifier = Modifier
                                 .width(20.dp)
@@ -206,13 +206,15 @@ fun SquadTypeOneItem(
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(all = 4.dp)
+                ,horizontalArrangement = Arrangement.Center
+                ,verticalAlignment = Alignment.CenterVertically
             ){
                 Row (
                     modifier = Modifier
                         .weight(1f)
                         .wrapContentHeight(), horizontalArrangement = Arrangement.Center){
                     StatText(
-                        playerDetail?.overAllStats?.batting?.matchesPlayed.toString(), "Matches", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
+                        playerDetail?.playerStats?.matches.toString(), "Matches", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
                     )
                 }
 
@@ -229,7 +231,7 @@ fun SquadTypeOneItem(
                         .weight(1f)
                         .wrapContentHeight(), horizontalArrangement = Arrangement.Center) {
                     StatText(
-                        playerDetail?.overAllStats?.batting?.runs.toString(), "Runs", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
+                        playerDetail?.playerStats?.runs.toString(), "Runs", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
                     )
                 }
 
@@ -246,7 +248,7 @@ fun SquadTypeOneItem(
                         .weight(1f)
                         .wrapContentHeight(), horizontalArrangement = Arrangement.Center) {
                     StatText(
-                        playerDetail?.overAllStats?.bowling?.wickets.toString(), "Wickets", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
+                        value = playerDetail?.playerStats?.wickets.toString(), "Wickets", valueStyle = playerRoleValueTextStyle, headingStyle =  playerRoleHeadingTextStyle
                     )
                 }
             }

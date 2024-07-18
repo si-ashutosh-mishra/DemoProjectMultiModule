@@ -94,11 +94,6 @@ fun SquadHomeTypeOne (
     onPlayerItemClick: (PlayerItem?) -> Unit = {},
     onMoreClick: () -> Unit = {},
 ) {
-
-    val viewModel: SquadViewModel = hiltViewModel()
-    val squadList by viewModel.player.observeAsState(initial = emptyList())
-
-
     Box (modifier = Modifier
         .wrapContentSize()
         .background(Color.White)) {
@@ -127,9 +122,8 @@ fun SquadHomeTypeOne (
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 contentPadding = PaddingValues(horizontal = 5.dp),
             ) {
-                items(squadList.size) {
+                items(players.size) {
                     val data = players[it]
-//                    Log.d("Player $page", data.toString())
                         SquadTypeOneItem(
                             firstNameTextStyle = firstNameTextStyle,
                             lastNameTextStyle = lastNameTextStyle,
