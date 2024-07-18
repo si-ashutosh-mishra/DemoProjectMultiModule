@@ -2,6 +2,7 @@ package com.example.photo_listing.presentation.photolist.typetwo
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,42 +35,56 @@ import com.example.photo_listing.presentation.theme.Black
 
 
 @Composable
-fun ListingOfPhotos(assetItem: AssetItem,
-                    itemCounts : Int,
-                    matchPhotoListingTitleStyle : TextStyle,
-                    @DrawableRes matchClockIcon : Int?=null,
-                    matchTimeTextStyle : TextStyle,
-                    displayMatchReaction : Boolean = false,
-                    borderColorStyle : TextStyle,
-                    @DrawableRes reactionIcon : Int?=null,
-                    reactionTextStyle : TextStyle,
-                    @DrawableRes matchShareLogo : Int?=null,
-                    matchPhotosNumberStyle: TextStyle) {
+fun ListingOfPhotos(
+    assetItem: AssetItem,
+    itemCounts: Int,
+    matchPhotoListingTitleStyle: TextStyle,
+    @DrawableRes matchClockIcon: Int? = null,
+    matchTimeTextStyle: TextStyle,
+    displayMatchReaction: Boolean = false,
+    borderColorStyle: TextStyle,
+    @DrawableRes reactionIcon: Int? = null,
+    reactionTextStyle: TextStyle,
+    @DrawableRes matchShareLogo: Int? = null,
+    matchPhotosNumberStyle: TextStyle,
+    onItemClick : (AssetItem) -> Unit
+) {
+
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val itemWidth = (screenWidth / itemCounts) + 80.dp
 
-    Card (modifier = Modifier
-        .width(itemWidth)
-        .aspectRatio(0.8f)
-        .padding(5.dp, 10.dp, 10.dp, 0.dp)){
+    Card(
+        modifier = Modifier
+            .width(itemWidth)
+            .aspectRatio(0.8f)
+            .padding(5.dp, 10.dp, 10.dp, 0.dp)
+            .clickable { onItemClick(assetItem) }
+    ) {
 
-        Column(verticalArrangement = Arrangement.SpaceAround,
+        Column(
+            verticalArrangement = Arrangement.SpaceAround,
             modifier = Modifier
                 .fillMaxSize()
-                .wrapContentHeight()) {
+                .wrapContentHeight()
+        ) {
 
-            Box(contentAlignment = Alignment.BottomStart){
+            Box(contentAlignment = Alignment.BottomStart) {
 
-                Image(painter = rememberAsyncImagePainter(model = assetItem.imageUrl),
+                Image(
+                    painter = rememberAsyncImagePainter(model = assetItem.imageUrl),
                     contentDescription = null,
                     modifier = Modifier
                         .aspectRatio(1.2f),
                     contentScale = ContentScale.Crop
-                    )
+                )
 
-                Text(text = "  ${assetItem.totalAssets} Photos  ",
-                    style = matchPhotosNumberStyle)
+                Text(
+                    text = "${assetItem.totalAssets} Photos",
+                    style = matchPhotosNumberStyle,
+                    modifier = Modifier.padding(0.dp)
+                        .padding(5.dp)
+                )
             }
 
             Text(
@@ -77,21 +92,26 @@ fun ListingOfPhotos(assetItem: AssetItem,
                 style = matchPhotoListingTitleStyle,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.padding(5.dp,0.dp,1.dp,5.dp)
+                modifier = Modifier.padding(5.dp, 0.dp, 1.dp, 5.dp)
             )
 
-            Row(verticalAlignment = Alignment.Bottom,
+            Row(
+                verticalAlignment = Alignment.Bottom,
                 modifier = Modifier.fillMaxHeight(),
-                horizontalArrangement = Arrangement.SpaceBetween) {
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
 
-                Row (verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ,modifier = Modifier.padding(0.dp,0.dp,0.dp,10.dp)
-                        .fillMaxHeight()){
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier
+                        .padding(0.dp, 0.dp, 0.dp, 10.dp)
+                        .fillMaxHeight()
+                ) {
 
-                    if (matchClockIcon!=null){
+                    if (matchClockIcon != null) {
                         Icon(
-                             painterResource(id = matchClockIcon),
+                            painterResource(id = matchClockIcon),
                             contentDescription = null,
                             modifier = Modifier.padding(5.dp, 0.dp, 1.dp, 0.dp)
                         )
@@ -109,7 +129,7 @@ fun ListingOfPhotos(assetItem: AssetItem,
                             style = borderColorStyle
                         )
 
-                        if (reactionIcon!=null) {
+                        if (reactionIcon != null) {
                             Icon(
                                 painterResource(id = reactionIcon),
                                 contentDescription = null,
@@ -124,17 +144,18 @@ fun ListingOfPhotos(assetItem: AssetItem,
                         )
                     }
 
-                Row (modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                    ){
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.End,
+                    ) {
 
-                    if (matchShareLogo!=null) {
-                        Icon(
-                            painter = painterResource(id = matchShareLogo),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .padding(0.dp, 0.dp, 5.dp, 0.dp)
-                        )
+                        if (matchShareLogo != null) {
+                            Icon(
+                                painter = painterResource(id = matchShareLogo),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(0.dp, 0.dp, 5.dp, 0.dp)
+                            )
                         }
                     }
                 }

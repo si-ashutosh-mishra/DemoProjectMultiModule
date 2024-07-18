@@ -1,5 +1,6 @@
 package com.example.lb_content_listing.data.model.layoutbuilder
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 
 data class AssetItemEntity(
@@ -59,7 +60,16 @@ data class AssetItemEntity(
     @SerializedName("webview_url") val webviewUrl: String?,
     @SerializedName("in_app_browser") val in_app_browser: Boolean?,
     @SerializedName("is_external_webview") val is_external_webview: Boolean?,
-    @SerializedName("is_web_auth") val is_web_auth: Boolean?
-
-
+    @SerializedName("is_web_auth") val is_web_auth: Boolean?,
+    @SerializedName("info_url") val infoUrl: String?,
+    @SerializedName("custom_json") val customJson: String?,
 )
+{
+   /* fun getCustomJson(): BannerRedirectionModel? {
+        return if (customJson != null) {
+            Gson().fromJson(customJson, BannerRedirectionModel::class.java)
+        } else {
+            null
+        }
+    }*/
+}

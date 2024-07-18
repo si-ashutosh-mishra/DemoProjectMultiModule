@@ -39,116 +39,93 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.photo_listing.business.model.PhotoListingItem
+import com.example.photo_listing.presentation.photolist.typetwo.photodetails.PhotoDetailsTypeTwo
 import com.example.photo_listing.presentation.theme.Black
 
 @Composable
 fun PhotoListing(
-    data : PhotoListingItem.PhotosArticle,
-    @DrawableRes matchPhotoBackgroundImage : Int?=null,
-    @ColorRes matchPhotoBackgroundColor : Int?=null,
+    data: PhotoListingItem.PhotosArticle,
+    @DrawableRes matchPhotoBackgroundImage: Int? = null,
+    @ColorRes matchPhotoBackgroundColor: Int? = null,
     matchPhotoTitleStyle: TextStyle,
     matchMoreButton: ButtonColors,
-    matchPhotoListingTitleStyle : TextStyle,
-    @DrawableRes matchClockIcon : Int?=null,
-    matchTimeTextStyle : TextStyle,
-    displayMatchReaction : Boolean = false,
-    borderColorStyle : TextStyle,
-    @DrawableRes reactionIcon : Int?=null,
-    reactionTextStyle : TextStyle,
-    @DrawableRes matchShareLogo : Int?=null,
+    matchPhotoListingTitleStyle: TextStyle,
+    @DrawableRes matchClockIcon: Int? = null,
+    matchTimeTextStyle: TextStyle,
+    displayMatchReaction: Boolean = false,
+    borderColorStyle: TextStyle,
+    @DrawableRes reactionIcon: Int? = null,
+    reactionTextStyle: TextStyle,
+    @DrawableRes matchShareLogo: Int? = null,
     matchPhotosNumberStyle: TextStyle,
-    matchMoreButtonTextStyle : TextStyle,
-    listingType : Boolean = false
-){
-   // Box (){
+    matchMoreButtonTextStyle: TextStyle,
+    navController: NavController
+) {
 
-        if (listingType){
-            DisplayPhotosVertically(data,
-                matchPhotoTitleStyle,
-                matchMoreButton,
-                matchPhotoListingTitleStyle,
-                matchClockIcon,
-                matchTimeTextStyle,
-                displayMatchReaction,
-                borderColorStyle,
-                reactionIcon,
-                reactionTextStyle,
-                matchShareLogo,
-                matchPhotosNumberStyle,
-                matchMoreButtonTextStyle,
-             matchPhotoBackgroundImage,
-            matchPhotoBackgroundColor)
-        }else{
-            DisplayPhotosHorizontally(data,
-            matchPhotoTitleStyle,
-            matchMoreButton,
-            matchPhotoListingTitleStyle,
-            matchClockIcon,
-            matchTimeTextStyle,
-            displayMatchReaction,
-            borderColorStyle,
-            reactionIcon,
-            reactionTextStyle,
-            matchShareLogo,
-            matchPhotosNumberStyle,
-            matchMoreButtonTextStyle,
-            matchPhotoBackgroundImage,
-            matchPhotoBackgroundColor)
-        }
-      /*  Column(modifier = Modifier
+    Column(
+        modifier = Modifier
             .background(Color.Transparent)
             .fillMaxSize()
-            .padding(0.dp, 5.dp, 0.dp, 5.dp)) {
+            .padding(0.dp, 5.dp, 0.dp, 5.dp)
+    ) {
 
-            Row(
-                horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+        Row(
+            horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .padding(0.dp, 10.dp, 0.dp, 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = data.title,
+                style = matchPhotoTitleStyle,
+                modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp)
+            )
+
+            Button(
+                onClick = { },
+                colors = matchMoreButton,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(0.dp, 10.dp, 0.dp, 10.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(0.dp, 0.dp, 10.dp, 0.dp)
+                    .height(30.dp)
+                    .width(80.dp)
+                    .align(alignment = Alignment.CenterVertically),
+                shape = RoundedCornerShape(5.dp)
             ) {
                 Text(
-                    text = data.title,
-                    style = matchPhotoTitleStyle,
-                    modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp)
+                    text = "More",
+                    style = matchMoreButtonTextStyle
                 )
-
-                Button(
-                    onClick = { },
-                    colors = matchMoreButton,
-                    modifier = Modifier.padding(0.dp, 0.dp, 10.dp, 0.dp).height(30.dp)
-                        .width(80.dp).align(alignment = Alignment.CenterVertically),
-                    shape = RoundedCornerShape(5.dp)
-                ) {
-                    Text(
-                        text = "More",
-                        style = matchMoreButtonTextStyle
-                    )
-                }
             }
+        }
 
-            LazyRow {
-                items(data.items) {
-                    ListingOfPhotos(
-                        it,
-                        data.items.size,
-                        matchPhotoListingTitleStyle,
-                        matchClockIcon,
-                        matchTimeTextStyle,
-                        displayMatchReaction,
-                        borderColorStyle,
-                        reactionIcon,
-                        reactionTextStyle = reactionTextStyle,
-                        matchShareLogo,
-                        matchPhotosNumberStyle
-                    )
-                }
+        LazyRow {
+            items(data.items) {
+                ListingOfPhotos(
+                    it,
+                    data.items.size,
+                    matchPhotoListingTitleStyle,
+                    matchClockIcon,
+                    matchTimeTextStyle,
+                    displayMatchReaction,
+                    borderColorStyle,
+                    reactionIcon,
+                    reactionTextStyle = reactionTextStyle,
+                    matchShareLogo,
+                    matchPhotosNumberStyle,
+                    onItemClick = { selectedItem ->
+                        navController.navigate(
+                           route = "PhotoDetails/${selectedItem.titleAlias}")
+                    })
             }
-        }*/
+        }
     }
+}
 
+/*
 @Composable
 fun DisplayPhotosHorizontally(data : PhotoListingItem.PhotosArticle,
                                matchPhotoTitleStyle: TextStyle,
@@ -323,9 +300,10 @@ fun DisplayPhotosVertically(data : PhotoListingItem.PhotosArticle,
         }
     }
 }
+*/
 
 
 
-fun addButtons(){
+fun addButtons() {
 
 }

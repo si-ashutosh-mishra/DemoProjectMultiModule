@@ -3,7 +3,7 @@ package com.example.lb_content_listing.business.domain.model
 
 object AssetUtils {
 
-    fun getAssetType(assetTypeId: Int?): AssetType {
+    fun getAssetType(assetTypeId: Int?,secondaryEntityRoleMapId: Int? = null): AssetType {
         return  when(assetTypeId) {
             AssetType.ARTICLE.typeId -> AssetType.ARTICLE
             AssetType.PHOTOS.typeId -> AssetType.PHOTOS

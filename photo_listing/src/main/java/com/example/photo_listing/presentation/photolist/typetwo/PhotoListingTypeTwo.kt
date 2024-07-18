@@ -169,11 +169,13 @@ fun PhotoListingTypeTwo(
             actionIconContentColor = Color.White
         ))
 
+
+        (photoListing as? PhotoListingItem.Training)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(photoListing){
                     when(it.type){
                         PhotoItemViewType.CAROUSEL->{
-                            (it as? PhotoListingItem.Carousel)?.let { 
+                            (it as? PhotoListingItem.Carousel)?.let {
                                 PhotosCorousal(data = it,
                                     likeLogo,clockLogo,shareLogo,displayReaction,
                                     corousalTitleStyle,
@@ -202,8 +204,9 @@ fun PhotoListingTypeTwo(
                                     trainingreactionTextStyle,
                                     trainingShareLogo,
                                     trainingPhotosNumberStyle,
-                                    trainingMoreButtonTextStyle
-                                    )
+                                    trainingMoreButtonTextStyle,
+                                    navController
+                                )
                             }
 
                         }
@@ -222,7 +225,7 @@ fun PhotoListingTypeTwo(
                                     reactionTextStyle,
                                     matchShareLogo,
                                     matchPhotosNumberStyle,
-                                    matchMoreButtonTextStyle
+                                    matchMoreButtonTextStyle,navController
                                 )
                             }
                         }
@@ -242,7 +245,7 @@ fun PhotoListingTypeTwo(
                                     behindScenereactionTextStyle,
                                     behindScenematchShareLogo,
                                     behindScenematchPhotosNumberStyle,
-                                    behindSceneMoreButtonTextStyle
+                                    behindSceneMoreButtonTextStyle,navController
                                 )
                             }
                         }

@@ -5,6 +5,7 @@ import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.photo_listing.data.remote.PhotoListingConfig
 import com.example.lb_content_listing.data.remote.ContentListingConfigContract
+import com.example.photo_listing.data.remote.PhotoDetailsConfig
 import com.example.standing.data.remote.StandingConfigContract
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -13,9 +14,8 @@ import javax.inject.Singleton
 @Singleton
 class ConfigManager @Inject constructor(
 ) : BaseConfigContract, FixtureConfigContract, StandingConfigContract,
-    ContentListingConfigContract, PhotoListingConfig {
-) : BaseConfigContract, FixtureConfigContract, StandingConfigContract, ContentListingConfigContract,
-    AppHomeConfigContract {
+    ContentListingConfigContract, PhotoListingConfig ,AppHomeConfigContract,PhotoDetailsConfig{
+
 
     override fun getBaseUrl(): String {
         return "https://www.knightclub.in/"
@@ -123,6 +123,18 @@ class ConfigManager @Inject constructor(
                 /*ReplaceKeys.CONTENT_IMAGE_VERSION*/"{content_image_version}", /*firebaseRemoteConfig.getString(
             KEY_CONTENT_IMAGE_VERSION
         )*/"1.30"
+            )
+    }
+
+
+
+    override fun getContentImageUrl1( imagePath: String?,
+                                     imageName: String?,
+                                     imageRatio: String?): String {
+        return getBaseUrl() + getBaseContentImageUrl().replace("{image_path}",
+            imageRatio?.let { imagePath?.replace("/0/", "/$imageRatio/") } ?: imagePath.orEmpty())
+            .replace(
+                "{image_name}", imageName.orEmpty()
             )
     }
 

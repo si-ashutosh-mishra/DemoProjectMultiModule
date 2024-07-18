@@ -77,6 +77,7 @@ dependencies {
     implementation(project(":feature_app_home"))
     implementation(project(":base"))
     implementation(project(":photo_listing"))
+    implementation(project(":feature_video_listing"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

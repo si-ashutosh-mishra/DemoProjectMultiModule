@@ -37,7 +37,11 @@ data class AssetItem(
     val videoUrl: String? = "",
     val secCanonicalUrl: String = "",
     var likesCounts: Int?,
-    var isLikedByUser: Boolean = false
+    var isLikedByUser: Boolean = false,
+    var infoUrl : String?="",
+    var tag : String?="",
+    val shortDesc: String?="",
+    //val redirectionPayload:BannerRedirectionModel? = null,
 ) : Serializable {
     private val assetType: AssetUtils.AssetType = AssetUtils.getAssetType(assetTypeId)
 
