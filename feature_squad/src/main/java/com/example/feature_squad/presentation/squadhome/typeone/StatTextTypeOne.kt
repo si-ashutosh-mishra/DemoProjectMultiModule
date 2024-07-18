@@ -9,26 +9,3 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 
-
-@Composable
-fun StatText(
-    value : String,
-    heading : String,
-    valueStyle: TextStyle = TextStyle(
-        color = Color.Black,
-        textAlign = TextAlign.Center
-    ),
-    headingStyle: TextStyle = TextStyle(
-        color = Color.Black,
-        textAlign = TextAlign.Center
-    )
-){
-    Column (
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally){
-        Text(text = value,
-            style = valueStyle)
-        Text(text = heading.uppercase(),
-           style = headingStyle)
-    }
-}

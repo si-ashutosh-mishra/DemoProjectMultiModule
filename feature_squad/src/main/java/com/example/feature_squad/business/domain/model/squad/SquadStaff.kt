@@ -1,7 +1,7 @@
 package com.example.feature_squad.business.domain.model.squad
 
 import android.os.Parcelable
-import com.example.feature_squad.data.model.OverAllStats
+import com.example.feature_squad.data.model.PlayerStats
 import kotlinx.parcelize.Parcelize
 
 
@@ -23,7 +23,7 @@ data class PlayerItem(
     val bio: String?,
     val isCaptain: Boolean,
     val isViceCaptain: Boolean,
-    val overAllStats: OverAllStats?,
+    val playerStats: PlayerStats?,
 ):Parcelable
 
 @Parcelize

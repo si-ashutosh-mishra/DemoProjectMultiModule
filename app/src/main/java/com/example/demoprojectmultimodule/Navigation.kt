@@ -1,5 +1,6 @@
 package com.example.demoprojectmultimodule
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -12,6 +13,7 @@ import com.example.feature_fixtures.presentation.fixture.typeone.FixtureScreenTy
 import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTypeTwo
 import com.example.photo_listing.presentation.photolist.typeone.DisplayPhotoListingGridLayout
 import com.example.photo_listing.presentation.photolist.typetwo.PhotoListingTypeTwo
+import com.example.feature_squad.presentation.squad.typetwo.SquadScreen
 import com.example.standing.presentation.standing.StandingsScreen
 
 @Composable
@@ -49,12 +51,18 @@ fun Navigation() {
 
         composable(route = Screen.AppHomeScreen.route) {
             AppHome(onFixtureViewMoreClick = {
-                navController.navigate(Screen.MainScreen.route)
-            }, onFixtureItemClick = {
-                //
-            }, onStandingViewMoreClick = {
-                navController.navigate(Screen.StandingDetailsScreen.route)
-            })
+                    navController.navigate(Screen.MainScreen.route)
+                },
+                onFixtureItemClick = {
+                    //
+                },
+                onSquadViewMoreClick = {
+                    navController.navigate(Screen.SquadScreen.route)
+                },
+                onStandingViewMoreClick = {
+                    navController.navigate(Screen.StandingDetailsScreen.route)
+                }
+            )
         }
         composable(route = Screen.WebViewScreen.route) {
             WebViewScreen(
@@ -64,6 +72,16 @@ fun Navigation() {
             ) {
 
             }
+        }
+        composable(route = Screen.SquadScreen.route){
+            SquadScreen(
+                onPlayerItemClick = { player ->
+                    Log.d("onClick PlayerDetail", player.toString())
+                },
+                onStaffItemClick = { staff ->
+                    Log.d("onClick StaffDetail", staff.toString())
+                }
+            )
         }
     }
 }
