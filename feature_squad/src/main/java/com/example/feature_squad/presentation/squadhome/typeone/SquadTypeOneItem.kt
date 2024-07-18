@@ -206,6 +206,8 @@ fun SquadTypeOneItem(
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .padding(all = 4.dp)
+                ,horizontalArrangement = Arrangement.Center
+                ,verticalAlignment = Alignment.CenterVertically
             ){
                 Row (
                     modifier = Modifier
