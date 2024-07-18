@@ -8,6 +8,7 @@ interface BaseConfigContract {
     fun getPreferenceDataStoreName(): String
     fun getCaptchaSiteKey(): String
     fun getIsDebugMode(): Boolean
+    fun getAppType(): String
 
 
 }

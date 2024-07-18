@@ -33,6 +33,13 @@ class AppHomeModuleEntityMapper @Inject constructor(
                     matches = emptyList()
                 )
 
+                HomeItemViewType.HOME_SQUAD -> HomeListingItem.HomeSquad(
+                    widgetTitle = module.displayTitle.orEmpty(),
+                    showWidgetTitle = module.metaInfo?.showWidgetTitle == 1,
+                    showMore = module.metaInfo?.showWidgetTitle == 1,
+                    items = emptyList()
+                )
+
                 else -> HomeListingItem.Unknown
             }
 
@@ -44,6 +51,7 @@ class AppHomeModuleEntityMapper @Inject constructor(
         return when {
             componentName == Component.SI_STANDINGS.componentName && layoutType == WidgetView.LAYOUT_01 -> HomeItemViewType.HOME_STANDING
             componentName == Component.SI_SCORESTRIP.componentName && layoutType == WidgetView.LAYOUT_01 -> HomeItemViewType.HOME_FIXTURES
+            componentName == Component.SI_SQUAD.componentName && layoutType == WidgetView.LAYOUT_01 -> HomeItemViewType.HOME_SQUAD
             else -> HomeItemViewType.UNKNOWN
         }
     }

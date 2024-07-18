@@ -7,6 +7,7 @@ sealed class Screen(val route:String) {
     object PhotoListingScreen : Screen("photo_listing_type_two")
     object AppHomeScreen : Screen("app_home")
     object PhotoDetails : Screen("PhotoDetails/{titleAlias}")
+    object SquadScreen : Screen("squad_listing")
 
     object WebViewScreen : Screen("webview")
     fun withArgs(vararg args:String?):String{
