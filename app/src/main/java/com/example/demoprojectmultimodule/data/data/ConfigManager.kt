@@ -5,6 +5,7 @@ import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.photo_listing.data.remote.PhotoListingConfig
 import com.example.lb_content_listing.data.remote.ContentListingConfigContract
+import com.example.photo_listing.data.remote.PhotoDetailsConfig
 import com.example.standing.data.remote.StandingConfigContract
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class ConfigManager @Inject constructor(
 ) : BaseConfigContract, FixtureConfigContract, StandingConfigContract,
-    ContentListingConfigContract, PhotoListingConfig ,AppHomeConfigContract,PhotoDetailsConfig{
+    ContentListingConfigContract, PhotoListingConfig ,AppHomeConfigContract, PhotoDetailsConfig {
 
 
     override fun getBaseUrl(): String {
@@ -34,6 +35,10 @@ class ConfigManager @Inject constructor(
 
     override fun getIsDebugMode(): Boolean {
         return true
+    }
+
+    override fun getAppType(): String {
+        TODO("Not yet implemented")
     }
 
     override fun getTeamLogo(clubId: String): String {
@@ -68,6 +73,14 @@ class ConfigManager @Inject constructor(
         return ""
     }
 
+    override fun getContentImageUrl1(
+        imagePath: String?,
+        imageName: String?,
+        imageRatio: String?
+    ): String {
+        TODO("Not yet implemented")
+    }
+
     override fun getReelsSharingUrl(
         entityCategory: String?, titleAlias: String?, assetId: Int?, assetTypeId: Int?,
     ): String {
@@ -83,6 +96,10 @@ class ConfigManager @Inject constructor(
 
     override fun getAppHomeUrl(): String {
         return getBaseUrl() + "apiv3/gettemplatedata?url=kkr-app-home&is_app=1"
+    }
+
+    override fun getAppHomeFixturesUrl(): String {
+        TODO("Not yet implemented")
     }
 
     override fun getCurrentTeamID() = 1106
