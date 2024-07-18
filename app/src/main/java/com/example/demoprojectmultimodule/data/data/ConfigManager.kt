@@ -4,12 +4,14 @@ import com.example.base.helper.BaseConfigContract
 import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.demoprojectmultimodule.data.data.model.AppTypePath
 import com.example.demoprojectmultimodule.util.AppType
-import com.example.feature_app_home.data.remote.AppHomeConfigContract
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
+import com.example.feature_squad.business.domain.model.squad.SkillItem
 import com.example.photo_listing.data.remote.PhotoListingConfig
 import com.example.lb_content_listing.data.remote.ContentListingConfigContract
+import com.example.lb_content_listing.helper.ReplaceKeys
 import com.example.photo_listing.data.remote.PhotoDetailsConfig
 import com.example.standing.data.remote.StandingConfigContract
+import com.google.gson.reflect.TypeToken
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -118,7 +120,7 @@ class ConfigManager @Inject constructor(
 
 
     override fun getPhotosPageListingUrl(): String {
-       /* val appTypePath = ""//getAppTypePath()
+        /* val appTypePath = ""//getAppTypePath()
         val photosListingFinder = when (getAppType()) {
             AppType.LAKR.id -> appTypePath?.lAKR?.photosPageListingFinder
             AppType.TKR.id -> appTypePath?.tKR?.photosPageListingFinder
@@ -128,6 +130,8 @@ class ConfigManager @Inject constructor(
         return getBaseApiUrl() + firebaseRemoteConfig.getString(KEY_PHOTOS_BUILDER_URL)
             .replace(ReplaceKeys.PHOTOS_PAGE_LISTING_FINDER, photosListingFinder ?: "")*/
         return ""
+    }
+
     override fun getSquadListingUrl(seriesId: String?, teamId: String?): String {/*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_SQUAD_FEED_URL)
             .replace(
                 ReplaceKeys.DEFAULT_SERIES_ID, seriesId ?: getDefaultSeriesId()
@@ -151,6 +155,7 @@ class ConfigManager @Inject constructor(
     override fun getCorousalImageUrl(
         imagePath: String?, imageName: String?, imageRatio: String?): String {
         return getBaseUrl() + getBaseContentImageUrl()
+    }
     override fun getPlayerImageUrl(playerId: String?): String {/*val appTypePath = getAppTypePath()
         val playerImagePathFinder = when (getAppType()) {
             AppType.KKR.id -> appTypePath?.kKR?.kkrPlayerImage
