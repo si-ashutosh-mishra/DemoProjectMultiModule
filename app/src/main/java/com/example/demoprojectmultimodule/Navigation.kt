@@ -14,6 +14,9 @@ import com.example.feature_fixtures.presentation.fixture.typetwo.FixtureScreenTy
 import com.example.photo_listing.presentation.photolist.typeone.DisplayPhotoListingGridLayout
 import com.example.photo_listing.presentation.photolist.typetwo.PhotoListingTypeTwo
 import com.example.feature_squad.presentation.squad.typetwo.SquadScreen
+import com.example.feature_video_listing.presentation.videolist.typetwo.VideoListingTypeTwo
+import com.example.feature_video_listing.presentation.videolist.typetwo.videodetails.VideoDetailsTypeTwo
+import com.example.photo_listing.presentation.photolist.typetwo.photodetails.PhotoDetailsTypeTwo
 import com.example.standing.presentation.standing.StandingsScreen
 
 @Composable
@@ -21,8 +24,9 @@ fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Screen.PhotoListingScreen.route) {
         composable(route = Screen.PhotoListingScreen.route) {
-          //PhotoListingTypeTwo(navController = navController)
-            DisplayPhotoListingGridLayout(navController)
+            //PhotoListingTypeTwo(navController = navController)
+            VideoListingTypeTwo(navController = navController)
+           // DisplayPhotoListingGridLayout(navController)
 
             /* FixtureScreenTypeOne {
     NavHost(navController = navController, startDestination = Screen.AppHomeScreen.route) {
@@ -51,8 +55,8 @@ fun Navigation() {
 
         composable(route = Screen.AppHomeScreen.route) {
             AppHome(onFixtureViewMoreClick = {
-                    navController.navigate(Screen.MainScreen.route)
-                },
+                navController.navigate(Screen.MainScreen.route)
+            },
                 onFixtureItemClick = {
                     //
                 },
@@ -73,7 +77,7 @@ fun Navigation() {
 
             }
         }
-        composable(route = Screen.SquadScreen.route){
+        composable(route = Screen.SquadScreen.route) {
             SquadScreen(
                 onPlayerItemClick = { player ->
                     Log.d("onClick PlayerDetail", player.toString())
@@ -83,5 +87,35 @@ fun Navigation() {
                 }
             )
         }
+        composable(
+            route = Screen.PhotoDetails.route,
+            arguments = listOf(
+                navArgument("titleAlias") {
+                    type = NavType.StringType
+                    nullable = true
+                })
+        )
+        { titleAlias ->
+            PhotoDetailsTypeTwo(
+                navController = navController,
+                titleAlias = titleAlias.arguments?.getString("titleAlias")
+            )
+        }
+        composable(route = Screen.PhotoListingGridView.route){
+            DisplayPhotoListingGridLayout(navController = navController)
+        }
+        composable(
+            route = Screen.VideoDetails.route,
+            arguments = listOf(
+                navArgument("titleAlias"){
+                    type = NavType.StringType
+                    nullable=true
+                })
+            ){titleAlias ->
+                VideoDetailsTypeTwo(
+                    navController = navController,
+                    titleAlias = titleAlias.arguments?.getString("titleAlias").toString()
+                )
+            }
     }
 }

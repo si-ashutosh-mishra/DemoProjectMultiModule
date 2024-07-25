@@ -8,8 +8,9 @@ sealed class Screen(val route:String) {
     object AppHomeScreen : Screen("app_home")
     object PhotoDetails : Screen("PhotoDetails/{titleAlias}")
     object SquadScreen : Screen("squad_listing")
-
+    object PhotoListingGridView : Screen("PhotoListingGridLayout")
     object WebViewScreen : Screen("webview")
+    object VideoDetails : Screen("VideoDetails/{titleAlias}")
     fun withArgs(vararg args:String?):String{
         return buildString {
             append(route)

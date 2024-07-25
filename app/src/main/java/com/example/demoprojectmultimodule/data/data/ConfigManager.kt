@@ -6,9 +6,10 @@ import com.example.demoprojectmultimodule.data.data.model.AppTypePath
 import com.example.demoprojectmultimodule.util.AppType
 import com.example.feature_fixtures.data.remote.FixtureConfigContract
 import com.example.feature_squad.business.domain.model.squad.SkillItem
+import com.example.feature_squad.data.remote.SquadConfigContract
+import com.example.feature_video_listing.data.remote.VideoDetailConfig
 import com.example.photo_listing.data.remote.PhotoListingConfig
 import com.example.lb_content_listing.data.remote.ContentListingConfigContract
-import com.example.lb_content_listing.helper.ReplaceKeys
 import com.example.photo_listing.data.remote.PhotoDetailsConfig
 import com.example.standing.data.remote.StandingConfigContract
 import com.google.gson.reflect.TypeToken
@@ -19,7 +20,8 @@ import javax.inject.Singleton
 @Singleton
 class ConfigManager @Inject constructor(
 ) : BaseConfigContract, FixtureConfigContract, StandingConfigContract,
-    ContentListingConfigContract, PhotoListingConfig ,AppHomeConfigContract, PhotoDetailsConfig {
+    ContentListingConfigContract, PhotoListingConfig ,AppHomeConfigContract,
+    PhotoDetailsConfig ,SquadConfigContract,VideoDetailConfig{
 
 
     override fun getBaseUrl(): String {
@@ -78,12 +80,27 @@ class ConfigManager @Inject constructor(
         return ""
     }
 
+    override fun getContentSharingUrl(
+        baseUrl: String,
+        entityCategory: String?,
+        titleAlias: String?
+    ): String {
+        return ""
+    }
+
     override fun getContentImageUrl1(
         imagePath: String?,
         imageName: String?,
         imageRatio: String?
     ): String {
-        TODO("Not yet implemented")
+       /* return (baseUrl ?: getBaseUrl()) + firebaseRemoteConfig.getString(KEY_CONTENT_SHARING_URL)
+            .replace(ReplaceKeys.ENTITY_CATEGORY, entityCategory.orEmpty())
+            .replace(ReplaceKeys.TITLE_ALIAS, titleAlias.orEmpty())*/
+        return getBaseUrl() + getBaseContentImageUrl().replace("{image_path}",
+            imageRatio?.let { imagePath?.replace("/0/", "/$imageRatio/") } ?: imagePath.orEmpty())
+            .replace(
+                "{image_name}", imageName.orEmpty()
+            )
     }
 
     override fun getReelsSharingUrl(
@@ -132,7 +149,7 @@ class ConfigManager @Inject constructor(
         return ""
     }
 
-    override fun getSquadListingUrl(seriesId: String?, teamId: String?): String {/*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_SQUAD_FEED_URL)
+      override fun getSquadListingUrl(seriesId: String?, teamId: String?): String {/*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_SQUAD_FEED_URL)
             .replace(
                 ReplaceKeys.DEFAULT_SERIES_ID, seriesId ?: getDefaultSeriesId()
             )
@@ -153,42 +170,49 @@ class ConfigManager @Inject constructor(
     }
 
     override fun getCorousalImageUrl(
-        imagePath: String?, imageName: String?, imageRatio: String?): String {
+        imagePath: String?, imageName: String?, imageRatio: String?
+    ): String {
         return getBaseUrl() + getBaseContentImageUrl()
     }
-    override fun getPlayerImageUrl(playerId: String?): String {/*val appTypePath = getAppTypePath()
-        val playerImagePathFinder = when (getAppType()) {
+
+    private fun getAppTypePath(): AppTypePath? {
+        return null
+    }
+
+    override fun getPlayerImageUrl(playerId: String?): String {
+       val appTypePath = getAppTypePath()
+      /*  val playerImagePathFinder = when (getAppType()) {
             AppType.KKR.id -> appTypePath?.kKR?.kkrPlayerImage
             AppType.LAKR.id -> appTypePath?.lAKR?.lakrPlayerImage
             AppType.TKR.id -> appTypePath?.tKR?.tkrPlayerImage
             AppType.ADKR.id -> appTypePath?.aDKR?.adkrPlayerImage
             else -> ""
-        }
-        return getBaseUrl() + firebaseRemoteConfig.getString(KEY_BASE_PLAYER_IMAGE_PATH)
-            .replace(ReplaceKeys.PLAYER_ID, playerId.orEmpty())
+        }*/
+       /* return getBaseUrl() + firebaseRemoteConfig.getString(KEY_BASE_PLAYER_IMAGE_PATH)
+            .replace(ReplaceK.PLAYER_ID, playerId.orEmpty())
             .replace(
                 ReplaceKeys.DATA_IMAGE_VERSION, firebaseRemoteConfig.getString(
                     KEY_DATA_IMAGE_VERSION
                 )
             ).replace(ReplaceKeys.PLAYER_IMAGE_PATH_FINDER, playerImagePathFinder ?: "")*/
-        return getBaseUrl() + "static-assets/images/players/lakr/" + "{player_id}.png?v={data_image_version}".replace(
-                ReplaceKeys.PLAYER_IMAGE_PATH_FINDER,
-                "kkr"
-            ).replace(ReplaceKeys.PLAYER_ID, playerId.orEmpty())
-            .replace(ReplaceKeys.DATA_IMAGE_VERSION, "2.28")
+                return getBaseUrl() + "static-assets/images/players/lakr/" + "{player_id}.png?v={data_image_version}".replace(
+                    ReplaceKeys.PLAYER_IMAGE_PATH_FINDER,
+                    "kkr"
+                ).replace(ReplaceKeys.PLAYER_ID, playerId.orEmpty())
+                    .replace(ReplaceKeys.DATA_IMAGE_VERSION, "2.28")
     }
 
     override fun getCountryNationalityIdImageUrl(nationalityId: String?): String {/*return getBaseUrl() + firebaseRemoteConfig.getString(KEY_BASE_COUNTRY_CODE_IMAGE_PATH)
             .replace(ReplaceKeys.NATIONALITY_ID, nationalityId.orEmpty())
             .replace(
-                /*ReplaceKeys.IMAGE_PATH*/"{image_path}",
+               ReplaceKeys.IMAGE_PATH"{image_path}",
                 imageRatio?.let { imagePath?.replace("/0/", "/$imageRatio/") }
                     ?: imagePath.orEmpty())
-            .replace(/*ReplaceKeys.IMAGE_NAME*/"{image_name}", imageName.orEmpty())
+            .replace(ReplaceKeys.IMAGE_NAME"{image_name}", imageName.orEmpty())
             .replace(
-                /*ReplaceKeys.CONTENT_IMAGE_VERSION*/"{content_image_version}", /*firebaseRemoteConfig.getString(
+                ReplaceKeys.CONTENT_IMAGE_VERSION"{content_image_version}", firebaseRemoteConfig.getString(
             KEY_CONTENT_IMAGE_VERSION
-        )*/"1.30"
+        )"1.30"
                 ReplaceKeys.DATA_IMAGE_VERSION, firebaseRemoteConfig.getString(
                     KEY_DATA_IMAGE_VERSION
                 )
@@ -197,8 +221,8 @@ class ConfigManager @Inject constructor(
             ReplaceKeys.NATIONALITY_ID,
             nationalityId.orEmpty()
         ).replace(
-                ReplaceKeys.DATA_IMAGE_VERSION, ""
-            )
+            ReplaceKeys.DATA_IMAGE_VERSION, ""
+        )
     }
 
     override fun getTeamNationalityId(currentTeam: Int): String? {
@@ -214,40 +238,37 @@ class ConfigManager @Inject constructor(
         return ""
     }
 
-    private fun getAppTypePath(): AppTypePath? {
-        return null
-    }
 
     override fun getSquadPlayerOrder(): List<String> {/*return firebaseRemoteConfig.getString(KEY_SQUAD_PLAYER_ORDER).let {
-            if (it.isBlank())
-                emptyList()
-            else
-                it.split(",")
-        }*/
+        if (it.isBlank())
+            emptyList()
+        else
+            it.split(",")
+    }*/
         return emptyList()
     }
 
     override fun getStaffImageUrl(staffId: String?): String {
         return getBaseUrl() + "static-assets/images/support-staff/{staff_id}.png?v={data_image_version}".replace(
-                ReplaceKeys.STAFF_ID,
-                staffId.orEmpty()
-            ).replace(
-                ReplaceKeys.DATA_IMAGE_VERSION, "2.28"
-            )
+            ReplaceKeys.STAFF_ID,
+            staffId.orEmpty()
+        ).replace(
+            ReplaceKeys.DATA_IMAGE_VERSION, "2.28"
+        )
     }
 
     override fun getSquadStaffOrder(): List<String> {/*return firebaseRemoteConfig.getString(KEY_SQUAD_STAFF_ORDER).let {
-            if (it.isBlank())
-                emptyList()
-            else
-                it.split(",")
-        }*/
+        if (it.isBlank())
+            emptyList()
+        else
+            it.split(",")
+    }*/
         return emptyList()
     }
 
     override fun getSkillList(): List<SkillItem> {
         val type = TypeToken.getParameterized(List::class.java, SkillItem::class.java).type
-        return try {
+      /*  return try {
             gson.fromJson(
                 """[{"skill_id":"1","skill_name":"Batters"},{"skill_id":"3","skill_name":"All-Rounders"},{"skill_id":"4","skill_name":"Wicket-Keepers"},{"skill_id":"2","skill_name":"Bowlers"}]""",
                 type
@@ -255,11 +276,31 @@ class ConfigManager @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             listOf()
-        }
+        }*/
+        return emptyList()
 //        return null
     }
-}
 
+    override fun getContentSharingVideoUrl(
+        baseUrl: String,
+        entityCategory: String?,
+        titleAlias: String?
+    ): String {
+        return ""
+    }
+
+    override fun getContentImageVideoUrl1(
+        imagePath: String?,
+        imageName: String?,
+        imageRatio: String?
+    ): String {
+        return getBaseUrl() + getBaseContentImageUrl().replace("{image_path}",
+            imageRatio?.let { imagePath?.replace("/0/", "/$imageRatio/") } ?: imagePath.orEmpty())
+            .replace(
+                "{image_name}", imageName.orEmpty()
+            )
+    }
+}
 
 
 object ReplaceKeys {
@@ -273,3 +314,7 @@ object ReplaceKeys {
     const val DEFAULT_TEAM_ID = "{team_id}"
 
 }
+
+
+
+

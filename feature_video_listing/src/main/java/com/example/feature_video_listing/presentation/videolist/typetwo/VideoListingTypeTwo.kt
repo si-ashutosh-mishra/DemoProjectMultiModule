@@ -62,85 +62,139 @@ fun VideoListingTypeTwo(
         TextStyle(color = Color.Black, textAlign = TextAlign.Center),
     activeColorIndicator : Color?=null,
     inactiveColorIndicator : Color?=null,
-    @DrawableRes matchPhotoBackgroundImage : Int?=null,
-    @ColorRes matchPhotoBackgroundColor : Int?=null,
-    matchPhotoTitleStyle: TextStyle = TextStyle(
+    @DrawableRes backGroundImage1 : Int?=null,
+    @ColorRes backgroundColor1 : Int?=null,
+    titleStyle1: TextStyle = TextStyle(
         color = Color.Black,
         textAlign = TextAlign.Left
     ),
-    matchMoreButton: ButtonColors =
+    moreBtnStyle1: ButtonColors =
         ButtonDefaults.buttonColors(containerColor = Color.Black),
-    matchPhotoListingTitle : TextStyle = TextStyle(
+    videoTitleStyle1 : TextStyle = TextStyle(
         color = Color.White, textAlign = TextAlign.Left
     ),
-    @DrawableRes matchClockIcon : Int?=null,
-    matchClockTextStyle : TextStyle = TextStyle(color = Color.White, textAlign = TextAlign.Center),
+    @DrawableRes durationIcon1 : Int?=null,
+    durationTextStyle1 : TextStyle = TextStyle(color = Color.White, textAlign = TextAlign.Center),
     displayMatchReaction : Boolean = false,
-    matchBorderColorStyle : TextStyle = TextStyle(color = Color.White, textAlign = TextAlign.Center),
+    borderColorStyle1 : TextStyle = TextStyle(color = Color.White, textAlign = TextAlign.Center),
     @DrawableRes reactionIcon : Int?=null,
-    reactionTextStyle : TextStyle = TextStyle(color = Color.White, textAlign = TextAlign.Center),
-    @DrawableRes matchShareLogo : Int?=null,
-    matchPhotosNumberStyle: TextStyle = TextStyle(
+    reactionTextStyle1 : TextStyle = TextStyle(color = Color.White, textAlign = TextAlign.Center),
+    @DrawableRes shareLogo1 : Int?=null,
+    photoNumberStyle1: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
         background = Black
     ),
-    matchMoreButtonTextStyle : TextStyle = TextStyle(
+    moreBtnTextStyle1 : TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center
     ),
-    @DrawableRes trainingPhotoBackgroundImage : Int?=null,
-    @ColorRes trainingPhotoBackgroundColor : Int?=null,
-    trainingPhotoTitleStyle: TextStyle = TextStyle(
+    @DrawableRes backgroundImage2 : Int?=null,
+    @ColorRes backgroundColor2 : Int?=null,
+    titleStyle2: TextStyle = TextStyle(
         color = Color.Black,
         textAlign = TextAlign.Left
     ),
-    trainingMoreButton: ButtonColors =
+    moreButtonStyle2: ButtonColors =
         ButtonDefaults.buttonColors(containerColor = Color.Black),
-    trainingPhotoListingTitleStyle : TextStyle = TextStyle(
+    videoTitleStyle2 : TextStyle = TextStyle(
         color = Color.Black, textAlign = TextAlign.Left
     ),
-    @DrawableRes trainingClockIcon : Int?=null,
-    trainingClockTextStyle : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
+    @DrawableRes durationIcon2 : Int?=null,
+    durationTextStyle2 : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
     trainingdisplayMatchReaction : Boolean = false,
-    trainingborderColorStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes trainingreactionIcon : Int?=null,
-    trainingreactionTextStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes trainingShareLogo : Int?=null,
-    trainingPhotosNumberStyle: TextStyle = TextStyle(
+    borderColorStyle2 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes reactionIcon2 : Int?=null,
+    reactionStyle2 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes shareLogo2 : Int?=null,
+    photosNumberStyle2: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
         background = Black,
         letterSpacing = 0.3.em
     ),
-    trainingMoreButtonTextStyle : TextStyle = TextStyle(
+    moreBtnTextStyle2 : TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center
     ),
-    @DrawableRes behindScenePhotoBackgroundImage : Int?=null,
-    @ColorRes behindScenePhotoBackgroundColor : Int?=null,
-    behindScenePhotoTitleStyle: TextStyle = TextStyle(
+    @DrawableRes backgroundImage3 : Int?=null,
+    @ColorRes backgroundColor3 : Int?=null,
+    titleStyle3: TextStyle = TextStyle(
         color = Color.Black,
         textAlign = TextAlign.Left
     ),
-    behindSceneMoreButton: ButtonColors =
+    moreButtonStyle3: ButtonColors =
         ButtonDefaults.buttonColors(containerColor = Color.Black),
-    behindScenePhotoListingTitleStyle : TextStyle = TextStyle(
+    videoTitleStyle3 : TextStyle = TextStyle(
         color = Color.Black, textAlign = TextAlign.Left
     ),
-    @DrawableRes behindSceneClockIcon : Int?=null,
-    behindSceneTextStyle : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
+    @DrawableRes durationIcon3 : Int?=null,
+    durationTextStyle3 : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
     behindSceneMatchReaction : Boolean = false,
-    behindSceneBorderStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes behindScenereactionIcon : Int?=null,
-    behindScenereactionTextStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes behindScenematchShareLogo : Int?=null,
-    behindScenematchPhotosNumberStyle: TextStyle = TextStyle(
+    borderStyle3 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes reactionIcon3 : Int?=null,
+    reactionTextStyle3 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes shareLogo3 : Int?=null,
+    photosNumberStyle3: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
         background = Black
     ),
-    behindSceneMoreButtonTextStyle : TextStyle = TextStyle(
+    moreBtnTextStyle3 : TextStyle = TextStyle(
+        color = Color.White,
+        textAlign = TextAlign.Center
+    ),
+    @DrawableRes backgroundImage4 : Int?=null,
+    @ColorRes backgroundColor4 : Int?=null,
+    titleStyle4: TextStyle = TextStyle(
+        color = Color.Black,
+        textAlign = TextAlign.Left
+    ),
+    moreButtonStyle4: ButtonColors =
+        ButtonDefaults.buttonColors(containerColor = Color.Black),
+    videoTitleStyle4 : TextStyle = TextStyle(
+        color = Color.Black, textAlign = TextAlign.Left
+    ),
+    @DrawableRes durationIcon4 : Int?=null,
+    durationTextStyle4 : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
+    behindSceneMatchReaction4 : Boolean = false,
+    borderStyle4 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes reactionIcon4 : Int?=null,
+    reactionTextStyle4 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes shareLogo4 : Int?=null,
+    photosNumberStyle4 : TextStyle = TextStyle(
+        color = Color.White,
+        textAlign = TextAlign.Center,
+        background = Black
+    ),
+    moreBtnTextStyle4 : TextStyle = TextStyle(
+        color = Color.White,
+        textAlign = TextAlign.Center
+    ),
+    @DrawableRes backgroundImage5 : Int?=null,
+    @ColorRes backgroundColor5 : Int?=null,
+    titleStyle5: TextStyle = TextStyle(
+        color = Color.Black,
+        textAlign = TextAlign.Left
+    ),
+    moreButtonStyle5: ButtonColors =
+        ButtonDefaults.buttonColors(containerColor = Color.Black),
+    videoTitleStyle5 : TextStyle = TextStyle(
+        color = Color.Black, textAlign = TextAlign.Left
+    ),
+    @DrawableRes durationIcon5 : Int?=null,
+    durationTextStyle5 : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
+    behindSceneMatchReaction5 : Boolean = false,
+    borderStyle5 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes reactionIcon5 : Int?=null,
+    reactionTextStyle5 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes shareLogo5 : Int?=null,
+    photosNumberStyle5 : TextStyle = TextStyle(
+        color = Color.White,
+        textAlign = TextAlign.Center,
+        background = Black
+    ),
+    moreBtnTextStyle5 : TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center
     )
@@ -190,84 +244,88 @@ fun VideoListingTypeTwo(
                     VideosItemViewType.BTS -> {
                         (it as VideosListingItem.BTS).let {
                             VideoListing(
+                                navController,
                                 it.title,
                                 it.items,
-                                matchPhotoBackgroundImage =matchPhotoBackgroundImage,
-                                matchPhotoBackgroundColor = matchPhotoBackgroundColor,
-                                matchPhotoTitleStyle = matchPhotoTitleStyle,
-                                matchMoreButton = matchMoreButton,
-                                matchPhotoListingTitleStyle = matchPhotoListingTitle,
-                                matchClockIcon = matchClockIcon,
-                                matchTimeTextStyle = matchClockTextStyle,
-                                borderColorStyle = matchBorderColorStyle,
+                                matchPhotoBackgroundImage =backGroundImage1,
+                                matchPhotoBackgroundColor = backgroundColor1,
+                                matchPhotoTitleStyle = titleStyle1,
+                                matchMoreButton = moreBtnStyle1,
+                                matchPhotoListingTitleStyle = videoTitleStyle1,
+                                matchClockIcon = durationIcon1,
+                                matchTimeTextStyle = durationTextStyle1,
+                                borderColorStyle = borderColorStyle1,
                                 reactionIcon = reactionIcon,
-                                reactionTextStyle = reactionTextStyle,
-                                matchShareLogo = matchShareLogo,
-                                matchPhotosNumberStyle = matchPhotosNumberStyle,
-                                matchMoreButtonTextStyle =matchMoreButtonTextStyle
+                                reactionTextStyle = reactionTextStyle1,
+                                matchShareLogo = shareLogo1,
+                                matchPhotosNumberStyle = photoNumberStyle1,
+                                matchMoreButtonTextStyle =moreBtnTextStyle1
                             )
                         }
                     }
                     VideosItemViewType.FILMS -> {
                         (it as VideosListingItem.Films)?.let {
                             VideoListing(
+                                navController,
                                 it.title,
                                 it.items,
-                                matchPhotoBackgroundImage =matchPhotoBackgroundImage,
-                                matchPhotoBackgroundColor = matchPhotoBackgroundColor,
-                                matchPhotoTitleStyle = matchPhotoTitleStyle,
-                                matchMoreButton = matchMoreButton,
-                                matchPhotoListingTitleStyle = matchPhotoListingTitle,
-                                matchClockIcon = matchClockIcon,
-                                matchTimeTextStyle = matchClockTextStyle,
-                                borderColorStyle = matchBorderColorStyle,
-                                reactionIcon = reactionIcon,
-                                reactionTextStyle = reactionTextStyle,
-                                matchShareLogo = matchShareLogo,
-                                matchPhotosNumberStyle = matchPhotosNumberStyle,
-                                matchMoreButtonTextStyle =matchMoreButtonTextStyle
+                                matchPhotoBackgroundImage =backgroundImage2,
+                                matchPhotoBackgroundColor = backgroundColor2,
+                                matchPhotoTitleStyle = titleStyle2,
+                                matchMoreButton = moreButtonStyle2,
+                                matchPhotoListingTitleStyle = videoTitleStyle2,
+                                matchClockIcon = durationIcon2,
+                                matchTimeTextStyle = durationTextStyle2,
+                                borderColorStyle = borderColorStyle2,
+                                reactionIcon = reactionIcon2,
+                                reactionTextStyle = reactionStyle2,
+                                matchShareLogo = shareLogo2,
+                                matchPhotosNumberStyle = photosNumberStyle2,
+                                matchMoreButtonTextStyle =moreBtnTextStyle2
                             )
                         }
                     }
                     VideosItemViewType.HIGHLIGHTS -> {
                         (it as VideosListingItem.Highlights).let {
                             VideoListing(
+                                navController,
                                 it.title,
                                 it.items,
-                                matchPhotoBackgroundImage =matchPhotoBackgroundImage,
-                                matchPhotoBackgroundColor = matchPhotoBackgroundColor,
-                                matchPhotoTitleStyle = matchPhotoTitleStyle,
-                                matchMoreButton = matchMoreButton,
-                                matchPhotoListingTitleStyle = matchPhotoListingTitle,
-                                matchClockIcon = matchClockIcon,
-                                matchTimeTextStyle = matchClockTextStyle,
-                                borderColorStyle = matchBorderColorStyle,
-                                reactionIcon = reactionIcon,
-                                reactionTextStyle = reactionTextStyle,
-                                matchShareLogo = matchShareLogo,
-                                matchPhotosNumberStyle = matchPhotosNumberStyle,
-                                matchMoreButtonTextStyle =matchMoreButtonTextStyle
+                                matchPhotoBackgroundImage =backgroundImage3,
+                                matchPhotoBackgroundColor = backgroundColor3,
+                                matchPhotoTitleStyle = titleStyle3,
+                                matchMoreButton = moreButtonStyle3,
+                                matchPhotoListingTitleStyle = videoTitleStyle3,
+                                matchClockIcon = durationIcon3,
+                                matchTimeTextStyle = durationTextStyle3,
+                                borderColorStyle = borderStyle3,
+                                reactionIcon = reactionIcon3,
+                                reactionTextStyle = reactionTextStyle3,
+                                matchShareLogo = shareLogo3,
+                                matchPhotosNumberStyle = photosNumberStyle3,
+                                matchMoreButtonTextStyle =moreBtnTextStyle3
                             )
                         }
                     }
                     VideosItemViewType.SUGGESTIONS -> {
                         (it as VideosListingItem.Suggestions).let {
                             VideoListing(
+                                navController,
                                 it.title,
                                 it.items,
-                                matchPhotoBackgroundImage =matchPhotoBackgroundImage,
-                                matchPhotoBackgroundColor = matchPhotoBackgroundColor,
-                                matchPhotoTitleStyle = matchPhotoTitleStyle,
-                                matchMoreButton = matchMoreButton,
-                                matchPhotoListingTitleStyle = matchPhotoListingTitle,
-                                matchClockIcon = matchClockIcon,
-                                matchTimeTextStyle = matchClockTextStyle,
-                                borderColorStyle = matchBorderColorStyle,
-                                reactionIcon = reactionIcon,
-                                reactionTextStyle = reactionTextStyle,
-                                matchShareLogo = matchShareLogo,
-                                matchPhotosNumberStyle = matchPhotosNumberStyle,
-                                matchMoreButtonTextStyle =matchMoreButtonTextStyle
+                                matchPhotoBackgroundImage =backgroundImage4,
+                                matchPhotoBackgroundColor = backgroundColor4,
+                                matchPhotoTitleStyle = titleStyle4,
+                                matchMoreButton = moreButtonStyle4,
+                                matchPhotoListingTitleStyle = videoTitleStyle4,
+                                matchClockIcon = durationIcon4,
+                                matchTimeTextStyle = durationTextStyle4,
+                                borderColorStyle = borderStyle4,
+                                reactionIcon = reactionIcon4,
+                                reactionTextStyle = reactionTextStyle4,
+                                matchShareLogo = shareLogo4,
+                                matchPhotosNumberStyle = photosNumberStyle4,
+                                matchMoreButtonTextStyle = moreBtnTextStyle4
                             )
                         }
                     }
@@ -276,19 +334,19 @@ fun VideoListingTypeTwo(
                             ShortVideoListing(
                                 it.title,
                                 it.items,
-                                matchPhotoBackgroundImage =matchPhotoBackgroundImage,
-                                matchPhotoBackgroundColor = matchPhotoBackgroundColor,
-                                matchPhotoTitleStyle = matchPhotoTitleStyle,
-                                matchMoreButton = matchMoreButton,
-                                matchPhotoListingTitleStyle = matchPhotoListingTitle,
-                                matchClockIcon = matchClockIcon,
-                                matchTimeTextStyle = matchClockTextStyle,
-                                borderColorStyle = matchBorderColorStyle,
-                                reactionIcon = reactionIcon,
-                                reactionTextStyle = reactionTextStyle,
-                                matchShareLogo = matchShareLogo,
-                                matchPhotosNumberStyle = matchPhotosNumberStyle,
-                                matchMoreButtonTextStyle =matchMoreButtonTextStyle
+                                matchPhotoBackgroundImage =backgroundImage5,
+                                matchPhotoBackgroundColor = backgroundColor5,
+                                matchPhotoTitleStyle = titleStyle5,
+                                matchMoreButton = moreButtonStyle5,
+                                matchPhotoListingTitleStyle = videoTitleStyle5,
+                                matchClockIcon = durationIcon5,
+                                matchTimeTextStyle = durationTextStyle5,
+                                borderColorStyle = borderStyle5,
+                                reactionIcon = reactionIcon5,
+                                reactionTextStyle = reactionTextStyle5,
+                                matchShareLogo = shareLogo5,
+                                matchPhotosNumberStyle = photosNumberStyle5,
+                                matchMoreButtonTextStyle =moreBtnTextStyle5
                             )
                         }
                     }

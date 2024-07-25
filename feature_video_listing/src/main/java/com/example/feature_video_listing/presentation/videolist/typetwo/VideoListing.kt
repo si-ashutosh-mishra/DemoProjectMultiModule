@@ -30,10 +30,12 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.lb_content_listing.business.domain.model.AssetItem
 
 @Composable
 fun VideoListing(
+    navController: NavController,
     title: String,
     list: List<AssetItem>,
     @DrawableRes matchPhotoBackgroundImage: Int? = null,
@@ -117,7 +119,14 @@ fun VideoListing(
                     reactionIcon,
                     reactionTextStyle = reactionTextStyle,
                     matchShareLogo,
-                    matchPhotosNumberStyle
+                    matchPhotosNumberStyle,
+                    aspectRatio = 1f,
+                    itemWidth = 170.dp,
+                    onItemClick = { onItemSelected->
+                        navController.navigate(
+                            route = "VideoDetails/${onItemSelected.titleAlias}"
+                        )
+                    }
                 )
             }
         }

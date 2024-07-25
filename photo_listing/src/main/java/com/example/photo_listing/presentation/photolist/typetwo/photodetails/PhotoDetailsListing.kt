@@ -1,4 +1,4 @@
-package com.example.photo_listing.presentation.photolist.typetwo
+package com.example.photo_listing.presentation.photolist.typetwo.photodetails
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
@@ -40,13 +40,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.lb_content_listing.business.domain.model.AssetItem
 import com.example.photo_listing.business.model.PhotoListingItem
+import com.example.photo_listing.presentation.photolist.typetwo.ListingOfPhotos
 import com.example.photo_listing.presentation.photolist.typetwo.photodetails.PhotoDetailsTypeTwo
 import com.example.photo_listing.presentation.theme.Black
 
 @Composable
-fun PhotoListing(
-    data: PhotoListingItem.PhotosArticle,
+fun PhotoDetailsListing(
+    data: List<AssetItem>,
+    title: String,
     @DrawableRes matchPhotoBackgroundImage: Int? = null,
     @ColorRes matchPhotoBackgroundColor: Int? = null,
     matchPhotoTitleStyle: TextStyle,
@@ -61,76 +64,99 @@ fun PhotoListing(
     @DrawableRes matchShareLogo: Int? = null,
     matchPhotosNumberStyle: TextStyle,
     matchMoreButtonTextStyle: TextStyle,
-    navController: NavController
+    navController: NavController,
+    photoType: Boolean = false
 ) {
-
-    Box(modifier = Modifier.background(if (matchPhotoBackgroundColor!=null) colorResource(id = matchPhotoBackgroundColor) else Color.Transparent)){
-
-        if (matchPhotoBackgroundImage!=null){
-            Image(painterResource(id = matchPhotoBackgroundImage),
-                contentDescription ="",
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.matchParentSize())
-        }
-    }
-
-    Column(
+    Box(
         modifier = Modifier
-            .background(Color.Transparent)
-            .fillMaxSize()
-            .padding(0.dp, 5.dp, 0.dp, 5.dp)
+            .background(
+                if (matchPhotoBackgroundColor != null)
+                    colorResource(id = matchPhotoBackgroundColor) else Color.Transparent
+            )
+            .padding(top = 10.dp, bottom = 10.dp)
     ) {
 
-        Row(
-            horizontalArrangement = Arrangement.Absolute.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(0.dp, 10.dp, 0.dp, 10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = data.title,
-                style = matchPhotoTitleStyle,
-                modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp)
+        if (matchPhotoBackgroundImage != null) {
+            Image(
+                painterResource(id = matchPhotoBackgroundImage),
+                contentDescription = "",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.matchParentSize()
             )
-
-            Button(
-                onClick = { navController.navigate(route = "PhotoListingGridLayout") },
-                colors = matchMoreButton,
-                modifier = Modifier
-                    .padding(0.dp, 0.dp, 10.dp, 0.dp)
-                    .height(30.dp)
-                    .width(80.dp)
-                    .align(alignment = Alignment.CenterVertically),
-                shape = RoundedCornerShape(5.dp)
-            ) {
-                Text(
-                    text = "More",
-                    style = matchMoreButtonTextStyle
-                )
-            }
         }
 
-        LazyRow {
-            items(data.items,
-                key = { it.assetId.toString() }) {
-                ListingOfPhotos(
-                    it,
-                    data.items.size,
-                    matchPhotoListingTitleStyle,
-                    matchClockIcon,
-                    matchTimeTextStyle,
-                    displayMatchReaction,
-                    borderColorStyle,
-                    reactionIcon,
-                    reactionTextStyle = reactionTextStyle,
-                    matchShareLogo,
-                    matchPhotosNumberStyle,
-                    onItemClick = { selectedItem ->
-                        navController.navigate(
-                           route = "PhotoDetails/${selectedItem.titleAlias}")
-                    })
+
+        Column(
+            modifier = Modifier
+                .background(Color.Transparent)
+                .fillMaxSize()
+                .padding(0.dp, 5.dp, 0.dp, 5.dp)
+        ) {
+
+            Row(
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(0.dp, 10.dp, 0.dp, 10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = title,
+                    style = matchPhotoTitleStyle,
+                    modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp)
+                )
+
+                Button(
+                    onClick = { navController.navigate(route = "PhotoListingGridLayout") },
+                    colors = matchMoreButton,
+                    modifier = Modifier
+                        .padding(0.dp, 0.dp, 10.dp, 0.dp)
+                        .height(30.dp)
+                        .width(80.dp)
+                        .align(alignment = Alignment.CenterVertically),
+                    shape = RoundedCornerShape(5.dp)
+                ) {
+                    Text(
+                        text = "More",
+                        style = matchMoreButtonTextStyle
+                    )
+                }
+            }
+
+            LazyRow {
+                items(data,
+                    key = { it.assetId.toString() }) {
+                    if (photoType) {
+                        ListingOfPhotos(
+                            it,
+                            data.size,
+                            matchPhotoListingTitleStyle,
+                            matchClockIcon,
+                            matchTimeTextStyle,
+                            displayMatchReaction,
+                            borderColorStyle,
+                            reactionIcon,
+                            reactionTextStyle = reactionTextStyle,
+                            matchShareLogo,
+                            matchPhotosNumberStyle,
+                            onItemClick = { selectedItem ->
+                                navController.navigate(
+                                    route = "PhotoDetails/${selectedItem.titleAlias}"
+                                )
+                            })
+                    } else {
+                        ListingOfVideos(
+                            assetItem = it,
+                            itemCounts = data.size ?: 0,
+                            matchPhotoListingTitleStyle = matchPhotoTitleStyle,
+                            matchTimeTextStyle = matchTimeTextStyle,
+                            borderColorStyle = borderColorStyle,
+                            reactionTextStyle = reactionTextStyle,
+                            matchPhotosNumberStyle = matchPhotosNumberStyle
+                        )
+                    }
+                }
             }
         }
     }

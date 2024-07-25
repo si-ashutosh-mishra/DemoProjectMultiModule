@@ -1,17 +1,17 @@
-package com.example.photo_listing.data.mapper
+package com.example.feature_video_listing.business.mapper
 
 import com.example.base.helper.EntityMapper
 import com.example.base.utils.CalendarUtils
+import com.example.feature_video_listing.data.remote.VideoDetailConfig
 import com.example.lb_content_listing.business.domain.model.AssetItem
 import com.example.lb_content_listing.business.domain.model.AssetUtils
 import com.example.lb_content_listing.data.model.layoutbuilder.AssetItemEntity
-import com.example.photo_listing.data.remote.PhotoDetailsConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AssetItemEntityMapper @Inject constructor(
-    private val configManager: PhotoDetailsConfig,
+    private val configManager: VideoDetailConfig,
 ) : EntityMapper<AssetItemEntity, AssetItem> {
 
     override fun toDomain(entity: AssetItemEntity): AssetItem {
@@ -32,7 +32,7 @@ class AssetItemEntityMapper @Inject constructor(
             titleAlias = entity.titleAlias,
             assetTypeId = entity.assetTypeId,
             secondaryEntityRoleMapId = entity.secondaryEntityRoleMapId,
-            imageUrl = configManager.getContentImageUrl1(
+            imageUrl = configManager.getContentImageVideoUrl1(
                 imagePath = entity.imagePath ?: "",
                 imageName = entity.imageFileName ?: "",
                 imageRatio = imageRatio

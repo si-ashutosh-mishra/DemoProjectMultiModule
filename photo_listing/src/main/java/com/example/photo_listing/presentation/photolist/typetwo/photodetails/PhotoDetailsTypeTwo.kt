@@ -20,8 +20,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -29,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.em
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.lb_content_listing.business.domain.model.AssetItem
 import com.example.photo_listing.presentation.LifeCycleObserver
 import com.example.photo_listing.presentation.photolist.typetwo.ListingOfPhotos
 import com.example.photo_listing.presentation.theme.Black
@@ -183,7 +187,17 @@ fun PhotoDetailsTypeTwo(
         viewModel.cancelApiCoroutine()
     }
 
-    Log.d("RESPONSE", "PhotoDetailsTypeTwo: " + photoDetails)
+    val photoState : MutableState<List<AssetItem>> = remember {
+        mutableStateOf(morePhotoList.orEmpty())
+    }
+
+    val videoState : MutableState<List<AssetItem>> = remember {
+        mutableStateOf(moreVideoList.orEmpty())
+    }
+
+    val newsState : MutableState<List<AssetItem>> = remember {
+        mutableStateOf(moreNewsList.orEmpty())
+    }
     Column(modifier = Modifier.fillMaxSize()) {
         TopAppBar(title = {
             Text(text = "Photos")
@@ -218,54 +232,55 @@ fun PhotoDetailsTypeTwo(
                 )
             }
             item {
-                LazyRow {
-                    items(morePhotoList.orEmpty()) {
-                        ListingOfPhotos(
-                            assetItem = it,
-                            itemCounts = morePhotoList?.size ?: 0,
-                            matchPhotoListingTitleStyle = matchPhotoTitleStyle,
-                            matchTimeTextStyle = timeTitleStyle,
-                            borderColorStyle = matchBorderColorStyle,
-                            reactionTextStyle = reactionTextStyle,
-                            matchPhotosNumberStyle = matchPhotosNumberStyle
-                        ) {
-
-                        }
-                    }
-                }
+                PhotoDetailsListing(
+                    data = morePhotoList.orEmpty(),
+                    title = "Photos",
+                    matchPhotoTitleStyle = matchPhotoTitleStyle,
+                    matchMoreButton = matchMoreButton,
+                    matchPhotoListingTitleStyle = matchPhotoTitleStyle,
+                    matchClockIcon = matchClockIcon,
+                    matchTimeTextStyle = timeTitleStyle,
+                    borderColorStyle = matchBorderColorStyle,
+                    reactionTextStyle = reactionTextStyle,
+                    matchPhotosNumberStyle = matchPhotosNumberStyle,
+                    matchMoreButtonTextStyle = matchMoreButtonTextStyle,
+                    navController = navController,
+                    photoType = true
+                )
             }
 
             item {
-                LazyRow {
-                    items(moreVideoList.orEmpty()) {
-                        ListingOfVideos(
-                            assetItem = it,
-                            itemCounts = moreVideoList?.size ?: 0,
-                            matchPhotoListingTitleStyle = matchPhotoListingTitle,
-                            matchTimeTextStyle = timeTitleStyle,
-                            borderColorStyle = matchBorderColorStyle,
-                            reactionTextStyle = reactionTextStyle,
-                            matchPhotosNumberStyle = matchPhotosNumberStyle
-                        )
-                    }
-                }
+                PhotoDetailsListing(
+                    data = moreVideoList.orEmpty(),
+                    title = "Videos",
+                    matchPhotoTitleStyle = matchPhotoTitleStyle,
+                    matchMoreButton = matchMoreButton,
+                    matchPhotoListingTitleStyle = matchPhotoTitleStyle,
+                    matchClockIcon = matchClockIcon,
+                    matchTimeTextStyle = timeTitleStyle,
+                    borderColorStyle = matchBorderColorStyle,
+                    reactionTextStyle = reactionTextStyle,
+                    matchPhotosNumberStyle = matchPhotosNumberStyle,
+                    matchMoreButtonTextStyle = matchMoreButtonTextStyle,
+                    navController = navController
+                )
             }
             item {
-                LazyRow {
-                    items(morePhotoList.orEmpty()) {
-                        ListingOfPhotos(
-                            assetItem = it,
-                            itemCounts = morePhotoList?.size ?: 0,
-                            matchPhotoListingTitleStyle = matchPhotoTitleStyle,
-                            matchTimeTextStyle = timeTitleStyle,
-                            borderColorStyle = matchBorderColorStyle,
-                            reactionTextStyle = reactionTextStyle,
-                            matchPhotosNumberStyle = matchPhotosNumberStyle
-                        ) {
-
-                        }
-                    }
-                }
+                PhotoDetailsListing(
+                    data = moreNewsList.orEmpty(),
+                    title = "News",
+                    matchPhotoTitleStyle = matchPhotoTitleStyle,
+                    matchMoreButton = matchMoreButton,
+                    matchPhotoListingTitleStyle = matchPhotoTitleStyle,
+                    matchClockIcon = matchClockIcon,
+                    matchTimeTextStyle = timeTitleStyle,
+                    borderColorStyle = matchBorderColorStyle,
+                    reactionTextStyle = reactionTextStyle,
+                    matchPhotosNumberStyle = matchPhotosNumberStyle,
+                    matchMoreButtonTextStyle = matchMoreButtonTextStyle,
+                    navController = navController,
+                    photoType = true
+                )
             }
         }
     }

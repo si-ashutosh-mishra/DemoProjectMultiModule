@@ -149,6 +149,8 @@ class PhotoDetailViewModel @Inject constructor(
     }
 
 
+
+
     fun cancelApiCoroutine() {
         // clearJobs()
         apiCoroutineScope?.cancel()

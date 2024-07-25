@@ -1,11 +1,12 @@
 package com.example.photo_listing.business.model
 
+import androidx.compose.runtime.Immutable
 import com.example.lb_content_listing.business.domain.model.AssetItem
 import com.example.photo_listing.business.listing.BannerItem
 import com.example.photo_listing.business.listing.ListingEntityData
 import com.example.photo_listing.presentation.PhotoItemViewType
 
-
+@Immutable
 sealed class PhotoListingItem(val type: PhotoItemViewType) {
     open class PhotosArticle(open val title: String, open val items: List<AssetItem>, open val entityData: ListingEntityData, type: PhotoItemViewType): PhotoListingItem(type = type)
     data class Carousel(val title: String, val items: List<BannerItem>): PhotoListingItem(PhotoItemViewType.CAROUSEL)

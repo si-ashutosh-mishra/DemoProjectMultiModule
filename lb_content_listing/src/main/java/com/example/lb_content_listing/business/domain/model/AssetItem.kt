@@ -1,7 +1,9 @@
 package com.example.lb_content_listing.business.domain.model
 
+import androidx.compose.runtime.Immutable
 import java.io.Serializable
 
+@Immutable
 data class AssetItem(
     val assetId: Int? = 0,
     val beautifiedDuration: String? = null,

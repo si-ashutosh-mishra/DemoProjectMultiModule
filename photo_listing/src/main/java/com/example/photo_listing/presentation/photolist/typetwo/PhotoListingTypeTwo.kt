@@ -61,85 +61,85 @@ fun PhotoListingTypeTwo(
         TextStyle(color = Color.Black, textAlign = TextAlign.Center),
     activeColorIndicator : Color?=null,
     inactiveColorIndicator : Color?=null,
-    @DrawableRes matchPhotoBackgroundImage : Int?=null,
-    @ColorRes matchPhotoBackgroundColor : Int?=null,
-    matchPhotoTitleStyle: TextStyle = TextStyle(
+    @DrawableRes backgroundImage1 : Int?=null,
+    @ColorRes backgroundColor1 : Int?=null,
+    titleStyle1: TextStyle = TextStyle(
         color = Color.Black,
         textAlign = TextAlign.Left
     ),
-    matchMoreButton: ButtonColors =
+    moreButtonStyle: ButtonColors =
         ButtonDefaults.buttonColors(containerColor = Color.Black),
-    matchPhotoListingTitle : TextStyle = TextStyle(
+    photoTitleStyle1 : TextStyle = TextStyle(
         color = Color.Black, textAlign = TextAlign.Left
     ),
-    @DrawableRes matchClockIcon : Int?=null,
-    matchClockTextStyle : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
-    displayMatchReaction : Boolean = false,
-    matchBorderColorStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes reactionIcon : Int?=null,
-    reactionTextStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes matchShareLogo : Int?=null,
-    matchPhotosNumberStyle: TextStyle = TextStyle(
+    @DrawableRes durationIcon1 : Int?=null,
+    durationTextStyle1 : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
+    displayMatchReaction1 : Boolean = false,
+    borderColorStyle1 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes reactionIcon1 : Int?=null,
+    reactionTextStyle1 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes shareLogo1 : Int?=null,
+    photoNumberStyle1: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
         background = Black
     ),
-    matchMoreButtonTextStyle : TextStyle = TextStyle(
+    moreButtonTextStyle1 : TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center
     ),
-    @DrawableRes trainingPhotoBackgroundImage : Int?=null,
-    @ColorRes trainingPhotoBackgroundColor : Int?=null,
-    trainingPhotoTitleStyle: TextStyle = TextStyle(
+    @DrawableRes backgroundImage2 : Int?=null,
+    @ColorRes backgroundColor2 : Int?=null,
+    titleStyle2: TextStyle = TextStyle(
         color = Color.Black,
         textAlign = TextAlign.Left
     ),
-    trainingMoreButton: ButtonColors =
+    moreButtonColor2: ButtonColors =
         ButtonDefaults.buttonColors(containerColor = Color.Black),
-    trainingPhotoListingTitleStyle : TextStyle = TextStyle(
+    photoTitleStyle2 : TextStyle = TextStyle(
         color = Color.Black, textAlign = TextAlign.Left
     ),
-    @DrawableRes trainingClockIcon : Int?=null,
-    trainingClockTextStyle : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
+    @DrawableRes durationIcon2 : Int?=null,
+    durationTextStyle2 : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
     trainingdisplayMatchReaction : Boolean = false,
-    trainingborderColorStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes trainingreactionIcon : Int?=null,
-    trainingreactionTextStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes trainingShareLogo : Int?=null,
-    trainingPhotosNumberStyle: TextStyle = TextStyle(
+    borderStyle2 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes reactionIcon2 : Int?=null,
+    reactionTextStyle2 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes shareLogo2 : Int?=null,
+    photosNumberStyle2: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
         background = Black,
         letterSpacing = 0.3.em
     ),
-    trainingMoreButtonTextStyle : TextStyle = TextStyle(
+    moreButtonTextStyle2 : TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center
     ),
-    @DrawableRes behindScenePhotoBackgroundImage : Int?=null,
-    @ColorRes behindScenePhotoBackgroundColor : Int?=null,
-    behindScenePhotoTitleStyle: TextStyle = TextStyle(
+    @DrawableRes backgroundImage3 : Int?=null,
+    @ColorRes backgrounfColor3 : Int?=null,
+    titleStyle3: TextStyle = TextStyle(
         color = Color.Black,
         textAlign = TextAlign.Left
     ),
-    behindSceneMoreButton: ButtonColors =
+    moreBtnStyle: ButtonColors =
         ButtonDefaults.buttonColors(containerColor = Color.Black),
-    behindScenePhotoListingTitleStyle : TextStyle = TextStyle(
+    photoTitleStyle3 : TextStyle = TextStyle(
         color = Color.Black, textAlign = TextAlign.Left
     ),
-    @DrawableRes behindSceneClockIcon : Int?=null,
-    behindSceneTextStyle : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
+    @DrawableRes durationIcon3 : Int?=null,
+    durationTextStyle3 : TextStyle = TextStyle(color = Color.DarkGray, textAlign = TextAlign.Center),
     behindSceneMatchReaction : Boolean = false,
-    behindSceneBorderStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes behindScenereactionIcon : Int?=null,
-    behindScenereactionTextStyle : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
-    @DrawableRes behindScenematchShareLogo : Int?=null,
-    behindScenematchPhotosNumberStyle: TextStyle = TextStyle(
+    borderStyle3 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes reactionIcon3 : Int?=null,
+    reactionTextStyle3 : TextStyle = TextStyle(color = Color.Black, textAlign = TextAlign.Center),
+    @DrawableRes shareLogo3 : Int?=null,
+    photoNumberStyle3: TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center,
         background = Black
     ),
-    behindSceneMoreButtonTextStyle : TextStyle = TextStyle(
+    moreBtnTextStyle3 : TextStyle = TextStyle(
         color = Color.White,
         textAlign = TextAlign.Center
     )
@@ -172,7 +172,9 @@ fun PhotoListingTypeTwo(
 
         (photoListing as? PhotoListingItem.Training)
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(photoListing){
+                items(
+                    photoListing,
+                    key = { it.type.id }){
                     when(it.type){
                         PhotoItemViewType.CAROUSEL->{
                             (it as? PhotoListingItem.Carousel)?.let {
@@ -191,20 +193,20 @@ fun PhotoListingTypeTwo(
                         }
                         PhotoItemViewType.TRAINING->{
                             (it as? PhotoListingItem.PhotosArticle)?.let {
-                                PhotoListing(it,trainingPhotoBackgroundImage,
-                                    trainingPhotoBackgroundColor,
-                                    trainingPhotoTitleStyle,
-                                    trainingMoreButton,
-                                    trainingPhotoListingTitleStyle,
-                                    trainingClockIcon,
-                                    matchTimeTextStyle = trainingClockTextStyle,
+                                PhotoListing(it,backgroundImage2,
+                                    backgroundColor2,
+                                    titleStyle2,
+                                    moreButtonColor2,
+                                    photoTitleStyle2,
+                                    durationIcon2,
+                                    matchTimeTextStyle = durationTextStyle2,
                                     trainingdisplayMatchReaction,
-                                    trainingborderColorStyle,
-                                    trainingreactionIcon,
-                                    trainingreactionTextStyle,
-                                    trainingShareLogo,
-                                    trainingPhotosNumberStyle,
-                                    trainingMoreButtonTextStyle,
+                                    borderStyle2,
+                                    reactionIcon2,
+                                    reactionTextStyle2,
+                                    shareLogo2,
+                                    photosNumberStyle2,
+                                    moreButtonTextStyle2,
                                     navController
                                 )
                             }
@@ -212,40 +214,40 @@ fun PhotoListingTypeTwo(
                         }
                         PhotoItemViewType.MATCHPHOTOS->{
                             (it as? PhotoListingItem.PhotosArticle)?.let {
-                                PhotoListing(it,matchPhotoBackgroundImage,
-                                    matchPhotoBackgroundColor,
-                                    matchPhotoTitleStyle,
-                                    matchMoreButton,
-                                    matchPhotoListingTitle,
-                                    matchClockIcon,
-                                    matchTimeTextStyle = matchClockTextStyle,
-                                    displayMatchReaction,
-                                    matchBorderColorStyle,
-                                    reactionIcon,
-                                    reactionTextStyle,
-                                    matchShareLogo,
-                                    matchPhotosNumberStyle,
-                                    matchMoreButtonTextStyle,navController
+                                PhotoListing(it,backgroundImage1,
+                                    backgroundColor1,
+                                    titleStyle1,
+                                    moreButtonStyle,
+                                    photoTitleStyle1,
+                                    durationIcon1,
+                                    matchTimeTextStyle = durationTextStyle1,
+                                    displayMatchReaction1,
+                                    borderColorStyle1,
+                                    reactionIcon1,
+                                    reactionTextStyle1,
+                                    shareLogo1,
+                                    photoNumberStyle1,
+                                    moreButtonTextStyle1,navController
                                 )
                             }
                         }
                         PhotoItemViewType.BEHINDSCENES->{
                             (it as? PhotoListingItem.PhotosArticle)?.let {
                                 PhotoListing(it,
-                                    behindScenePhotoBackgroundImage,
-                                    behindScenePhotoBackgroundColor,
-                                    behindScenePhotoTitleStyle,
-                                    behindSceneMoreButton,
-                                    behindScenePhotoListingTitleStyle,
-                                    behindSceneClockIcon,
-                                    matchTimeTextStyle = behindSceneTextStyle,
+                                    backgroundImage3,
+                                    backgrounfColor3,
+                                    titleStyle3,
+                                    moreBtnStyle,
+                                    photoTitleStyle3,
+                                    durationIcon3,
+                                    matchTimeTextStyle = durationTextStyle3,
                                     behindSceneMatchReaction,
-                                    behindSceneBorderStyle,
-                                    behindScenereactionIcon,
-                                    behindScenereactionTextStyle,
-                                    behindScenematchShareLogo,
-                                    behindScenematchPhotosNumberStyle,
-                                    behindSceneMoreButtonTextStyle,navController
+                                    borderStyle3,
+                                    reactionIcon3,
+                                    reactionTextStyle3,
+                                    shareLogo3,
+                                    photoNumberStyle3,
+                                    moreBtnTextStyle3,navController
                                 )
                             }
                         }

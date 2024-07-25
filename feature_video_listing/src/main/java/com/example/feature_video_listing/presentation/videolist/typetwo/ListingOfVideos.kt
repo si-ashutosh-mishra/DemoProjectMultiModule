@@ -1,23 +1,19 @@
 package com.example.feature_video_listing.presentation.videolist.typetwo
 
-import android.graphics.Color.parseColor
-import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
@@ -35,13 +31,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.core.graphics.toColorInt
 import coil.compose.rememberAsyncImagePainter
 import com.example.feature_video_listing.R
 import com.example.lb_content_listing.business.domain.model.AssetItem
@@ -52,26 +44,30 @@ fun ListingOfVideos(
     assetItem: AssetItem,
     itemCounts: Int,
     matchPhotoListingTitleStyle: TextStyle,
-    @DrawableRes matchClockIcon: Int? = null,
+    @DrawableRes clockIcon: Int? = null,
     matchTimeTextStyle: TextStyle,
-    displayMatchReaction: Boolean = false,
-    borderColorStyle: TextStyle,
+    displayReaction: Boolean = false,
+    borderStyle: TextStyle,
     @DrawableRes reactionIcon: Int? = null,
     reactionTextStyle: TextStyle,
-    @DrawableRes matchShareLogo: Int? = null,
-    matchPhotosNumberStyle: TextStyle
+    @DrawableRes shareLogo: Int? = null,
+    numberStyle: TextStyle,
+    aspectRatio : Float?= 1.4f,
+    itemWidth : Dp ?= 170.dp,
+    onItemClick : (AssetItem) -> Unit
 ) {
 
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-    val itemWidth = (screenWidth / itemCounts) + 170.dp
+    val itemWidth = (screenWidth / itemCounts) + itemWidth!!
 
     Card(
         modifier = Modifier
             .wrapContentSize()
             .width(itemWidth)
-            .aspectRatio(1.4f)
-            .padding(5.dp, 10.dp, 10.dp, 0.dp),
+            .aspectRatio(aspectRatio!!)
+            .padding(5.dp, 10.dp, 10.dp, 0.dp)
+            .clickable { onItemClick(assetItem) }
     ) {
         Box(
             contentAlignment = Alignment.BottomCenter,
@@ -81,7 +77,7 @@ fun ListingOfVideos(
                 Image(
                     painter = rememberAsyncImagePainter(model = assetItem.imageUrl), // Replace with your thumbnail image
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
+                    contentScale = ContentScale.FillBounds,
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()

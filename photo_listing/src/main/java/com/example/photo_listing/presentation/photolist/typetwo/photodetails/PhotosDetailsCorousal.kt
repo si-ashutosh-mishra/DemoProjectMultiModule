@@ -66,7 +66,9 @@ fun PhotosDetailsCorousal(
             pagerState.scrollToPage(nextPage)
         }
     }*/
-    Box(modifier = Modifier.background(if (corousalBackgroundColor != null) colorResource(id = corousalBackgroundColor) else Color.Transparent)) {
+    Box(
+        modifier = Modifier.background(if (corousalBackgroundColor != null) colorResource(id = corousalBackgroundColor) else Color.Transparent)
+            .padding(top = 10.dp, bottom = 10.dp)) {
 
         if (corousalBackgroundImage != null) {
             Image(
@@ -77,7 +79,7 @@ fun PhotosDetailsCorousal(
             )
         }
 
-        Column(Modifier.fillMaxWidth()) {
+        Column(Modifier.fillMaxWidth().padding(top = 10.dp, bottom = 10.dp)) {
 
             Text(text = "Match 30: SKNP vs TKR CPL 2021",
                 textAlign = TextAlign.Center,
